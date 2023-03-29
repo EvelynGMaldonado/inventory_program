@@ -1,0 +1,17 @@
+.em-buttons {
+    -fx-background-color: rgba(27, 163, 45, 0.75);
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.em-buttons:hover {
+    -fx-background-color: #1ba32d;
+}
+.close {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.close:hover {
+    -fx-background-color: rgba(203, 16, 16, 0.73);
+}
