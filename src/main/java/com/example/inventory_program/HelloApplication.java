@@ -1,50 +1,28 @@
 package com.example.inventory_program;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+//    static {
+//        Font.loadFont(HelloApplication.class.getResource("/font/fontawesome-webfont.ttf").toExternalForm(), 10);
+//    }
 
-    //adding private doubles x and y
-//    private double x = 0;
-//    private double y = 0;
+
 
     @Override
-    //public void start(Stage stage) throws Exception {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-//        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
-//        Scene scene = new Scene(root);
+        //scene.getStylesheets().add(getClass().getResource("startPageDesign.css").toString());
         stage.setTitle("Inventory Management System");
 
-//        root.setOnMousePressed((MouseEvent event) -> {
-//            x = event.getSceneX();
-//            y = event.getSceneY();
-//        });
 
-//        root.setOnMouseDragged((MouseEvent event) -> {
-//            stage.setX(event.getSceneX() - x);
-//            stage.setY(event.getSceneY() - y);
-//
-//            stage.setOpacity(.8);
-//        });
-//
-//        root.setOnMouseReleased((MouseEvent event) -> {
-//            stage.setOpacity(1);
-//        });
-
-
-
-        //setting up initial style
-        //stage.initStyle(StageStyle.TRANSPARENT);
 
         stage.setScene(scene);
         stage.show();
@@ -54,3 +32,5 @@ public class HelloApplication extends Application {
         launch();
     }
 }
+
+
