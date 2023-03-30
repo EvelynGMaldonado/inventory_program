@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="landing_page" fx:controller="com.example.inventory_program.HelloController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="270.0" layoutY="39.0" prefHeight="61.0" prefWidth="59.0" text="EM">
          <font>
@@ -53,11 +53,11 @@
             </LinearGradient>
          </textFill></Label>
       <Label layoutX="479.0" layoutY="368.0" text="By Evelyn G Morrow" textFill="GREY" />
-      <Button layoutX="240.0" layoutY="278.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Start" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="startBtn" layoutX="240.0" layoutY="278.0" mnemonicParsing="false" onAction="#clickStartBtn" prefHeight="30.0" prefWidth="120.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Start" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Tahoma Bold" size="14.0" />
          </font></Button>
-      <Button layoutX="566.0" layoutY="14.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
+      <Button fx:id="close" layoutX="566.0" layoutY="14.0" mnemonicParsing="false" onAction="#close" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
       <ImageView fitHeight="100.0" fitWidth="90.0" layoutX="255.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/database.png" />

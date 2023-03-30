@@ -7,7 +7,7 @@
 
 .em-buttons:hover {
     /*-fx-background-color: #1ba32d;*/
-    -fx-background-color: linear-gradient(to bottom right, #196f9a, #1ba32d);
+    -fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
 }
 .close {
     -fx-background-color: transparent;
@@ -19,6 +19,19 @@
     -fx-text-fill: white;
 }
 
-.borderpane {
-    -fx-background-color: green;
+
+
+/*next*/
+.textfield {
+    -fx-background-color: yellow;
+    -fx-background-radius: 4px;
+    -fx-border-color: pink;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial";
+}
+
+.textfield:focused {
+    -fx-background-color: white;
 }
