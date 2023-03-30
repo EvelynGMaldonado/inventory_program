@@ -15,3 +15,7 @@
 .close:hover {
     -fx-background-color: rgba(203, 16, 16, 0.73);
 }
+
+.borderpane {
+    -fx-background-color: green;
+}
