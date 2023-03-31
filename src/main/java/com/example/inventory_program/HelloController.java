@@ -76,6 +76,23 @@ public class HelloController implements Initializable {
 
     }
 
+    public void clickAddPartPageBtn (ActionEvent event) throws IOException {
+        addPartPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage addPartPageWindow = new Stage();
+        addPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader addPartPageLoader = new FXMLLoader(getClass().getResource("addPart_page.fxml"));
+
+        //set view in ppMainWindow
+        addPartPageWindow.setScene(new Scene(addPartPageLoader.load(), 600, 400));
+
+        //launch
+        addPartPageWindow.show();
+
+    }
+
     public void close() {
         System.exit(0);
     }

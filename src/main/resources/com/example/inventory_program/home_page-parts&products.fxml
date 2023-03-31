@@ -106,7 +106,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" onAction="#clickStartBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
+                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" onAction="#clickAddPartPageBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
