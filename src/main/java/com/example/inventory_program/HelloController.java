@@ -1,7 +1,5 @@
 package com.example.inventory_program;
 
-import de.jensd.fx.glyphs.GlyphsDude;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,6 +22,28 @@ public class HelloController implements Initializable {
 
     @FXML
     private Button startBtn;
+
+    @FXML
+    private StackPane home_page;
+
+    @FXML
+    private Button addPartPageBtn;
+
+    @FXML
+    private Button addProductPageBtn;
+
+    @FXML
+    private Button homePageBtn;
+
+    @FXML
+    private Button modifyPartPageBtn;
+
+    @FXML
+    private Button modifyProductPageBtn;
+
+    @FXML
+    private Button settingsBtn;
+
 
     @FXML
     private Button close;

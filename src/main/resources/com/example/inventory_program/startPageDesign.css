@@ -35,7 +35,14 @@
     -fx-text-fill: white;
 }
 
+.shadow {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
+}
 
+.white-bg {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+}
 
 /*next*/
 .textfield {
