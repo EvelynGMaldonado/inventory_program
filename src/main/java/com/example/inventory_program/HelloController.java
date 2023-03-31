@@ -55,7 +55,7 @@ public class HelloController implements Initializable {
         ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
 
         //create view for FXML
-        FXMLLoader ppMainloader = new FXMLLoader(getClass().getResource("parts-and-products.fxml"));
+        FXMLLoader ppMainloader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
 
         //set view in ppMainWindow
         ppMainWindow.setScene(new Scene(ppMainloader.load(), 600, 400));

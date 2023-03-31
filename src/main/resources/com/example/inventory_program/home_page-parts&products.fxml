@@ -143,11 +143,23 @@
                               <String fx:value="shadow" />
                            </styleClass>
                            <children>
-                              <Label layoutX="203.0" layoutY="14.0" text="Dashboard" textFill="#000000fc">
+                              <Label layoutX="203.0" layoutY="14.0" text="Dashboard" textFill="GREY">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
+                              <AnchorPane layoutX="249.0" layoutY="57.0" prefHeight="269.0" prefWidth="220.0" stylesheets="@startPageDesign.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                              </AnchorPane>
+                              <AnchorPane layoutX="14.0" layoutY="57.0" prefHeight="269.0" prefWidth="220.0" stylesheets="@startPageDesign.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </children>
