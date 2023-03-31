@@ -44,6 +44,17 @@ public class HelloController implements Initializable {
     @FXML
     private Button settingsBtn;
 
+    @FXML
+    private StackPane addPart_page;
+
+    @FXML
+    private StackPane addProduct_page;
+
+    @FXML
+    private StackPane modifyPart_page;
+
+    @FXML
+    private StackPane modifyProduct_page;
 
     @FXML
     private Button close;
