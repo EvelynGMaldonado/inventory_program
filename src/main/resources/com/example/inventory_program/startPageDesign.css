@@ -9,6 +9,22 @@
     /*-fx-background-color: #1ba32d;*/
     -fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
 }
+
+.em-currentBtn {
+    -fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
+    -fx-font-weight: bold;
+}
+
+.em-link-Btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.em-link-Btn:hover {
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+    -fx-text-fill: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #196f9a 0.0%, #1ba32d 99.7763%, #1ba32d 100.0%);
+    -fx-background-color: linear-gradient(to right, rgba(128, 128, 128, 0.27), transparent);
+}
 .close {
     -fx-background-color: transparent;
     -fx-cursor: hand;
