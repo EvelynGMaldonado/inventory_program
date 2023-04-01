@@ -66,7 +66,7 @@ public class HelloController implements Initializable {
         FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
 
         //set view in ppMainWindow
-        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 600, 400));
+        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
 
         //launch
         ppMainWindow.show();

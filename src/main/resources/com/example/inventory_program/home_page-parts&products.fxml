@@ -146,7 +146,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                            <children>
-                              <Label layoutX="203.0" layoutY="14.0" text="Dashboard" textFill="GREY">
+                              <Label layoutX="309.0" layoutY="14.0" text="Dashboard" textFill="GREY">
                                  <font>
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
@@ -157,7 +157,7 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <Label layoutX="96.0" layoutY="14.0" text="Parts" textFill="#196f9a">
+                                    <Label layoutX="146.0" layoutY="14.0" text="Parts" textFill="#196f9a">
                                        <font>
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
@@ -195,7 +195,7 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <Label layoutX="87.0" layoutY="14.0" text="Products" textFill="#196f9a">
+                                    <Label layoutX="137.0" layoutY="14.0" text="Products" textFill="#196f9a">
                                        <font>
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
