@@ -66,15 +66,32 @@ public class HelloController implements Initializable {
         ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
 
         //create view for FXML
-        FXMLLoader ppMainloader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
 
         //set view in ppMainWindow
-        ppMainWindow.setScene(new Scene(ppMainloader.load(), 600, 400));
+        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 600, 400));
 
         //launch
         ppMainWindow.show();
 
     }
+
+//    public void clickHomePageBtn (ActionEvent event) throws IOException {
+//        homePageBtn.getScene().getWindow().hide();
+//        //create new stage
+//        Stage homePageWindow = new Stage();
+//        homePageWindow.setTitle("Parts and Products - EM Inventory Management System");
+//
+//        //create view for FXML
+//        FXMLLoader homePageLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+//
+//        //set view in ppMainWindow
+//        homePageWindow.setScene(new Scene(homePageLoader.load(), 600, 400));
+//
+//        //launch
+//        homePageWindow.show();
+//
+//    }
 
     public void clickAddPartPageBtn (ActionEvent event) throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
