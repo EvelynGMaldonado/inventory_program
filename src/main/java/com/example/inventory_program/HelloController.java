@@ -33,9 +33,6 @@ public class HelloController implements Initializable {
     private Button addProductPageBtn;
 
     @FXML
-    private Button homePageBtn;
-
-    @FXML
     private Button modifyPartPageBtn;
 
     @FXML
@@ -75,23 +72,6 @@ public class HelloController implements Initializable {
         ppMainWindow.show();
 
     }
-
-//    public void clickHomePageBtn (ActionEvent event) throws IOException {
-//        homePageBtn.getScene().getWindow().hide();
-//        //create new stage
-//        Stage homePageWindow = new Stage();
-//        homePageWindow.setTitle("Parts and Products - EM Inventory Management System");
-//
-//        //create view for FXML
-//        FXMLLoader homePageLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
-//
-//        //set view in ppMainWindow
-//        homePageWindow.setScene(new Scene(homePageLoader.load(), 600, 400));
-//
-//        //launch
-//        homePageWindow.show();
-//
-//    }
 
     public void clickAddPartPageBtn (ActionEvent event) throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
