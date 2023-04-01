@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="home_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventory_program.HelloController">
+<StackPane fx:id="home_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventory_program.HelloController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -140,7 +140,7 @@
                <center>
                   <AnchorPane prefHeight="271.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="3.0" layoutY="-2.0" prefHeight="351.0" prefWidth="481.0" stylesheets="@startPageDesign.css">
+                        <AnchorPane layoutX="3.0" layoutY="-2.0" prefHeight="351.0" prefWidth="681.0" stylesheets="@startPageDesign.css">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -151,7 +151,7 @@
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <AnchorPane layoutX="14.0" layoutY="57.0" prefHeight="269.0" prefWidth="220.0" stylesheets="@startPageDesign.css">
+                              <AnchorPane layoutX="14.0" layoutY="57.0" prefHeight="277.0" prefWidth="320.0" stylesheets="@startPageDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
@@ -162,18 +162,20 @@
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TableView layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="200.0">
+                                    <TableView layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="C1" />
-                                        <TableColumn prefWidth="75.0" text="C2" />
+                                        <TableColumn prefWidth="75.0" text="Part ID" />
+                                        <TableColumn prefWidth="75.0" text="Part Name" />
+                                          <TableColumn prefWidth="75.0" text="Inventory Level" />
+                                          <TableColumn prefWidth="75.0" text="Price/Unit" />
                                       </columns>
                                     </TableView>
-                                    <TextField layoutX="109.0" layoutY="36.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                    <TextField layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Button layoutX="180.0" layoutY="36.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                    <Button layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -182,12 +184,12 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button layoutX="52.0" layoutY="237.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
-                                    <Button layoutX="96.0" layoutY="237.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
-                                    <Button layoutX="155.0" layoutY="237.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
+                                    <Button layoutX="152.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                    <Button layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
+                                    <Button layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="247.0" layoutY="57.0" prefHeight="269.0" prefWidth="220.0" stylesheets="@startPageDesign.css">
+                              <AnchorPane layoutX="347.0" layoutY="57.0" prefHeight="277.0" prefWidth="320.0" stylesheets="@startPageDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
@@ -198,18 +200,20 @@
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TableView layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="200.0">
+                                    <TableView layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="C1" />
-                                          <TableColumn prefWidth="75.0" text="C2" />
+                                          <TableColumn prefWidth="75.0" text="Product ID" />
+                                          <TableColumn prefWidth="75.0" text="Product Name" />
+                                          <TableColumn prefWidth="75.0" text="Inventory Level" />
+                                          <TableColumn prefWidth="75.0" text="Price/Unit" />
                                        </columns>
                                     </TableView>
-                                    <TextField layoutX="109.0" layoutY="36.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                    <TextField layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Button layoutX="180.0" layoutY="36.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                    <Button layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -218,9 +222,9 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button layoutX="52.0" layoutY="237.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
-                                    <Button layoutX="96.0" layoutY="237.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
-                                    <Button layoutX="155.0" layoutY="237.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
+                                    <Button layoutX="152.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                    <Button layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
+                                    <Button layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
                                  </children>
                               </AnchorPane>
                            </children>
