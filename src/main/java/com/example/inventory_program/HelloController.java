@@ -93,6 +93,57 @@ public class HelloController implements Initializable {
 
     }
 
+    public void clickAddProductPageBtn (ActionEvent event) throws IOException {
+        addProductPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage addProductPageWindow = new Stage();
+        addProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader addProductPageLoader = new FXMLLoader(getClass().getResource("addProduct_page.fxml"));
+
+        //set view in ppMainWindow
+        addProductPageWindow.setScene(new Scene(addProductPageLoader.load(), 600, 400));
+
+        //launch
+        addProductPageWindow.show();
+
+    }
+
+    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
+        modifyProductPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage modifyProductPageWindow = new Stage();
+        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
+
+        //set view in ppMainWindow
+        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 600, 400));
+
+        //launch
+        modifyProductPageWindow.show();
+
+    }
+
+    public void clickModifyPartPageBtn (ActionEvent event) throws IOException {
+        modifyPartPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage modifyPartPageWindow = new Stage();
+        modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
+
+        //set view in ppMainWindow
+        modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
+
+        //launch
+        modifyPartPageWindow.show();
+
+    }
+
     public void close() {
         System.exit(0);
     }

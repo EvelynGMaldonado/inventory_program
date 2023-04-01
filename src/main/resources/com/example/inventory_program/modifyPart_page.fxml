@@ -96,17 +96,17 @@
                               </Label>
                               <Line endX="-14.000022888183594" endY="-1.52587890625E-5" layoutX="113.0" layoutY="114.0" startX="-104.5" startY="-1.52587890625E-5" stroke="#808080c5" />
                               <Button fx:id="homePageBtn" layoutX="11.0" layoutY="129.0" mnemonicParsing="false" onAction="#clickStartBtn" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Home" textFill="WHITE" />
-                              <Button fx:id="addProductPageBtn" layoutX="11.0" layoutY="163.0" mnemonicParsing="false" onAction="#clickStartBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Product" textFill="WHITE">
+                              <Button fx:id="addProductPageBtn" layoutX="11.0" layoutY="163.0" mnemonicParsing="false" onAction="#clickAddProductPageBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Product" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="modifyProductPageBtn" layoutX="11.0" layoutY="201.0" mnemonicParsing="false" onAction="#clickStartBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Modify Product" textFill="WHITE">
+                              <Button fx:id="modifyProductPageBtn" layoutX="11.0" layoutY="201.0" mnemonicParsing="false" onAction="#clickModifyProductPageBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Modify Product" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" onAction="#clickStartBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
+                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" onAction="#clickAddPartPageBtn" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
