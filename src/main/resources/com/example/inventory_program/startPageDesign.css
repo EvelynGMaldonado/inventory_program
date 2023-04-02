@@ -77,17 +77,27 @@
 .editions-btns:hover {
     -fx-background-color: linear-gradient(to top, rgba(25, 111, 154, 0.77), rgba(27, 163, 45, 0.77));
 }
-/*next*/
-.textfield {
-    -fx-background-color: rgba(169, 169, 169, 0.11);
+
+.textfield-disabled {
+    /*-fx-background-color: rgba(217, 217, 217, 0.27);*/
+    -fx-background-color: rgba(169, 169, 169, 0.27);
     -fx-background-radius: 4px;
-    -fx-border-color: pink;
+    -fx-border-color: rgba(128, 128, 128, 0.77);
+    -fx-border-width: 1px;
+    -fx-font-size: 10px;
+    -fx-font-family: "Arial";
+    -fx-border-radius: 4px;
+    -fx-cursor: hand;
+    -fx-text-fill: gray;
+}
+
+.textfield {
+    -fx-background-color: white;
+    -fx-background-radius: 4px;
+    -fx-border-color: rgba(128, 128, 128, 0.77);
     -fx-border-width: 1px;
     -fx-border-radius: 4px;
     -fx-font-size: 10px;
     -fx-font-family: "Arial";
-}
-
-.textfield:focused {
-    -fx-background-color: white;
+    -fx-cursor: hand;
 }

@@ -3,6 +3,8 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -148,17 +150,68 @@
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <AnchorPane layoutX="249.0" layoutY="57.0" prefHeight="269.0" prefWidth="220.0" stylesheets="@startPageDesign.css">
+                              <AnchorPane layoutX="15.0" layoutY="38.0" prefHeight="297.0" prefWidth="451.0" stylesheets="@startPageDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
                                  </styleClass>
-                              </AnchorPane>
-                              <AnchorPane layoutX="14.0" layoutY="57.0" prefHeight="269.0" prefWidth="220.0" stylesheets="@startPageDesign.css">
-                                 <styleClass>
-                                    <String fx:value="white-bg" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
+                                 <children>
+                                    <RadioButton layoutX="204.0" layoutY="14.0" mnemonicParsing="false" text="In-House" />
+                                    <Label layoutX="59.0" layoutY="14.0" text="Select part category:" />
+                                    <RadioButton layoutX="286.0" layoutY="14.0" mnemonicParsing="false" text="Outsourced" />
+                                    <AnchorPane layoutX="30.0" layoutY="39.0" prefHeight="237.0" prefWidth="391.0" stylesheets="@startPageDesign.css">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="14.0" layoutY="19.0" prefHeight="17.0" prefWidth="83.0" text="Part ID:" />
+                                          <TextField editable="false" layoutX="108.0" layoutY="14.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
+                                             <font>
+                                                <Font name="System Italic" size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label layoutX="14.0" layoutY="53.0" prefHeight="17.0" prefWidth="83.0" text="Part Name:" />
+                                          <TextField layoutX="108.0" layoutY="48.0" prefHeight="27.0" prefWidth="101.0" promptText="part name" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label layoutX="14.0" layoutY="87.0" prefHeight="17.0" prefWidth="83.0" text="Inventory Level:" />
+                                          <TextField layoutX="108.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" promptText="inventory level" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label layoutX="14.0" layoutY="121.0" prefHeight="17.0" prefWidth="83.0" text="Price per Unit:" />
+                                          <TextField layoutX="108.0" layoutY="116.0" prefHeight="27.0" prefWidth="101.0" promptText="price per unit:" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label layoutX="14.0" layoutY="155.0" prefHeight="17.0" prefWidth="83.0" text="Max:" textAlignment="RIGHT" />
+                                          <TextField layoutX="108.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="max" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label layoutX="14.0" layoutY="189.0" prefHeight="17.0" prefWidth="83.0" text="Machine ID:" textAlignment="RIGHT" />
+                                          <TextField layoutX="108.0" layoutY="184.0" prefHeight="27.0" prefWidth="101.0" promptText="machine ID" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label layoutX="238.0" layoutY="155.0" prefHeight="17.0" prefWidth="37.0" text="Min:" textAlignment="RIGHT" />
+                                          <TextField layoutX="275.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="min" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Button layoutX="275.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
+                                          <Button layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
