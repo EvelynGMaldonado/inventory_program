@@ -100,7 +100,7 @@ public class HelloController implements Initializable {
         FXMLLoader addProductPageLoader = new FXMLLoader(getClass().getResource("addProduct_page.fxml"));
 
         //set view in ppMainWindow
-        addProductPageWindow.setScene(new Scene(addProductPageLoader.load(), 600, 400));
+        addProductPageWindow.setScene(new Scene(addProductPageLoader.load(), 800, 610));
 
         //launch
         addProductPageWindow.show();
@@ -117,7 +117,7 @@ public class HelloController implements Initializable {
         FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
 
         //set view in ppMainWindow
-        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 600, 400));
+        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
 
         //launch
         modifyProductPageWindow.show();
