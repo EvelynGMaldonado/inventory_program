@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +12,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="landing_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.inventory_program.HelloController">
+<AnchorPane fx:id="landing_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventory_program.HelloController">
    <children>
       <Label layoutX="270.0" layoutY="39.0" prefHeight="61.0" prefWidth="59.0" text="EM">
          <font>
@@ -63,5 +65,7 @@
             <Image url="@assets/database.png" />
          </image>
       </ImageView>
+      <TextField fx:id="usernameField" layoutX="138.0" layoutY="240.0" promptText="Username" styleClass="textfield" stylesheets="@startPageDesign.css" />
+      <PasswordField fx:id="passwordField" layoutX="329.0" layoutY="240.0" promptText="Password" styleClass="textfield" stylesheets="@startPageDesign.css" />
    </children>
 </AnchorPane>

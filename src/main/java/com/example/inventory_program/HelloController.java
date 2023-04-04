@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -21,7 +23,13 @@ public class HelloController implements Initializable {
     private AnchorPane landing_page;
 
     @FXML
+    private PasswordField passwordField;
+
+    @FXML
     private Button startBtn;
+
+    @FXML
+    private TextField usernameField;
 
     @FXML
     private StackPane home_page;
