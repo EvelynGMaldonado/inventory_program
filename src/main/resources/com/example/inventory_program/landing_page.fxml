@@ -68,5 +68,10 @@
       <TextField fx:id="usernameField" layoutX="138.0" layoutY="240.0" promptText="Username" styleClass="textfield" stylesheets="@startPageDesign.css" />
       <PasswordField fx:id="passwordField" layoutX="329.0" layoutY="240.0" promptText="Password" styleClass="textfield" stylesheets="@startPageDesign.css" />
       <Label fx:id="messageLabel" layoutX="173.0" layoutY="331.0" prefHeight="17.0" prefWidth="268.0" />
+      <Button fx:id="signUpBtn" layoutX="510.0" layoutY="333.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="76.0" styleClass="em-link-Btn" stylesheets="@startPageDesign.css" text="Sign Up" textAlignment="CENTER" textFill="#196f9a">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
