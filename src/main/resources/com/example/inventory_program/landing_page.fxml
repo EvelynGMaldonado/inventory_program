@@ -55,7 +55,7 @@
             </LinearGradient>
          </textFill></Label>
       <Label layoutX="479.0" layoutY="368.0" text="By Evelyn G Morrow" textFill="GREY" />
-      <Button fx:id="startBtn" layoutX="240.0" layoutY="278.0" mnemonicParsing="false" onAction="#clickStartBtn" prefHeight="30.0" prefWidth="120.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Start" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="startBtn" layoutX="240.0" layoutY="278.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="30.0" prefWidth="120.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Start" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Tahoma Bold" size="14.0" />
          </font></Button>
@@ -67,5 +67,6 @@
       </ImageView>
       <TextField fx:id="usernameField" layoutX="138.0" layoutY="240.0" promptText="Username" styleClass="textfield" stylesheets="@startPageDesign.css" />
       <PasswordField fx:id="passwordField" layoutX="329.0" layoutY="240.0" promptText="Password" styleClass="textfield" stylesheets="@startPageDesign.css" />
+      <Label fx:id="messageLabel" layoutX="173.0" layoutY="331.0" prefHeight="17.0" prefWidth="268.0" />
    </children>
 </AnchorPane>

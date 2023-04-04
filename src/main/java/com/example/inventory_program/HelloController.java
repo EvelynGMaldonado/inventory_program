@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -30,6 +31,9 @@ public class HelloController implements Initializable {
 
     @FXML
     private TextField usernameField;
+
+    @FXML
+    private Label messageLabel;
 
     @FXML
     private StackPane home_page;
@@ -63,6 +67,15 @@ public class HelloController implements Initializable {
 
     @FXML
     private Button close;
+
+    public void LoginButtonOnAction(ActionEvent e) {
+
+        if(usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false) {
+            messageLabel.setText("You are clicking the start btn!!");
+        } else {
+            messageLabel.setText("Please enter username and password");
+        }
+    }
 
     public void clickStartBtn (ActionEvent event) throws IOException {
         startBtn.getScene().getWindow().hide();
