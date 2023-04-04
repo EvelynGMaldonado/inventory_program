@@ -39,6 +39,27 @@ public class HelloController implements Initializable {
     private Button signUpBtn;
 
     @FXML
+    private StackPane addProfile_page;
+
+    @FXML
+    private PasswordField confirmpasswordField;
+
+    @FXML
+    private Button saveUserBtn;
+
+    @FXML
+    private TextField setfullnameField;
+
+    @FXML
+    private PasswordField setpasswordField;
+
+    @FXML
+    private TextField setroleField;
+
+    @FXML
+    private TextField setusernameField;
+
+    @FXML
     private StackPane home_page;
 
     @FXML
@@ -70,6 +91,28 @@ public class HelloController implements Initializable {
 
     @FXML
     private Button close;
+
+    public void createAccountForm(ActionEvent event) throws IOException {
+        try {
+            signUpBtn.getScene().getWindow().hide();
+            //create new stage
+            Stage addProfileWindow = new Stage();
+            addProfileWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+            //create view for FXML
+            FXMLLoader addProfileLoader = new FXMLLoader(getClass().getResource("signUp.fxml"));
+
+            //set view in ppMainWindow
+            addProfileWindow.setScene(new Scene(addProfileLoader.load(), 500, 400));
+
+            //launch
+            addProfileWindow.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
     public void LoginButtonOnAction(ActionEvent e) {
 
