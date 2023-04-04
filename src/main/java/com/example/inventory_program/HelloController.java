@@ -149,8 +149,9 @@ public class HelloController implements Initializable {
 
     }
 
-    public void close() {
-        System.exit(0);
+    public void closeBtnAction(ActionEvent e) {
+        Stage stage = (Stage) close.getScene().getWindow();
+        stage.close();
     }
 
     @Override
