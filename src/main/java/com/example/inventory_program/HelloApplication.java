@@ -1,6 +1,6 @@
 package com.example.inventory_program;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
