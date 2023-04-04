@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
@@ -71,9 +74,31 @@ public class HelloController implements Initializable {
     public void LoginButtonOnAction(ActionEvent e) {
 
         if(usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false) {
-            messageLabel.setText("You are clicking the start btn!!");
+            //messageLabel.setText("You are clicking the start btn!!");
+            validateLogin();
         } else {
             messageLabel.setText("Please enter username and password");
+        }
+    }
+
+    public void validateLogin(){
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        String verifyLogin = "SELECT count(1) FROM user WHERE username = '" + usernameField.getText() + "' AND password = '" + passwordField.getText() + "'";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(verifyLogin);
+
+            while(queryResult.next()) {
+                if(queryResult.getInt(1) == 1) {
+                    messageLabel.setText("Welcome to EM Inventory Management System!");
+                } else {
+                    messageLabel.setText("Invalid Login. Please try again.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
