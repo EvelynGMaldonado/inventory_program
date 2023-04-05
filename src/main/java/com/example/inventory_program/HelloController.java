@@ -148,7 +148,7 @@ public class HelloController implements Initializable {
                     alert.setContentText("Welcome to EM Inventory Management System!");
                     alert.showAndWait();
 //                    Platform.exit();
-//                    clickStartBtn();
+                    clickStartBtn();
                 } else {
 //                    messageLabel.setText("Invalid Login. Please try again.");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -165,9 +165,9 @@ public class HelloController implements Initializable {
     }
 
     public void clickStartBtn () throws IOException {
-        startBtn.getScene().getWindow().hide();
-//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
-//        stage1.close();
+//        startBtn.getScene().getWindow().hide();
+        Stage stage1 = (Stage) startBtn.getScene().getWindow();
+        stage1.close();
         //create new stage
         Stage ppMainWindow = new Stage();
         ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
