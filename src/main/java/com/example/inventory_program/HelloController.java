@@ -64,6 +64,9 @@ public class HelloController implements Initializable {
     private StackPane home_page;
 
     @FXML
+    private Button LogOut_btn;
+
+    @FXML
     private Button addNewPart_btn;
 
     @FXML

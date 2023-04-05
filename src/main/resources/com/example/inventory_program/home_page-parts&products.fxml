@@ -227,7 +227,7 @@
                                     <Button fx:id="deleteProduct_btn" layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
                                  </children>
                               </AnchorPane>
-                              <Button layoutX="617.0" layoutY="21.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="49.0" styleClass="close" stylesheets="@startPageDesign.css" text="Log Out">
+                              <Button fx:id="LogOut_btn" layoutX="601.0" layoutY="19.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="59.0" styleClass="close" stylesheets="@startPageDesign.css" text="Log Out">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
