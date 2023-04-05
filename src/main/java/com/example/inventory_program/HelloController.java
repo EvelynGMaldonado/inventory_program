@@ -1,5 +1,6 @@
 package com.example.inventory_program;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -146,8 +147,7 @@ public class HelloController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Welcome to EM Inventory Management System!");
                     alert.showAndWait();
-
-
+//                    Platform.exit();
 //                    clickStartBtn();
                 } else {
 //                    messageLabel.setText("Invalid Login. Please try again.");

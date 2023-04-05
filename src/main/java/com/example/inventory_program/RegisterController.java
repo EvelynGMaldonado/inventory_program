@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
@@ -50,12 +52,24 @@ public class RegisterController implements Initializable {
     }
 
     public void clickSaveUserBtn(ActionEvent event) throws IOException {
+//        if(setusernameField.getText()) {
+//
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error message");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Username already exists. Please try again.");
+//            alert.showAndWait();
+//        }
         if(setpasswordField.getText() == confirmpasswordField.getText()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successful Registration");
             alert.setHeaderText(null);
             alert.setContentText("New user has been registered in EM Inventory Management System!");
             alert.showAndWait();
+
+            registerUser();
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
@@ -82,5 +96,28 @@ public class RegisterController implements Initializable {
 //            e.printStackTrace();
 //            e.getCause();
 //        }
+    }
+
+    public void registerUser() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String fullName = setfullnameField.getText();
+        String roleTitle = setroleField.getText();
+        String username = setusernameField.getText();
+        String password = setpasswordField.getText();
+
+        String insertNewUserFields = "INSERT INTO users(full_name, role_title, username, u_password) VALUES ('";
+        String insertNewUserValues = fullName + "','" + roleTitle + "','" + username + "','" + password + "')";
+        String insertNewUserFieldsToDB = insertNewUserFields + insertNewUserValues;
+
+        try {
+            Statement statement = connectDB.createStatement();
+            statement.executeQuery(insertNewUserFieldsToDB);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 }
