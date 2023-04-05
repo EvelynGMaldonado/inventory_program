@@ -147,6 +147,8 @@ public class HelloController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Welcome to EM Inventory Management System!");
                     alert.showAndWait();
+
+                    startBtn.getScene().getWindow().hide();
 //                    Platform.exit();
                     clickStartBtn();
                 } else {
@@ -166,8 +168,8 @@ public class HelloController implements Initializable {
 
     public void clickStartBtn () throws IOException {
 //        startBtn.getScene().getWindow().hide();
-        Stage stage1 = (Stage) startBtn.getScene().getWindow();
-        stage1.close();
+//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
+//        stage1.close();
         //create new stage
         Stage ppMainWindow = new Stage();
         ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
