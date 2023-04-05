@@ -119,7 +119,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="settingsBtn" layoutX="11.0" layoutY="324.0" mnemonicParsing="false" onAction="#clickStartBtn" prefHeight="22.0" prefWidth="85.0" styleClass="em-link-Btn" stylesheets="@startPageDesign.css" text="Settings" textFill="#09b61f">
+                              <Button fx:id="settingsBtn" layoutX="11.0" layoutY="324.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="85.0" styleClass="em-link-Btn" stylesheets="@startPageDesign.css" text="Settings" textFill="#09b61f">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -162,20 +162,20 @@
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TableView layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
+                                    <TableView fx:id="parts_tableView" layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="Part ID" />
-                                        <TableColumn prefWidth="75.0" text="Part Name" />
-                                          <TableColumn prefWidth="75.0" text="Inventory Level" />
-                                          <TableColumn prefWidth="75.0" text="Price/Unit" />
+                                        <TableColumn fx:id="parts_tableView_col_partID" prefWidth="75.0" text="Part ID" />
+                                        <TableColumn fx:id="parts_tableView_col_partName" prefWidth="75.0" text="Part Name" />
+                                          <TableColumn fx:id="parts_tableView_col_inventoryLevel" prefWidth="75.0" text="Inventory Level" />
+                                          <TableColumn fx:id="parts_tableView_col_priceUnit" prefWidth="75.0" text="Price/Unit" />
                                       </columns>
                                     </TableView>
-                                    <TextField layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="searchPart_inputField" layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Button layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                    <Button fx:id="searchPart_btn" layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -184,9 +184,9 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button layoutX="152.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
-                                    <Button layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
-                                    <Button layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
+                                    <Button fx:id="addNewPart_btn" layoutX="152.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                    <Button fx:id="modifyPart_btn" layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
+                                    <Button fx:id="deletePart_btn" layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="347.0" layoutY="57.0" prefHeight="277.0" prefWidth="320.0" stylesheets="@startPageDesign.css">
@@ -200,20 +200,20 @@
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TableView layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
+                                    <TableView fx:id="products_tableView" layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Product ID" />
-                                          <TableColumn prefWidth="75.0" text="Product Name" />
-                                          <TableColumn prefWidth="75.0" text="Inventory Level" />
-                                          <TableColumn prefWidth="75.0" text="Price/Unit" />
+                                          <TableColumn fx:id="products_tableView_col_productID" prefWidth="75.0" text="Product ID" />
+                                          <TableColumn fx:id="products_tableView_col_productName" prefWidth="75.0" text="Product Name" />
+                                          <TableColumn fx:id="products_tableView_col_inventoryLevel" prefWidth="75.0" text="Inventory Level" />
+                                          <TableColumn fx:id="products_tableView_col_priceUnit" prefWidth="75.0" text="Price/Unit" />
                                        </columns>
                                     </TableView>
-                                    <TextField layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="searchProduct_inputField" layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Button layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                    <Button fx:id="searchProduct_btn" layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -222,9 +222,9 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button layoutX="152.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
-                                    <Button layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
-                                    <Button layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
+                                    <Button fx:id="addNewProduct_btn" layoutX="152.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                    <Button fx:id="modifyProduct_btn" layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
+                                    <Button fx:id="deleteProduct_btn" layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
                                  </children>
                               </AnchorPane>
                               <Button layoutX="617.0" layoutY="21.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="49.0" styleClass="close" stylesheets="@startPageDesign.css" text="Log Out">

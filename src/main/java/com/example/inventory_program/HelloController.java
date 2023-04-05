@@ -64,6 +64,65 @@ public class HelloController implements Initializable {
     private StackPane home_page;
 
     @FXML
+    private Button addNewPart_btn;
+
+    @FXML
+    private Button addNewProduct_btn;
+    @FXML
+    private Button deletePart_btn;
+
+    @FXML
+    private Button deleteProduct_btn;
+
+    @FXML
+    private Button modifyPart_btn;
+
+    @FXML
+    private Button modifyProduct_btn;
+
+    @FXML
+    private TableView<?> parts_tableView;
+
+    @FXML
+    private TableColumn<?, ?> parts_tableView_col_inventoryLevel;
+
+    @FXML
+    private TableColumn<?, ?> parts_tableView_col_priceUnit;
+
+    @FXML
+    private TableColumn<?, ?> parts_tableView_col_partID;
+
+    @FXML
+    private TableColumn<?, ?> parts_tableView_col_partName;
+
+    @FXML
+    private TableView<?> products_tableView;
+
+    @FXML
+    private TableColumn<?, ?> products_tableView_col_inventoryLevel;
+
+    @FXML
+    private TableColumn<?, ?> products_tableView_col_priceUnit;
+
+    @FXML
+    private TableColumn<?, ?> products_tableView_col_productID;
+
+    @FXML
+    private TableColumn<?, ?> products_tableView_col_productName;
+
+    @FXML
+    private Button searchPart_btn;
+
+    @FXML
+    private TextField searchPart_inputField;
+
+    @FXML
+    private Button searchProduct_btn;
+
+    @FXML
+    private TextField searchProduct_inputField;
+
+    @FXML
     private Button addPartPageBtn;
 
     @FXML
