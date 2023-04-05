@@ -92,6 +92,7 @@ public class HelloController implements Initializable {
     @FXML
     private Button close;
 
+    //When we click the sign-up button that is in the landing page we are redirected to the addProfile_page
     public void createAccountForm(ActionEvent event) throws IOException {
         try {
             signUpBtn.getScene().getWindow().hide();
@@ -117,14 +118,14 @@ public class HelloController implements Initializable {
     public void LoginButtonOnAction(ActionEvent e) {
 
         if(usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false) {
-            //messageLabel.setText("You are clicking the start btn!!");
             validateLogin();
         } else {
-            messageLabel.setText("Please enter username and password");
-//            alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error message");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Please fill all blank fields");
+//            messageLabel.setText("Please enter username and password");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields.");
+            alert.showAndWait();
         }
     }
 
@@ -139,9 +140,22 @@ public class HelloController implements Initializable {
 
             while(queryResult.next()) {
                 if(queryResult.getInt(1) == 1) {
-                    messageLabel.setText("Welcome to EM Inventory Management System!");
+//                    messageLabel.setText("Welcome to EM Inventory Management System!");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful Log In");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Welcome to EM Inventory Management System!");
+                    alert.showAndWait();
+
+
+//                    clickStartBtn();
                 } else {
-                    messageLabel.setText("Invalid Login. Please try again.");
+//                    messageLabel.setText("Invalid Login. Please try again.");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Invalid Login. Please try again.");
+                    alert.showAndWait();
                 }
             }
         } catch (Exception e) {
@@ -152,6 +166,8 @@ public class HelloController implements Initializable {
 
     public void clickStartBtn () throws IOException {
         startBtn.getScene().getWindow().hide();
+//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
+//        stage1.close();
         //create new stage
         Stage ppMainWindow = new Stage();
         ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");

@@ -3,7 +3,9 @@ package com.example.inventory_program;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -14,7 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegisterController {
+public class RegisterController implements Initializable {
     @FXML
     private Button signUpBtn;
 
@@ -42,7 +44,25 @@ public class RegisterController {
     @FXML
     private Button close;
 
-//    public void createAccountForm(ActionEvent event) throws IOException {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+    }
+
+    public void clickSaveUserBtn(ActionEvent event) throws IOException {
+        if(setpasswordField.getText() == confirmpasswordField.getText()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successful Registration");
+            alert.setHeaderText(null);
+            alert.setContentText("New user has been registered in EM Inventory Management System!");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Password does not match. Please try again.");
+            alert.showAndWait();
+        }
 //        try {
 //            signUpBtn.getScene().getWindow().hide();
 //            //create new stage
@@ -62,5 +82,5 @@ public class RegisterController {
 //            e.printStackTrace();
 //            e.getCause();
 //        }
-//    }
+    }
 }

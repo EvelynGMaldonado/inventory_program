@@ -124,7 +124,7 @@
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="155.0" prefHeight="17.0" prefWidth="83.0" text="Password:" textAlignment="RIGHT" />
-                                          <Button fx:id="saveUserBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
+                                          <Button fx:id="saveUserBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" onAction="#clickSaveUserBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
                                           <Button layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                           <PasswordField fx:id="setpasswordField" layoutX="125.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="password" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
