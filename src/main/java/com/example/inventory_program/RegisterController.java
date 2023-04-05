@@ -61,12 +61,12 @@ public class RegisterController implements Initializable {
 //            alert.setContentText("Username already exists. Please try again.");
 //            alert.showAndWait();
 //        }
-        if(setpasswordField.getText() == confirmpasswordField.getText()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Successful Registration");
-            alert.setHeaderText(null);
-            alert.setContentText("New user has been registered in EM Inventory Management System!");
-            alert.showAndWait();
+        if(setpasswordField.getText().equals(confirmpasswordField.getText())) {
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Successful Registration");
+//            alert.setHeaderText(null);
+//            alert.setContentText("New user has been registered in EM Inventory Management System!");
+//            alert.showAndWait();
 
             registerUser();
 
@@ -108,12 +108,18 @@ public class RegisterController implements Initializable {
         String password = setpasswordField.getText();
 
         String insertNewUserFields = "INSERT INTO users(full_name, role_title, username, u_password) VALUES ('";
-        String insertNewUserValues = fullName + "','" + roleTitle + "','" + username + "','" + password + "')";
+        String insertNewUserValues = fullName + "', '" + roleTitle + "', '" + username + "', '" + password + "');";
         String insertNewUserFieldsToDB = insertNewUserFields + insertNewUserValues;
 
         try {
             Statement statement = connectDB.createStatement();
-            statement.executeQuery(insertNewUserFieldsToDB);
+            statement.executeUpdate(insertNewUserFieldsToDB);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successful Registration");
+            alert.setHeaderText(null);
+            alert.setContentText("New user has been registered in EM Inventory Management System!");
+            alert.showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();
