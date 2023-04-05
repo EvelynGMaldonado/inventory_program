@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
@@ -52,51 +53,71 @@ public class RegisterController implements Initializable {
     }
 
     public void clickSaveUserBtn(ActionEvent event) throws IOException {
-//        if(setusernameField.getText()) {
-//
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error message");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Username already exists. Please try again.");
-//            alert.showAndWait();
-//        }
-        if(setpasswordField.getText().equals(confirmpasswordField.getText())) {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Successful Registration");
-//            alert.setHeaderText(null);
-//            alert.setContentText("New user has been registered in EM Inventory Management System!");
-//            alert.showAndWait();
 
-            registerUser();
+        //Not null accepted Input validation checks if none of the fields are blank or empty...
+        if(!setfullnameField.getText().trim().isEmpty() || !setroleField.getText().trim().isEmpty() || !setusernameField.getText().trim().isEmpty() || !setpasswordField.getText().trim().isEmpty() || !confirmpasswordField.getText().trim().isEmpty()) {
+
+            //check if the desired username is available or if it already exists using the validateUsername method
+//            validateUsername();
+
+            //check if the set password field matches with the confirm-password field...
+            if(setpasswordField.getText().trim().equals(confirmpasswordField.getText().trim())) {
+                registerUser();
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error message");
+                alert.setHeaderText(null);
+                alert.setContentText("Password does not match. Please try again.");
+                alert.showAndWait();
+            }
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
             alert.setHeaderText(null);
-            alert.setContentText("Password does not match. Please try again.");
+            alert.setContentText("Please fill all blank fields.");
             alert.showAndWait();
         }
+
+    }
+
+//    public void validateUsername(){
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
+//        String verifyUsername = "SELECT count(1) FROM users WHERE username = '" + setusernameField.getText() + "'";
+//
 //        try {
-//            signUpBtn.getScene().getWindow().hide();
-//            //create new stage
-//            Stage addProfileWindow = new Stage();
-//            addProfileWindow.setTitle("Parts and Products - EM Inventory Management System");
+//            Statement statement = connectDB.createStatement();
+//            ResultSet queryResult = statement.executeQuery(verifyUsername);
 //
-//            //create view for FXML
-//            FXMLLoader addProfileLoader = new FXMLLoader(getClass().getResource("signUp.fxml"));
+//            while(queryResult.next()) {
+//                if(queryResult.getInt(1) == 1) {
+//                    //check if the set password field matches with the confirm-password field using the validateNewPassword method
+//                    if(setpasswordField.getText().trim().equals(confirmpasswordField.getText().trim())) {
+//                        registerUser();
 //
-//            //set view in ppMainWindow
-//            addProfileWindow.setScene(new Scene(addProfileLoader.load(), 500, 400));
-//
-//            //launch
-//            addProfileWindow.show();
-//
+//                    } else {
+//                        Alert alert = new Alert(Alert.AlertType.ERROR);
+//                        alert.setTitle("Error message");
+//                        alert.setHeaderText(null);
+//                        alert.setContentText("Password does not match. Please try again.");
+//                        alert.showAndWait();
+//                    }
+//                } else {
+////                    messageLabel.setText("Invalid Login. Please try again.");
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setTitle("Error message");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText("Username already exists. Please try again.");
+//                    alert.showAndWait();
+//                }
+//            }
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            e.getCause();
 //        }
-    }
+//    }
 
     public void registerUser() {
         DatabaseConnection connectNow = new DatabaseConnection();

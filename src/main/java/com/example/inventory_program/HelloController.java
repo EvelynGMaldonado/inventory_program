@@ -118,7 +118,7 @@ public class HelloController implements Initializable {
 
     public void LoginButtonOnAction(ActionEvent e) {
 
-        if(usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false) {
+        if(usernameField.getText().trim().isBlank() == false && passwordField.getText().trim().isBlank() == false) {
             validateLogin();
         } else {
 //            messageLabel.setText("Please enter username and password");
