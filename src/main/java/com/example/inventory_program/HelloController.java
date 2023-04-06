@@ -355,8 +355,40 @@ public class HelloController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
-
     }
+
+    //creating the switch window method that might be implemented on the menu and other buttons
+//    public void switchWindow(ActionEvent event) {
+//        if(event.getSource() == addNewPart_btn || addPartPageBtn) {
+//            addPart_page.setVisible(true);
+//            addProduct_page.setVisible(false);
+//            modifyPart_page.setVisible(false);
+//            modifyProduct_page.setVisible(false);
+//            landing_page.setVisible(false);
+//            home_page.setVisible(false);
+//        } else if(event.getSource() == addNewProduct_btn || addProductPageBtn) {
+//            addPart_page.setVisible(false);
+//            addProduct_page.setVisible(true);
+//            modifyPart_page.setVisible(false);
+//            modifyProduct_page.setVisible(false);
+//            landing_page.setVisible(false);
+//            home_page.setVisible(false);
+//        } else if(event.getSource() == modifyPart_btn || modifyPartPageBtn) {
+//            addPart_page.setVisible(false);
+//            addProduct_page.setVisible(false);
+//            modifyPart_page.setVisible(true);
+//            modifyProduct_page.setVisible(false);
+//            landing_page.setVisible(false);
+//            home_page.setVisible(false);
+//        } else if(event.getSource() == modifyProduct_btn || modifyProductPageBtn) {
+//            addPart_page.setVisible(false);
+//            addProduct_page.setVisible(false);
+//            modifyPart_page.setVisible(false);
+//            modifyProduct_page.setVisible(true);
+//            landing_page.setVisible(false);
+//            home_page.setVisible(false);
+//        }
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
