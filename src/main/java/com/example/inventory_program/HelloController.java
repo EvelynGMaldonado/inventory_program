@@ -331,20 +331,10 @@ public class HelloController implements Initializable {
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {
-//                addPartPageBtn.getScene().getWindow().hide();
+
                 Platform.exit();
-//                //create new stage
-//                Stage landingPageWindow = new Stage();
-//                landingPageWindow.setTitle("Add Part - EM Inventory Management System");
-//
-//                //create view for FXML
-//                FXMLLoader landingPageLoader = new FXMLLoader(getClass().getResource("landing_page.fxml"));
-//
-//                //set view in ppMainWindow
-//                landingPageWindow.setScene(new Scene(landingPageLoader.load(), 600, 400));
-//
-//                //launch
-//                landingPageWindow.show();
+            } else {
+                return;
             }
         } catch (Exception e) {
             e.printStackTrace();
