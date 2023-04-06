@@ -16,6 +16,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
@@ -319,6 +320,37 @@ public class HelloController implements Initializable {
     public void closeBtnAction(ActionEvent e) {
         Stage stage = (Stage) close.getScene().getWindow();
         stage.close();
+    }
+
+    public void logOutBtnAction() {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure that you wan to Log Out?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)) {
+//                addPartPageBtn.getScene().getWindow().hide();
+                Platform.exit();
+//                //create new stage
+//                Stage landingPageWindow = new Stage();
+//                landingPageWindow.setTitle("Add Part - EM Inventory Management System");
+//
+//                //create view for FXML
+//                FXMLLoader landingPageLoader = new FXMLLoader(getClass().getResource("landing_page.fxml"));
+//
+//                //set view in ppMainWindow
+//                landingPageWindow.setScene(new Scene(landingPageLoader.load(), 600, 400));
+//
+//                //launch
+//                landingPageWindow.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
     }
 
     @Override
