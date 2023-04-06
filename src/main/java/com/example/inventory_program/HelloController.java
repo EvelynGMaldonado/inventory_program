@@ -366,6 +366,10 @@ public class HelloController implements Initializable {
 //            modifyProduct_page.setVisible(false);
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
+//
+//            addPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
+//                                     -fx-font-weight: bold;");
+//
 //        } else if(event.getSource() == addNewProduct_btn || addProductPageBtn) {
 //            addPart_page.setVisible(false);
 //            addProduct_page.setVisible(true);
@@ -373,6 +377,10 @@ public class HelloController implements Initializable {
 //            modifyProduct_page.setVisible(false);
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
+//
+//            addProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
+//                                     -fx-font-weight: bold;");
+//
 //        } else if(event.getSource() == modifyPart_btn || modifyPartPageBtn) {
 //            addPart_page.setVisible(false);
 //            addProduct_page.setVisible(false);
@@ -380,6 +388,10 @@ public class HelloController implements Initializable {
 //            modifyProduct_page.setVisible(false);
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
+//
+//            modifyPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
+//                                     -fx-font-weight: bold;");
+//
 //        } else if(event.getSource() == modifyProduct_btn || modifyProductPageBtn) {
 //            addPart_page.setVisible(false);
 //            addProduct_page.setVisible(false);
@@ -387,6 +399,9 @@ public class HelloController implements Initializable {
 //            modifyProduct_page.setVisible(true);
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
+//
+//            modifyProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
+//                                     -fx-font-weight: bold;");
 //        }
 //    }
 
