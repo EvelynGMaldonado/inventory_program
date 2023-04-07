@@ -156,7 +156,7 @@ public class HelloController implements Initializable {
     @FXML
     private Button close;
 
-    //When we click the sign-up button that is in the landing page we are redirected to the addProfile_page
+//WHEN WE CLOCK TO THE SIGN-UP BUTTON THAT IS IN THE LANDING PAGE WE ARE REDIRECTED TO THE addProfile_page
     public void createAccountForm(ActionEvent event) throws IOException {
         try {
             signUpBtn.getScene().getWindow().hide();
@@ -179,12 +179,13 @@ public class HelloController implements Initializable {
         }
     }
 
+// WHEN WE TRY TO LOG-IN - IF ALL FIELDS ARE FILLED THEN WE CALL THE validateLogin() METHOD, OTHERWISE WE SHOW AN ERROR MESSAGE ALERT
     public void LoginButtonOnAction(ActionEvent e) {
 
         if(usernameField.getText().trim().isBlank() == false && passwordField.getText().trim().isBlank() == false) {
             validateLogin();
         } else {
-//            messageLabel.setText("Please enter username and password");
+           //messageLabel.setText("Please enter username and password");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
             alert.setHeaderText(null);
@@ -193,6 +194,9 @@ public class HelloController implements Initializable {
         }
     }
 
+//DURING THE LOGIN VALIDATION WE CONNECT TO THE DATABASE, AND LOOK FOR A MATCH BETWEEN THE USERNAME AND PASSWORD,
+// IF THERE IS A MATCH WE CALL THE startEMInventoryManagementSystem() method that is going to redirect us to the home_page-parts&products,
+//OTHERWISE IT WILL SHOW AN ERROR MESSAGE ALERT
     public void validateLogin(){
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -204,18 +208,19 @@ public class HelloController implements Initializable {
 
             while(queryResult.next()) {
                 if(queryResult.getInt(1) == 1) {
-//                    messageLabel.setText("Welcome to EM Inventory Management System!");
+                    //messageLabel.setText("Welcome to EM Inventory Management System!");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Successful Log In");
                     alert.setHeaderText(null);
                     alert.setContentText("Welcome to EM Inventory Management System!");
                     alert.showAndWait();
 
+                    //we hide the landing_page before we display the home_page-parts&products page
                     startBtn.getScene().getWindow().hide();
-//                    Platform.exit();
-                    clickStartBtn();
+                    //Platform.exit();
+                    viewEMInventoryManagementSystem();
                 } else {
-//                    messageLabel.setText("Invalid Login. Please try again.");
+                    //messageLabel.setText("Invalid Login. Please try again.");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error message");
                     alert.setHeaderText(null);
@@ -229,10 +234,11 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void clickStartBtn () throws IOException {
-//        startBtn.getScene().getWindow().hide();
-//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
-//        stage1.close();
+//THE startEMInventoryManagementSystem() METHOD THAT IS GOING TO DISPLAY THE home_page-parts&products
+    public void viewEMInventoryManagementSystem() throws IOException {
+        //startBtn.getScene().getWindow().hide();
+        //Stage stage1 = (Stage) startBtn.getScene().getWindow();
+        //stage1.close();
         //create new stage
         Stage ppMainWindow = new Stage();
         ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
@@ -331,10 +337,10 @@ public class HelloController implements Initializable {
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {
-//                We can exit the plataform by doing...
-//                Platform.exit();
+                //We can exit the plataform by doing...
+                //Platform.exit();
 
-//                or go back to the landing page by doing ...
+                //or go back to the landing page by doing ...
                 LogOut_btn.getScene().getWindow().hide();
                 //create new stage
                 Stage landingPageWindow = new Stage();
@@ -357,7 +363,9 @@ public class HelloController implements Initializable {
         }
     }
 
-    //creating the switch window method that might be implemented on the menu and other buttons
+
+
+//    //creating the switch window method that might be implemented on the menu and other buttons
 //    public void switchWindow(ActionEvent event) {
 //        if(event.getSource() == addNewPart_btn || addPartPageBtn) {
 //            addPart_page.setVisible(true);
@@ -367,8 +375,7 @@ public class HelloController implements Initializable {
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
 //
-//            addPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
+//            addPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d); -fx-font-weight: bold;");
 //
 //        } else if(event.getSource() == addNewProduct_btn || addProductPageBtn) {
 //            addPart_page.setVisible(false);
@@ -378,8 +385,7 @@ public class HelloController implements Initializable {
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
 //
-//            addProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
+//            addProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d); -fx-font-weight: bold;");
 //
 //        } else if(event.getSource() == modifyPart_btn || modifyPartPageBtn) {
 //            addPart_page.setVisible(false);
@@ -389,8 +395,7 @@ public class HelloController implements Initializable {
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
 //
-//            modifyPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
+//            modifyPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d); -fx-font-weight: bold;");
 //
 //        } else if(event.getSource() == modifyProduct_btn || modifyProductPageBtn) {
 //            addPart_page.setVisible(false);
@@ -400,8 +405,7 @@ public class HelloController implements Initializable {
 //            landing_page.setVisible(false);
 //            home_page.setVisible(false);
 //
-//            modifyProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
+//            modifyProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d); -fx-font-weight: bold;");
 //        }
 //    }
 
