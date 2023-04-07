@@ -234,7 +234,8 @@ public class HelloController implements Initializable {
         }
     }
 
-//THE startEMInventoryManagementSystem() METHOD THAT IS GOING TO DISPLAY THE home_page-parts&products
+//THE startEMInventoryManagementSystem() METHOD THAT IS GOING TO DISPLAY THE home_page-parts&products WHERE WE CAN HAVE ACCESS TO
+//THE Dashboard WHICH GIVES US A GENERAL VIEW OF OUR INVENTORY ~ Parts AND Products TABLES
     public void viewEMInventoryManagementSystem() throws IOException {
         //startBtn.getScene().getWindow().hide();
         //Stage stage1 = (Stage) startBtn.getScene().getWindow();
@@ -254,6 +255,9 @@ public class HelloController implements Initializable {
 
     }
 
+
+//NAVIGATION FUNCTIONALITY
+// clickAddPartPageBtn() METHOD HIDES THE CURRENT WINDOW AND TAKES US TO THE addPart_page WHERE WE WILL BE ABLE TO ADD A NEW PART
     public void clickAddPartPageBtn (ActionEvent event) throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
         //create new stage
@@ -271,6 +275,7 @@ public class HelloController implements Initializable {
 
     }
 
+// clickAddProductPageBtn() METHOD HIDES THE CURRENT WINDOW AND TAKES US TO THE addProduct_page WHERE WE WILL BE ABLE TO ADD A NEW PRODUCT
     public void clickAddProductPageBtn (ActionEvent event) throws IOException {
         addProductPageBtn.getScene().getWindow().hide();
         //create new stage
@@ -288,7 +293,7 @@ public class HelloController implements Initializable {
 
     }
 
-
+// clickModifyProductPageBtn() METHOD HIDES THE CURRENT WINDOW AND TAKES US TO THE modifyProduct_page WHERE WE WILL BE ABLE TO MODIFY A PRODUCT
     public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
         modifyProductPageBtn.getScene().getWindow().hide();
         //create new stage
@@ -306,6 +311,7 @@ public class HelloController implements Initializable {
 
     }
 
+// clickModifyPartPageBtn() METHOD HIDES THE CURRENT WINDOW AND TAKES US TO THE modifyPart_page WHERE WE WILL BE ABLE TO MODIFY A PART
     public void clickModifyPartPageBtn (ActionEvent event) throws IOException {
         modifyPartPageBtn.getScene().getWindow().hide();
         //create new stage
@@ -323,11 +329,14 @@ public class HelloController implements Initializable {
 
     }
 
+// closeBtnAction() METHOD HIDES THE CURRENT WINDOW AND TAKES US TO THE home_page-parts&products WHERE WE CAN HAVE ACCESS TO
+////THE Dashboard WHICH GIVES US A GENERAL VIEW OF OUR INVENTORY ~ Parts AND Products TABLES
     public void closeBtnAction(ActionEvent e) {
         Stage stage = (Stage) close.getScene().getWindow();
         stage.close();
     }
 
+// logOutBtnAction() METHOD HIDES THE CURRENT WINDOW AND TAKES US TO THE landing_page WHERE WE WILL BE ABLE TO EITHER SIGN UP OR CREATE A NEW ACCOUNT
     public void logOutBtnAction() {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
