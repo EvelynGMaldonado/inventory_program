@@ -89,6 +89,4 @@ public class PartData {
         this.company_name = company_name;
     }
 
-
-
 }

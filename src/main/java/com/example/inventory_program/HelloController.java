@@ -163,6 +163,10 @@ public class HelloController implements Initializable {
     @FXML
     private Button close;
 
+    ObservableList<PartData> partList = FXCollections.observableArrayList();
+
+    ObservableList<ProductData> productList = FXCollections.observableArrayList();
+
     //When we click the sign-up button that is in the landing page we are redirected to the addProfile_page
     public void createAccountForm(ActionEvent event) throws IOException {
         try {
@@ -255,9 +259,7 @@ public class HelloController implements Initializable {
 
     }
 
-    ObservableList<PartData> partList = FXCollections.observableArrayList();
 
-    ObservableList<ProductData> productList = FXCollections.observableArrayList();
 
 
 
