@@ -1,23 +1,27 @@
 package com.example.inventory_program;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HelloController implements Initializable {
 //public class HelloController {
@@ -85,19 +89,19 @@ public class HelloController implements Initializable {
     private Button modifyProduct_btn;
 
     @FXML
-    private TableView<?> parts_tableView;
+    private TableView<PartData> parts_tableView = new TableView<PartData>();
 
     @FXML
-    private TableColumn<?, ?> parts_tableView_col_inventoryLevel;
+    private TableColumn<PartData, Integer> parts_tableView_col_inventoryLevel = new TableColumn<>("stock");
 
     @FXML
-    private TableColumn<?, ?> parts_tableView_col_priceUnit;
+    private TableColumn<PartData, BigDecimal> parts_tableView_col_priceUnit = new TableColumn<>("price_unit");
 
     @FXML
-    private TableColumn<?, ?> parts_tableView_col_partID;
+    private TableColumn<PartData, Integer> parts_tableView_col_partID = new TableColumn<>("partID");
 
     @FXML
-    private TableColumn<?, ?> parts_tableView_col_partName;
+    private TableColumn<PartData, String> parts_tableView_col_partName = new TableColumn<>("part_name");
 
     @FXML
     private TableView<?> products_tableView;
@@ -247,6 +251,11 @@ public class HelloController implements Initializable {
         ppMainWindow.show();
 
     }
+
+    ObservableList<PartData> partList = FXCollections.observableArrayList();
+
+
+
 
     public void clickAddPartPageBtn (ActionEvent event) throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
@@ -407,6 +416,72 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        //SQL Query - executed in the backend database
+        String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
+
+            while (queryPartsOutput.next()) {
+
+                //populate the observableList
+                partList.add(new PartData(queryPartsOutput.getInt("partID"),
+                                            queryPartsOutput.getString("part_name"),
+                                            queryPartsOutput.getInt("stock"),
+                                            queryPartsOutput.getBigDecimal("price_unit")));
+            }
+            //PropertyValueFactory corresponds to the new PartData fields
+            //the table column is the one we annotate above
+            parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+            parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+            parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+            parts_tableView.setItems(partList);
+
+        } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            e.getCause();
+        }
+//        try {
+//            DatabaseConnection connectNow = new DatabaseConnection();
+//            connectDB = connectNow.getConnection();
+//            ResultSet partQueryResult = connectDB.createStatement().executeQuery("SELECT * FROM parts");
+//
+//            while(partQueryResult.next()) {
+//                //the partList MUST have the same order than the public PartData();
+//                partList.add(new PartData(partQueryResult.getInt("partID"),
+//                        partQueryResult.getInt("stock"),
+//                        partQueryResult.getInt("min"),
+//                        partQueryResult.getInt("max"),
+//                        partQueryResult.getInt("machineID"),
+//                        partQueryResult.getString("part_name"),
+//                        partQueryResult.getString("company_name"),
+//                        partQueryResult.getBigDecimal("price_unit")
+////                        partQueryResult.getInt("stock"),
+////                        partQueryResult.getBigDecimal("price_unit"),
+////                        partQueryResult.getInt("min"),
+////                        partQueryResult.getInt("max"),
+////                        partQueryResult.getInt("machineID"),
+////                        partQueryResult.getString("company_name")
+//                ));
+//            }
+//            parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+//            parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+//            parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//            parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+//
+//            parts_tableView.setItems(partList);
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, ex);
+////            e.printStackTrace();
+////            e.getCause();
+//        }
 //        borderpane.setCenter(GlyphsDude.createIcon(FontAwesomeIcon.DATABASE, "200px"));
 
     }
