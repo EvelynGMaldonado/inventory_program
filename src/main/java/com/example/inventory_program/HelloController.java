@@ -3,6 +3,8 @@ package com.example.inventory_program;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -441,6 +444,32 @@ public class HelloController implements Initializable {
             parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
 
             parts_tableView.setItems(partList);
+
+//            //Initial filtered list
+//            FilteredList<PartData> filteredPartData = new FilteredList<>(partList, b -> true);
+//            searchPart_inputField.textProperty().addListener((observable, oldValue, newValue) -> {
+//                filteredPartData.setPredicate(partDataSearch -> {
+//                    //if no search value, then display all records or whatever records it currently has. - no changes!
+//                    if(newValue.isEmpty() || newValue.isBlank() || newValue == null) {
+//                        return true;
+//                    }
+//                    String searchPartByInput = newValue.toLowerCase();
+//                    if(partDataSearch.getPart_name().toLowerCase().indexOf(searchPartByInput) > -1) {
+//                        return true; //it means a part_name match has been found
+//                    } else if(partDataSearch.getPartID().toString().indexOf(searchPartByInput) > -1) {
+//                        return true; //it means a partID match has been found
+//                    } else if (partDataSearch.getPrice_unit().toString().indexOf(searchPartByInput) > -1) {
+//                        return true; //it means a price_unit match has been found
+//                    } else {
+//                        return false; //no matches have been found
+//                    }
+//                });
+//            });
+//            SortedList<PartData> sortedPartData = new SortedList<>(filteredPartData);
+//            //Bind sorted result with Table view
+//            sortedPartData.comparatorProperty().bind(parts_tableView.comparatorProperty());
+//            //Apply filtered and sorted data to the Table View
+//            parts_tableView.setItems(sortedPartData);
 
         } catch(SQLException e) {
             Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
