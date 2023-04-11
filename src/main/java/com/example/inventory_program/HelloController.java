@@ -107,19 +107,19 @@ public class HelloController implements Initializable {
     private TableColumn<PartData, String> parts_tableView_col_partName = new TableColumn<>("part_name");
 
     @FXML
-    private TableView<?> products_tableView;
+    private TableView<ProductData> products_tableView = new TableView<ProductData>();
 
     @FXML
-    private TableColumn<?, ?> products_tableView_col_inventoryLevel;
+    private TableColumn<ProductData, Integer> products_tableView_col_inventoryLevel = new TableColumn<>("stock");
 
     @FXML
-    private TableColumn<?, ?> products_tableView_col_priceUnit;
+    private TableColumn<ProductData, BigDecimal> products_tableView_col_priceUnit = new TableColumn<>("price_unit");
 
     @FXML
-    private TableColumn<?, ?> products_tableView_col_productID;
+    private TableColumn<ProductData, Integer> products_tableView_col_productID = new TableColumn<>("productID");
 
     @FXML
-    private TableColumn<?, ?> products_tableView_col_productName;
+    private TableColumn<ProductData, String> products_tableView_col_productName = new TableColumn<>("product_name");
 
     @FXML
     private Button searchPart_btn;
@@ -256,6 +256,8 @@ public class HelloController implements Initializable {
     }
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
+
+    ObservableList<ProductData> productList = FXCollections.observableArrayList();
 
 
 
@@ -424,6 +426,8 @@ public class HelloController implements Initializable {
 
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+        //**new
+        String productsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
@@ -436,6 +440,8 @@ public class HelloController implements Initializable {
                                             queryPartsOutput.getInt("stock"),
                                             queryPartsOutput.getBigDecimal("price_unit")));
             }
+
+
             //PropertyValueFactory corresponds to the new PartData fields
             //the table column is the one we annotate above
             parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -444,6 +450,8 @@ public class HelloController implements Initializable {
             parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
 
             parts_tableView.setItems(partList);
+
+
 
 //            //Initial filtered list
 //            FilteredList<PartData> filteredPartData = new FilteredList<>(partList, b -> true);
@@ -472,6 +480,31 @@ public class HelloController implements Initializable {
 //            parts_tableView.setItems(sortedPartData);
 
         } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            e.getCause();
+        }
+        try {
+            Statement statement = connectDB.createStatement();
+            //**new
+            ResultSet queryProductsOutput = statement.executeQuery(productsViewQuery);
+
+            //**new
+            while (queryProductsOutput.next()) {
+                productList.add(new ProductData(queryProductsOutput.getInt("productID"),
+                        queryProductsOutput.getString("product_name"),
+                        queryProductsOutput.getInt("stock"),
+                        queryProductsOutput.getBigDecimal("price_unit")));
+            }
+            //**new
+            products_tableView_col_productID.setCellValueFactory(new PropertyValueFactory<>("productID"));
+            products_tableView_col_productName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
+            products_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            products_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+            products_tableView.setItems(productList);
+
+        } catch (SQLException e) {
             Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
             e.getCause();
