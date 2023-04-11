@@ -451,8 +451,6 @@ public class HelloController implements Initializable {
 
             parts_tableView.setItems(partList);
 
-
-
 //            //Initial filtered list
 //            FilteredList<PartData> filteredPartData = new FilteredList<>(partList, b -> true);
 //            searchPart_inputField.textProperty().addListener((observable, oldValue, newValue) -> {
