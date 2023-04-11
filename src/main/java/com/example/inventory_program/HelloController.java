@@ -217,7 +217,7 @@ public class HelloController implements Initializable {
 
                     startBtn.getScene().getWindow().hide();
 //                    Platform.exit();
-                    clickStartBtn();
+                    viewEMInventoryManagementSystem();
                 } else {
 //                    messageLabel.setText("Invalid Login. Please try again.");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -233,7 +233,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void clickStartBtn () throws IOException {
+    public void viewEMInventoryManagementSystem() throws IOException {
 //        startBtn.getScene().getWindow().hide();
 //        Stage stage1 = (Stage) startBtn.getScene().getWindow();
 //        stage1.close();
