@@ -259,11 +259,6 @@ public class HelloController implements Initializable {
 
     }
 
-
-
-
-
-
     public void clickAddPartPageBtn (ActionEvent event) throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
         //create new stage
