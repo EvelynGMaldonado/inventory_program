@@ -447,43 +447,5 @@ public class HelloController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
-//        try {
-//            DatabaseConnection connectNow = new DatabaseConnection();
-//            connectDB = connectNow.getConnection();
-//            ResultSet partQueryResult = connectDB.createStatement().executeQuery("SELECT * FROM parts");
-//
-//            while(partQueryResult.next()) {
-//                //the partList MUST have the same order than the public PartData();
-//                partList.add(new PartData(partQueryResult.getInt("partID"),
-//                        partQueryResult.getInt("stock"),
-//                        partQueryResult.getInt("min"),
-//                        partQueryResult.getInt("max"),
-//                        partQueryResult.getInt("machineID"),
-//                        partQueryResult.getString("part_name"),
-//                        partQueryResult.getString("company_name"),
-//                        partQueryResult.getBigDecimal("price_unit")
-////                        partQueryResult.getInt("stock"),
-////                        partQueryResult.getBigDecimal("price_unit"),
-////                        partQueryResult.getInt("min"),
-////                        partQueryResult.getInt("max"),
-////                        partQueryResult.getInt("machineID"),
-////                        partQueryResult.getString("company_name")
-//                ));
-//            }
-//            parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
-//            parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
-//            parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//            parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
-//
-//            parts_tableView.setItems(partList);
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, ex);
-////            e.printStackTrace();
-////            e.getCause();
-//        }
-//        borderpane.setCenter(GlyphsDude.createIcon(FontAwesomeIcon.DATABASE, "200px"));
-
     }
-
 }
