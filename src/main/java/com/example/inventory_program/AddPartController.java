@@ -176,6 +176,9 @@ public class AddPartController implements Initializable {
                 alert.setContentText("New In House Part has been successfully added to EM Inventory Management System");
                 alert.showAndWait();
 
+                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                addPartRedirectsToEMIMSHomePage();
+
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getCause();
@@ -196,6 +199,9 @@ public class AddPartController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("New Outsourced Part has been successfully added to EM Inventory Management System");
                 alert.showAndWait();
+
+                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                addPartRedirectsToEMIMSHomePage();
 
             } catch (Exception e) {
                 e.printStackTrace();
