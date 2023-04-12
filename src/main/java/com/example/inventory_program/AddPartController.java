@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class AddPartController implements Initializable {
@@ -51,15 +54,39 @@ public class AddPartController implements Initializable {
     @FXML
     private ToggleGroup selectInHouseOutsourcedToggleGroup;
 
+    @FXML
+    private TextField addPart_partIDTextField;
+
+    @FXML
+    private TextField addPart_setPartName;
+
+    @FXML
+    private TextField addPart_setInventoryLevel;
+
+    @FXML
+    private TextField addPart_setMax;
+
+    @FXML
+    private TextField addPart_setMin;
+
+    @FXML
+    private TextField addPart_setPriceUnit;
+
+    @FXML
+    private Button addPart_saveBtn;
+
+    @FXML
+    private Button addPart_cancelBtn;
+
+    @FXML
+    private TextField addPart_partID;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inHouseRadioBtn.setSelected(true);
 
     }
-
-
-
-
+    //Toggle Group - radio buttons functionality
     public void displayMachineIDOrCompanyName(ActionEvent event) {
         if(inHouseRadioBtn.isSelected()) {
             displayCompanyOrMachineLabel.setText("Machine ID:");
@@ -69,6 +96,114 @@ public class AddPartController implements Initializable {
             inputCompanyOrMachineInputField.setPromptText("company name");
         }
     }
+
+    public void clickSavePartBtn(ActionEvent event) throws IOException{
+        //Part Category Selection Validation - No null Accepted ~ it has to select inHouse or Outsourced
+        if(inHouseRadioBtn.isSelected() || outsourcedRadioBtn.isSelected()) {
+            //Not null accepted Input validation checks that none of the fields are blank or empty...
+            if(!addPart_setPartName.getText().trim().isEmpty() || !addPart_setInventoryLevel.getText().trim().isEmpty() || addPart_setPriceUnit.getText().trim().isEmpty() || !addPart_setMax.getText().trim().isEmpty() || !addPart_setMin.getText().trim().isEmpty() || !inputCompanyOrMachineInputField.getText().trim().isEmpty()) {
+                //check if the part name is available or if it already exists using the validatePartName method
+                validatePartName();
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields.");
+                alert.showAndWait();
+            }
+        } else {
+            //alert error when part category hasn't been selected
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the Part Category: In-House or Outsourced.");
+            alert.showAndWait();
+        }
+    };
+
+    public void validatePartName() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        String verifyPartName = "SELECT count(1) FROM parts WHERE part_name = '" + addPart_setPartName.getText() + "'";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryUniquePartNameResult = statement.executeQuery(verifyPartName);
+
+            while(queryUniquePartNameResult.next()) {
+                if(queryUniquePartNameResult.getInt(1) == 1) {
+                    //                    messageLabel.setText("Part Name already exists. Please try again.");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Part Name already exists. Please try again.");
+                    alert.showAndWait();
+                } else {
+                    registerNewPart();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    };
+
+    public void registerNewPart() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String partName = addPart_setPartName.getText();
+        String inventoryLevel = addPart_setInventoryLevel.getText();
+        String priceUnit = addPart_setPriceUnit.getText();
+        String max= addPart_setMax.getText();
+        String min = addPart_setMin.getText();
+
+
+        if(inHouseRadioBtn.isSelected()) {
+            String machineId = inputCompanyOrMachineInputField.getText();
+            String insertNewInHousePartFields = "INSERT INTO parts (part_name, stock, price_unit, min, max, machineID) VALUES ('";
+            String insertNewInHousePartValues = partName + "', '" + inventoryLevel + "', '" + priceUnit + "', '" + min + "', '" + max + "', '" + machineId + "')";
+            String insertNewInHousePartToDB = insertNewInHousePartFields + insertNewInHousePartValues;
+
+            try {
+                Statement statement = connectDB.createStatement();
+                statement.executeUpdate(insertNewInHousePartToDB);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful In-House Part Registration");
+                alert.setHeaderText(null);
+                alert.setContentText("New In House Part has been successfully added to EM Inventory Management System");
+                alert.showAndWait();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+
+        } else if(outsourcedRadioBtn.isSelected()){
+            String companyName = inputCompanyOrMachineInputField.getText();
+            String insertNewOutsourcedPartFields = "INSERT INTO parts (part_name, stock, price_unit, min, max, company_name) VALUES ('";
+            String insertNewOutsourcedPartValues = partName + "', '" + inventoryLevel + "', '" + priceUnit + "', '" + min + "', '" + max + "', '" + companyName + "')";
+            String insertNewOutsourcedPartToDB = insertNewOutsourcedPartFields + insertNewOutsourcedPartValues;
+
+            try {
+                Statement statement = connectDB.createStatement();
+                statement.executeUpdate(insertNewOutsourcedPartToDB);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful Outsourced Part Registration");
+                alert.setHeaderText(null);
+                alert.setContentText("New Outsourced Part has been successfully added to EM Inventory Management System");
+                alert.showAndWait();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+        }
+    };
+
 
     //SIDE MENU
     public void addPartRedirectsToEMIMSHomePage() throws IOException {

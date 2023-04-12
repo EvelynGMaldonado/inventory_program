@@ -170,31 +170,31 @@
                                        </styleClass>
                                        <children>
                                           <Label layoutX="14.0" layoutY="19.0" prefHeight="17.0" prefWidth="83.0" text="Part ID:" />
-                                          <TextField editable="false" layoutX="108.0" layoutY="14.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
+                                          <TextField fx:id="addPart_partIDTextField" editable="false" layoutX="108.0" layoutY="14.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
                                              <font>
                                                 <Font name="System Italic" size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="53.0" prefHeight="17.0" prefWidth="83.0" text="Part Name:" />
-                                          <TextField layoutX="108.0" layoutY="48.0" prefHeight="27.0" prefWidth="101.0" promptText="part name" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="addPart_setPartName" layoutX="108.0" layoutY="48.0" prefHeight="27.0" prefWidth="101.0" promptText="part name" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="87.0" prefHeight="17.0" prefWidth="83.0" text="Inventory Level:" />
-                                          <TextField layoutX="108.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" promptText="inventory level" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="addPart_setInventoryLevel" layoutX="108.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" promptText="inventory level" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="121.0" prefHeight="17.0" prefWidth="83.0" text="Price per Unit:" />
-                                          <TextField layoutX="108.0" layoutY="116.0" prefHeight="27.0" prefWidth="101.0" promptText="price per unit:" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="addPart_setPriceUnit" layoutX="108.0" layoutY="116.0" prefHeight="27.0" prefWidth="101.0" promptText="price per unit:" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="155.0" prefHeight="17.0" prefWidth="83.0" text="Max:" textAlignment="RIGHT" />
-                                          <TextField layoutX="108.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="max" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="addPart_setMax" layoutX="108.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="max" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
@@ -206,13 +206,13 @@
                                              </font>
                                           </TextField>
                                           <Label layoutX="238.0" layoutY="155.0" prefHeight="17.0" prefWidth="37.0" text="Min:" textAlignment="RIGHT" />
-                                          <TextField layoutX="275.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="min" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="addPart_setMin" layoutX="275.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="min" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <Button layoutX="275.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
-                                          <Button layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
+                                          <Button fx:id="addPart_saveBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" onAction="#clickSavePartBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
+                                          <Button fx:id="addPart_cancelBtn" layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>
                                  </children>

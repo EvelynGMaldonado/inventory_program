@@ -167,6 +167,42 @@ public class HelloController implements Initializable {
 
     ObservableList<ProductData> productList = FXCollections.observableArrayList();
 
+    //!!!!!!REFRESH TABLE AFTER ADDING A NEW USER!!!!
+//    public void refreshPartsTable() {
+//        partList.clear();
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
+//        //SQL Query - executed in the backend database
+//        String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+//        try {
+//            Statement statement = connectDB.createStatement();
+//            ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
+//
+//            while (queryPartsOutput.next()) {
+//
+//                //populate the observableList
+//                partList.add(new PartData(queryPartsOutput.getInt("partID"),
+//                        queryPartsOutput.getString("part_name"),
+//                        queryPartsOutput.getInt("stock"),
+//                        queryPartsOutput.getBigDecimal("price_unit")));
+//            }
+//
+//            //PropertyValueFactory corresponds to the new PartData fields
+//            //the table column is the one we annotate above
+//            parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+//            parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+//            parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//            parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+//
+//            parts_tableView.setItems(partList);
+//
+//        } catch(SQLException e) {
+//            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+//            e.printStackTrace();
+//            e.getCause();
+//        }
+//    }
+
     //When we click the sign-up button that is in the landing page we are redirected to the addProfile_page
     public void createAccountForm(ActionEvent event) throws IOException {
         try {

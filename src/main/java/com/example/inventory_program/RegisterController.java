@@ -54,7 +54,7 @@ public class RegisterController implements Initializable {
 
     public void clickSaveUserBtn(ActionEvent event) throws IOException {
 
-        //Not null accepted Input validation checks if none of the fields are blank or empty...
+        //Not null accepted Input validation checks that none of the fields are blank or empty...
         if(!setfullnameField.getText().trim().isEmpty() || !setroleField.getText().trim().isEmpty() || !setusernameField.getText().trim().isEmpty() || !setpasswordField.getText().trim().isEmpty() || !confirmpasswordField.getText().trim().isEmpty()) {
 
             //check if the desired username is available or if it already exists using the validateUsername method
@@ -128,7 +128,7 @@ public class RegisterController implements Initializable {
         String username = setusernameField.getText();
         String password = setpasswordField.getText();
 
-        String validateUniqueUsername = "SELECT username FROM users";
+//        String validateUniqueUsername = "SELECT username FROM users";
         String insertNewUserFields = "INSERT INTO users(full_name, role_title, username, u_password) VALUES ('";
         String insertNewUserValues = fullName + "', '" + roleTitle + "', '" + username + "', '" + password + "');";
         String insertNewUserFieldsToDB = insertNewUserFields + insertNewUserValues;
