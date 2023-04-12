@@ -53,26 +53,18 @@ public class AddPartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        inHouseRadioBtn.setSelected(true);
 
     }
 
 
 
+
     public void displayMachineIDOrCompanyName(ActionEvent event) {
-//        inHouseRadioBtn.selectedProperty().addListener((observable, oldValue, newValue) -> {
-//            if(newValue) {
-//                if(outsourcedRadioBtn.isSelected()) {
-//                    outsourcedRadioBtn.isSelected(false);
-//                }
-//            }
-//        })
         if(inHouseRadioBtn.isSelected()) {
-//            outsourcedRadioBtn.disabledProperty();
             displayCompanyOrMachineLabel.setText("Machine ID:");
             inputCompanyOrMachineInputField.setPromptText("machine ID");
         } else if(outsourcedRadioBtn.isSelected()) {
-//            inHouseRadioBtn.setDisable(true);
-//            inHouseRadioBtn.disabledProperty();
             displayCompanyOrMachineLabel.setText("Company Name:");
             inputCompanyOrMachineInputField.setPromptText("company name");
         }
