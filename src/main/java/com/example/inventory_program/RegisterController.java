@@ -128,6 +128,7 @@ public class RegisterController implements Initializable {
         String username = setusernameField.getText();
         String password = setpasswordField.getText();
 
+        String validateUniqueUsername = "SELECT username FROM users";
         String insertNewUserFields = "INSERT INTO users(full_name, role_title, username, u_password) VALUES ('";
         String insertNewUserValues = fullName + "', '" + roleTitle + "', '" + username + "', '" + password + "');";
         String insertNewUserFieldsToDB = insertNewUserFields + insertNewUserValues;

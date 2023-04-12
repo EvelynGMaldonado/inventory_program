@@ -3,14 +3,17 @@ package com.example.inventory_program;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AddPartController {
+public class AddPartController implements Initializable {
 
     @FXML
     private StackPane addPart_page;
@@ -33,6 +36,49 @@ public class AddPartController {
     @FXML
     private Button startBtn;
 
+    @FXML
+    private Label displayCompanyOrMachineLabel;
+
+    @FXML
+    private RadioButton inHouseRadioBtn;
+
+    @FXML
+    private TextField inputCompanyOrMachineInputField;
+
+    @FXML
+    private RadioButton outsourcedRadioBtn;
+
+    @FXML
+    private ToggleGroup selectInHouseOutsourcedToggleGroup;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+    }
+
+
+
+    public void displayMachineIDOrCompanyName(ActionEvent event) {
+//        inHouseRadioBtn.selectedProperty().addListener((observable, oldValue, newValue) -> {
+//            if(newValue) {
+//                if(outsourcedRadioBtn.isSelected()) {
+//                    outsourcedRadioBtn.isSelected(false);
+//                }
+//            }
+//        })
+        if(inHouseRadioBtn.isSelected()) {
+//            outsourcedRadioBtn.disabledProperty();
+            displayCompanyOrMachineLabel.setText("Machine ID:");
+            inputCompanyOrMachineInputField.setPromptText("machine ID");
+        } else if(outsourcedRadioBtn.isSelected()) {
+//            inHouseRadioBtn.setDisable(true);
+//            inHouseRadioBtn.disabledProperty();
+            displayCompanyOrMachineLabel.setText("Company Name:");
+            inputCompanyOrMachineInputField.setPromptText("company name");
+        }
+    }
+
+    //SIDE MENU
     public void addPartRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
 
@@ -65,7 +111,6 @@ public class AddPartController {
         //launch
         addProductPageWindow.show();
     }
-
 
     public void addPartRedirectsToModifyProductPage (ActionEvent event) throws IOException {
         modifyProductPageBtn.getScene().getWindow().hide();
