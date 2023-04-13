@@ -223,6 +223,8 @@ public class HelloController implements Initializable {
                     alert.setContentText("Data Part has been successfully removed from the EM Inventory Management System");
                     alert.showAndWait();
 
+
+                    homePage_modifyPartBtn.getScene().getWindow().hide();
                     viewEMInventoryManagementSystem();
                 } else {
                     return;
