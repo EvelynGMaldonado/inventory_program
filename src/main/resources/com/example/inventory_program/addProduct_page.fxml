@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="addProduct_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.inventory_program.AddProductController">
+<StackPane fx:id="addProduct_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventory_program.AddProductController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -27,7 +27,7 @@
                      <children>
                         <AnchorPane prefHeight="40.0" prefWidth="600.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="close" layoutX="762.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeBtnAction" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
+                              <Button fx:id="addProduct_closeBtn" layoutX="762.0" layoutY="1.0" mnemonicParsing="false" onAction="#addProductRedirectsToEMIMSHomePage" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
                               <Label layoutX="42.0" layoutY="8.0" text="Inventory Management System">
                                  <textFill>
                                     <LinearGradient endX="1.0" endY="1.0">
@@ -250,7 +250,7 @@
                                           </TableView>
                                           <Button layoutX="249.0" layoutY="153.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Remove associated part" />
                                           <Button layoutX="288.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
-                                          <Button layoutX="340.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
+                                          <Button fx:id="addProduct_cancelBtn" layoutX="340.0" layoutY="189.0" mnemonicParsing="false" onAction="#addProductRedirectsToEMIMSHomePage" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>
                                  </children>

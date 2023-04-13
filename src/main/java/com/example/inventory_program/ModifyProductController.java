@@ -49,6 +49,9 @@ public class ModifyProductController implements Initializable {
     private Button startBtn;
 
     @FXML
+    private Button modifyProduct_cancelBtn;
+
+    @FXML
     private TableView<PartData> parts_tableView = new TableView<PartData>();
 
     @FXML

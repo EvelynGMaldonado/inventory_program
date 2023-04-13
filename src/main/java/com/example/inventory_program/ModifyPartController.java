@@ -19,7 +19,10 @@ public class ModifyPartController {
     private Button addProductPageBtn;
 
     @FXML
-    private Button close;
+    private Button modifyPart_closeBtn;
+
+    @FXML
+    private Button modifyPart_cancelBtn;
 
     @FXML
     private StackPane modifyPart_page;
@@ -104,9 +107,9 @@ public class ModifyPartController {
 
     }
 
-    public void closeBtnAction(ActionEvent e) {
-        Stage stage = (Stage) close.getScene().getWindow();
-        stage.close();
-    }
+//    public void closeBtnAction(ActionEvent e) {
+//        Stage stage = (Stage) close.getScene().getWindow();
+//        stage.close();
+//    }
 
 }

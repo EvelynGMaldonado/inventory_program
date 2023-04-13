@@ -79,6 +79,7 @@ public class HelloController implements Initializable {
 
     @FXML
     private Button addNewProduct_btn;
+
     @FXML
     private Button deletePart_btn;
 
@@ -161,7 +162,10 @@ public class HelloController implements Initializable {
     private StackPane modifyProduct_page;
 
     @FXML
-    private Button close;
+    private Button homePage_closeBtn;
+
+    @FXML
+    private Button landingPage_closeBtn;
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
 
@@ -365,7 +369,7 @@ public class HelloController implements Initializable {
     }
 
     public void closeBtnAction(ActionEvent e) {
-        Stage stage = (Stage) close.getScene().getWindow();
+        Stage stage = (Stage) landingPage_closeBtn.getScene().getWindow();
         stage.close();
     }
 

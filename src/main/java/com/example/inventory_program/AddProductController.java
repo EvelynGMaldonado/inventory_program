@@ -34,7 +34,7 @@ public class AddProductController implements Initializable {
     private StackPane addProduct_page;
 
     @FXML
-    private Button close;
+    private Button addProduct_closeBtn;
 
     @FXML
     private Button modifyPartPageBtn;
@@ -47,6 +47,9 @@ public class AddProductController implements Initializable {
 
     @FXML
     private Button startBtn;
+
+    @FXML
+    private Button addProduct_cancelBtn;
 
     @FXML
     private TableView<PartData> parts_tableView = new TableView<PartData>();
@@ -138,10 +141,11 @@ public class AddProductController implements Initializable {
 
     }
 
-    public void closeBtnAction(ActionEvent e) {
-        Stage stage = (Stage) close.getScene().getWindow();
-        stage.close();
-    }
+//    public void closeBtnAction(ActionEvent e) {
+//        Stage stage = (Stage) close.getScene().getWindow();
+//        stage.close();
+//    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DatabaseConnection connectNow = new DatabaseConnection();

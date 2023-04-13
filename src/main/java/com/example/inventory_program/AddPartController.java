@@ -25,7 +25,7 @@ public class AddPartController implements Initializable {
     private Button addProductPageBtn;
 
     @FXML
-    private Button close;
+    private Button modifyProduct_closeBtn;
 
     @FXML
     private Button modifyPartPageBtn;
@@ -77,6 +77,9 @@ public class AddPartController implements Initializable {
 
     @FXML
     private Button addPart_cancelBtn;
+
+    @FXML
+    private Button addPart_closeBtn;
 
     @FXML
     private TextField addPart_partID;
@@ -277,8 +280,8 @@ public class AddPartController implements Initializable {
         modifyPartPageWindow.show();
     }
 
-    public void closeBtnAction(ActionEvent e) {
-        Stage stage = (Stage) close.getScene().getWindow();
-        stage.close();
-    }
+//    public void closeBtnAction(ActionEvent e) {
+//        Stage stage = (Stage) close.getScene().getWindow();
+//        stage.close();
+//    }
 }
