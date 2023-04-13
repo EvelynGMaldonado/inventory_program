@@ -70,7 +70,7 @@ public class AddProductController implements Initializable {
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
 
-
+//MENU
     public void addProductRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
 
@@ -88,7 +88,6 @@ public class AddProductController implements Initializable {
         ppMainWindow.show();
 
     }
-
 
     public void addProductRedirectsToAddPartPage (ActionEvent event) throws IOException {
         addPartPageBtn.getScene().getWindow().hide();

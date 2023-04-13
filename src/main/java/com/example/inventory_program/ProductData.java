@@ -4,12 +4,15 @@ import java.math.BigDecimal;
 
 public class ProductData {
     private Integer productID;
-    private Integer partID;
     private String product_name;
     private Integer stock;
     private BigDecimal price_unit;
     private Integer min;
     private Integer max;
+    private Integer partID;
+//    private String part_name;
+//    private Integer part_stock;
+//    private Integer part_price_unit;
 
     public ProductData (Integer productID, String product_name, Integer stock,BigDecimal price_unit) {
         this.productID = productID;
@@ -25,14 +28,6 @@ public class ProductData {
 
     public void setProductID(Integer productID) {
         this.productID = productID;
-    }
-
-    public Integer getPartID() {
-        return partID;
-    }
-
-    public void setPartID(Integer partID) {
-        this.partID = partID;
     }
 
     public String getProduct_name() {
@@ -74,4 +69,36 @@ public class ProductData {
     public void setMax(Integer max) {
         this.max = max;
     }
+
+    public Integer getPartID() {
+        return partID;
+    }
+
+    public void setPartID(Integer partID) {
+        this.partID = partID;
+    }
+
+//    public String getPart_name() {
+//        return part_name;
+//    }
+//
+//    public void setPart_name(String part_name) {
+//        this.part_name = part_name;
+//    }
+//
+//    public Integer getPart_stock() {
+//        return part_stock;
+//    }
+//
+//    public void setPart_stock(Integer part_stock) {
+//        this.part_stock = part_stock;
+//    }
+//
+//    public Integer getPart_price_unit() {
+//        return part_price_unit;
+//    }
+//
+//    public void setPart_price_unit(Integer part_price_unit) {
+//        this.part_price_unit = part_price_unit;
+//    }
 }

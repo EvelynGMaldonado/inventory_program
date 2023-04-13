@@ -206,9 +206,9 @@ public class HelloController implements Initializable {
             String deleteSelectedPart = "DELETE FROM parts WHERE partID = ?";
 
             try {
-                pst = connectDB.prepareStatement(deleteSelectedPart);
-                pst.setString(1, selectedItem.getPartID().toString());
-                pst.execute();
+//                pst = connectDB.prepareStatement(deleteSelectedPart);
+//                pst.setString(1, selectedItem.getPartID().toString());
+//                pst.execute();
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
@@ -217,6 +217,10 @@ public class HelloController implements Initializable {
                 Optional<ButtonType> option = alert.showAndWait();
 
                 if(option.get().equals(ButtonType.OK)) {
+                    pst = connectDB.prepareStatement(deleteSelectedPart);
+                    pst.setString(1, selectedItem.getPartID().toString());
+                    pst.execute();
+
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Data Part has been deleted");
                     alert.setHeaderText(null);
