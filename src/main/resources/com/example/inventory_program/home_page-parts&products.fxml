@@ -170,12 +170,12 @@
                                           <TableColumn fx:id="parts_tableView_col_priceUnit" prefWidth="75.0" text="Price/Unit" />
                                       </columns>
                                     </TableView>
-                                    <TextField fx:id="searchPart_inputField" layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="homePage_searchPartInputField" layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Button fx:id="searchPart_btn" layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                    <Button fx:id="homePage_searchPartBtn" layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -184,9 +184,9 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="addNewPart_btn" layoutX="152.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickAddPartPageBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
-                                    <Button fx:id="modifyPart_btn" layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
-                                    <Button fx:id="deletePart_btn" layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
+                                    <Button fx:id="homePage_addNewPartBtn" layoutX="152.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickAddPartPageBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                    <Button fx:id="homePage_modifyPartBtn" layoutX="196.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickModifyPartPageBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
+                                    <Button fx:id="homePage_deletePartBtn" layoutX="255.0" layoutY="242.0" mnemonicParsing="false" onAction="#deleteSelectedPart" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="347.0" layoutY="57.0" prefHeight="277.0" prefWidth="320.0" stylesheets="@startPageDesign.css">
@@ -200,7 +200,7 @@
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="products_tableView" layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
+                                    <TableView fx:id="products_tableView" layoutX="10.0" layoutY="70.0" onMouseClicked="#getSelectedProduct" prefHeight="159.0" prefWidth="300.0">
                                        <columns>
                                           <TableColumn fx:id="products_tableView_col_productID" prefWidth="75.0" text="Product ID" />
                                           <TableColumn fx:id="products_tableView_col_productName" prefWidth="75.0" text="Product Name" />
@@ -208,12 +208,12 @@
                                           <TableColumn fx:id="products_tableView_col_priceUnit" prefWidth="75.0" text="Price/Unit" />
                                        </columns>
                                     </TableView>
-                                    <TextField fx:id="searchProduct_inputField" layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="homePage_searchProductInputField" layoutX="207.0" layoutY="35.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Button fx:id="searchProduct_btn" layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                    <Button fx:id="homePage_searchProductBtn" layoutX="278.0" layoutY="35.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                        <graphic>
                                           <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -222,9 +222,9 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="addNewProduct_btn" layoutX="152.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
-                                    <Button fx:id="modifyProduct_btn" layoutX="196.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
-                                    <Button fx:id="deleteProduct_btn" layoutX="255.0" layoutY="242.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
+                                    <Button fx:id="homePage_addNewProductBtn" layoutX="152.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickAddProductPageBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                    <Button fx:id="homePage_modifyProductBtn" layoutX="196.0" layoutY="242.0" mnemonicParsing="false" onAction="#clickModifyProductPageBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Modify" />
+                                    <Button fx:id="homePage_deleteProductBtn" layoutX="255.0" layoutY="242.0" mnemonicParsing="false" onAction="#deleteSelectedProduct" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Delete" />
                                  </children>
                               </AnchorPane>
                               <Button fx:id="LogOut_btn" layoutX="601.0" layoutY="19.0" mnemonicParsing="false" onAction="#logOutBtnAction" prefHeight="22.0" prefWidth="59.0" styleClass="close" stylesheets="@startPageDesign.css" text="Log Out">

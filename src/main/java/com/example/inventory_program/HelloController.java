@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -75,22 +76,34 @@ public class HelloController implements Initializable {
     private Button LogOut_btn;
 
     @FXML
-    private Button addNewPart_btn;
+    private Button homePage_searchPartBtn;
 
     @FXML
-    private Button addNewProduct_btn;
+    private TextField homePage_searchPartInputField;
 
     @FXML
-    private Button deletePart_btn;
+    private Button homePage_searchProductBtn;
 
     @FXML
-    private Button deleteProduct_btn;
+    private TextField homePage_searchProductInputField;
 
     @FXML
-    private Button modifyPart_btn;
+    private Button homePage_addNewPartBtn;
 
     @FXML
-    private Button modifyProduct_btn;
+    private Button homePage_addNewProductBtn;
+
+    @FXML
+    private Button homePage_deletePartBtn;
+
+    @FXML
+    private Button homePage_deleteProductBtn;
+
+    @FXML
+    private Button homePage_modifyPartBtn;
+
+    @FXML
+    private Button homePage_modifyProductBtn;
 
     @FXML
     private TableView<PartData> parts_tableView = new TableView<PartData>();
@@ -122,17 +135,6 @@ public class HelloController implements Initializable {
     @FXML
     private TableColumn<ProductData, String> products_tableView_col_productName = new TableColumn<>("product_name");
 
-    @FXML
-    private Button searchPart_btn;
-
-    @FXML
-    private TextField searchPart_inputField;
-
-    @FXML
-    private Button searchProduct_btn;
-
-    @FXML
-    private TextField searchProduct_inputField;
 
     @FXML
     private Button addPartPageBtn;
@@ -166,6 +168,85 @@ public class HelloController implements Initializable {
 
     @FXML
     private Button landingPage_closeBtn;
+
+    int index = -1;
+
+    //Method to get selected part records
+    @FXML
+    void getSelectedPart (MouseEvent event) {
+//        index = parts_tableView.getSelectionModel().getSelectedIndex();
+//        if(index <= -1) {
+//            return;
+//        } else{
+//        //EXAMPLE:
+//        //text_id.setText(col_id.getCellData(index).toString());
+//            parts_tableView_col_partID.getCellData(index).toString();
+//
+//        }
+    }
+
+    //Method to get selected product records
+    @FXML
+    void getSelectedProduct (MouseEvent event) {
+
+    }
+
+    //Method to delete selected part records
+    @FXML
+    private void deleteSelectedPart (ActionEvent event) {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        index = parts_tableView.getSelectionModel().getSelectedIndex();
+//        parts_tableView.getItems().remove(selectedItem);
+
+        if(index > -1) {
+            PreparedStatement pst;
+            PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
+
+            String deleteSelectedPart = "DELETE FROM parts WHERE partID = ?";
+
+            try {
+                pst = connectDB.prepareStatement(deleteSelectedPart);
+                pst.setString(1, selectedItem.getPartID().toString());
+                pst.execute();
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure that you want to delete this Part from the EM Inventory Management System?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if(option.get().equals(ButtonType.OK)) {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Data Part has been deleted");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Data Part has been successfully removed from the EM Inventory Management System");
+                    alert.showAndWait();
+
+                    viewEMInventoryManagementSystem();
+                } else {
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the data row that you want to delete.");
+            alert.showAndWait();
+        }
+
+    }
+
+    //Method to delete selected product records
+    @FXML
+    private void deleteSelectedProduct (ActionEvent event) {
+
+    }
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
 
@@ -351,6 +432,7 @@ public class HelloController implements Initializable {
 
     }
 
+    @FXML
     public void clickModifyPartPageBtn (ActionEvent event) throws IOException {
         modifyPartPageBtn.getScene().getWindow().hide();
         //create new stage
@@ -359,6 +441,13 @@ public class HelloController implements Initializable {
 
         //create view for FXML
         FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
+
+//        //Get modifyPart_page Controller : ModifyPartController
+//        ModifyPartController modifyPartController = modifyPartPageLoader.getController();
+//
+//        //Pass any data we want, we can have multiple method calls here
+//        modifyPartController.showSelectedPartDataInformation(nameScene1.getText(), ageScene1.getText());
+
 
         //set view in ppMainWindow
         modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
@@ -378,7 +467,7 @@ public class HelloController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Message");
             alert.setHeaderText(null);
-            alert.setContentText("Are you sure that you wan to Log Out?");
+            alert.setContentText("Are you sure that you want to Log Out?");
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {

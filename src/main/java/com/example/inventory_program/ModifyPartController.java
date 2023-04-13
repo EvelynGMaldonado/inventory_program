@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -36,6 +39,49 @@ public class ModifyPartController {
     @FXML
     private Button startBtn;
 
+    @FXML
+    private Button modifyPart_saveBtn;
+
+    @FXML
+    private ToggleGroup modifyPartSelectInHouseOutsourcedToggleGroup;
+
+    @FXML
+    private RadioButton modifyPartOutsourcedRadioBtn;
+
+    @FXML
+    private RadioButton modifyPartInHouseRadioBtn;
+
+    @FXML
+    private TextField modifyPart_partIDTextField;
+
+    @FXML
+    private TextField modifyPart_setPartName;
+
+    @FXML
+    private TextField modifyPart_setInventoryLevel;
+
+    @FXML
+    private TextField modifyPart_setMax;
+
+    @FXML
+    private TextField modifyPart_setMin;
+
+    @FXML
+    private TextField modifyPart_setPriceUnit;
+
+    @FXML
+    private TextField modifyPart_inputCompanyOrMachineInputField;
+
+    //display info from the row selected to be modified/edited at the home_page
+//    public void showSelectedPartDataInformation(String name, String age) {
+//        nameScene2.setText(name);
+//        ageScene2.setText(age);
+//
+//    };
+
+
+
+    //MENU
     public void modifyPartRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
 //        Stage stage1 = (Stage) startBtn.getScene().getWindow();

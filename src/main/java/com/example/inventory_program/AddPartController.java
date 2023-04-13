@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -84,11 +85,7 @@ public class AddPartController implements Initializable {
     @FXML
     private TextField addPart_partID;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        inHouseRadioBtn.setSelected(true);
 
-    }
     //Toggle Group - radio buttons functionality
     public void displayMachineIDOrCompanyName(ActionEvent event) {
         if(inHouseRadioBtn.isSelected()) {
@@ -284,4 +281,10 @@ public class AddPartController implements Initializable {
 //        Stage stage = (Stage) close.getScene().getWindow();
 //        stage.close();
 //    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        inHouseRadioBtn.setSelected(true);
+
+    }
 }
