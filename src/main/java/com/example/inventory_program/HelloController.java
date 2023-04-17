@@ -27,6 +27,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.example.inventory_program.PartData;
+import com.example.inventory_program.PartsAndProductsInventory;
+
 public class HelloController implements Initializable {
 //public class HelloController {
 
@@ -135,7 +138,6 @@ public class HelloController implements Initializable {
     @FXML
     private TableColumn<ProductData, String> products_tableView_col_productName = new TableColumn<>("product_name");
 
-
     @FXML
     private Button addPartPageBtn;
 
@@ -169,7 +171,17 @@ public class HelloController implements Initializable {
     @FXML
     private Button landingPage_closeBtn;
 
+    @FXML
+    private TextField modifyPart_setPartName = new TextField();
+
     int index = -1;
+
+    ObservableList<PartData> partList = FXCollections.observableArrayList();
+
+    ObservableList<ProductData> productList = FXCollections.observableArrayList();
+
+    //**new**
+    PartsAndProductsInventory partsAndProductsInventory;
 
     //Method to get selected part records
     @FXML
@@ -185,11 +197,6 @@ public class HelloController implements Initializable {
 //        }
     }
 
-    //Method to get selected product records
-    @FXML
-    void getSelectedProduct (MouseEvent event) {
-
-    }
 
     //Method to delete selected part records
     @FXML
@@ -206,9 +213,6 @@ public class HelloController implements Initializable {
             String deleteSelectedPart = "DELETE FROM parts WHERE partID = ?";
 
             try {
-//                pst = connectDB.prepareStatement(deleteSelectedPart);
-//                pst.setString(1, selectedItem.getPartID().toString());
-//                pst.execute();
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
@@ -248,15 +252,161 @@ public class HelloController implements Initializable {
 
     }
 
+    private ObservableList<RowPartData> rowPartDataList = FXCollections.observableArrayList();
+
+
+    //********#2 Modify part
+//    public void clickModifyPartPageBtn (ActionEvent event){
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
+//
+//        index = parts_tableView.getSelectionModel().getSelectedIndex();
+////        parts_tableView.getItems().remove(selectedItem);
+//
+//        if(index > -1) {
+//            PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
+//            String rowPartName = "";
+////            String rowSql = "SELECT partID, part_name, stock, price_unit, min, max, machineID, company_name FROM parts WHERE partID =?";
+//
+//            String modifySelectedPart = "SELECT * FROM parts WHERE partID = '" + selectedItem.getPartID() + "'";
+////
+//            try {
+//                Statement statement = connectDB.createStatement();
+//                ResultSet querySelectedPartResult = statement.executeQuery(modifySelectedPart);
+////                PreparedStatement pst = connectDB.prepareStatement(rowSql);
+////                pst.setString(1, selectedItem.getPartID().toString());
+////                ResultSet rs = pst.executeQuery();
+//                 if(querySelectedPartResult.next()) {
+//                     String rowPartID = querySelectedPartResult.getString("partID");
+//
+//                     rowPartName = querySelectedPartResult.getString("part_name");
+//                     modifyPart_setPartName.setText(rowPartName);
+//                     String rowPartStock = querySelectedPartResult.getString("stock");
+//                     String rowPartPriceUnit = querySelectedPartResult.getString("price_unit");
+//                     String rowPartMin = querySelectedPartResult.getString("min");
+//                     String rowPartMax = querySelectedPartResult.getString("max");
+//                     String rowPartMachineID = querySelectedPartResult.getString("machineID");
+//                     String rowPartCompanyName = querySelectedPartResult.getString("company_name");
+//
+//                     System.out.println(rowPartID + rowPartName+ rowPartStock+ rowPartPriceUnit+ rowPartMin+ rowPartMax+ rowPartMachineID+ rowPartCompanyName);
+//
+//                 }
+//////                while(querySelectedPartResult.next()) {
+//////                    System.out.println(querySelectedPartResult.getString("partID"));
+//////////                    System.out.println(querySelectedPartResult.getString("part_name"));
+//////                    getRowPartName = querySelectedPartResult.getString("part_name");
+//////                    System.out.println("This new try... getRowPartName is: " + getRowPartName);
+//////
+//////                }
+//                modifyPartPageBtn.getScene().getWindow().hide();
+//                Stage modifyPartPageWindow = new Stage();
+//                modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+//
+//                //create view for FXML
+//                FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
+//
+//                //set view in ppMainWindow
+//                modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
+//
+//                //launch
+//                modifyPartPageWindow.show();
+//
+//                if(modifyPart_setPartName.getText() == null || modifyPart_setPartName.getText() == "") {
+//                    modifyPart_setPartName.setText(rowPartName);
+//                }
+//            } catch(Exception e) {
+//                e.printStackTrace();
+//                e.getCause();
+//            }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error message");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Please select the data row that you want to delete.");
+//            alert.showAndWait();
+//        }
+//
+//        modifyPart_setPartName.setText("hello!!");
+//
+//    }
+
+    @FXML
+    public void clickModifyPartPageBtn (ActionEvent event){
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        index = parts_tableView.getSelectionModel().getSelectedIndex();
+//        parts_tableView.getItems().remove(selectedItem);
+
+        if(index > -1) {
+            PreparedStatement pst;
+
+            PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
+            String getPartName = "";
+            String modifySelectedPart = "SELECT * FROM parts WHERE partID = '" + selectedItem.getPartID() + "'";
+            try {
+                Statement statement = connectDB.createStatement();
+                ResultSet querySelectedPartResult = statement.executeQuery(modifySelectedPart);
+               // System.out.println("Modify part is: "+querySelectedPartResult.);
+                while(querySelectedPartResult.next()) {
+//                    System.out.println(querySelectedPartResult.getString("partID"));
+//                    System.out.println(querySelectedPartResult.getString("part_name"));
+                    getPartName = querySelectedPartResult.getString("part_name");
+                    System.out.println("getPartName is: " + getPartName);
+
+                }
+
+                modifyPartPageBtn.getScene().getWindow().hide();
+                //create new stage
+                Stage modifyPartPageWindow = new Stage();
+                modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+                //create view for FXML
+                FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
+
+////        //Get modifyPart_page Controller : ModifyPartController
+//        ModifyPartController modifyPartController = modifyPartPageLoader.getController();
+
+////
+////        //Pass any data we want, we can have multiple method calls here
+//        modifyPartController.showSelectedPartDataInformation(getPartName);
+
+
+                //***give it a try*****
+                ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem);
+                modifyPartPageLoader.setController(modifyPartController);
+                modifyPartController.startingToModify(getPartName);
+
+
+                //set view in ppMainWindow
+                modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
+
+                //launch
+                modifyPartPageWindow.show();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                e.getCause();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the data row that you want to delete.");
+            alert.showAndWait();
+        }
+
+    }
+
     //Method to delete selected product records
     @FXML
     private void deleteSelectedProduct (ActionEvent event) {
 
     }
 
-    ObservableList<PartData> partList = FXCollections.observableArrayList();
-
-    ObservableList<ProductData> productList = FXCollections.observableArrayList();
 
     //!!!!!!REFRESH TABLE AFTER ADDING A NEW USER!!!!
 //    public void refreshPartsTable() {
@@ -438,30 +588,30 @@ public class HelloController implements Initializable {
 
     }
 
-    @FXML
-    public void clickModifyPartPageBtn (ActionEvent event) throws IOException {
-        modifyPartPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyPartPageWindow = new Stage();
-        modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
-
-//        //Get modifyPart_page Controller : ModifyPartController
-//        ModifyPartController modifyPartController = modifyPartPageLoader.getController();
+//    @FXML
+//    public void clickModifyPartPageBtn (ActionEvent event) throws IOException {
+//        modifyPartPageBtn.getScene().getWindow().hide();
+//        //create new stage
+//        Stage modifyPartPageWindow = new Stage();
+//        modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
 //
-//        //Pass any data we want, we can have multiple method calls here
-//        modifyPartController.showSelectedPartDataInformation(nameScene1.getText(), ageScene1.getText());
-
-
-        //set view in ppMainWindow
-        modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
-
-        //launch
-        modifyPartPageWindow.show();
-
-    }
+//        //create view for FXML
+//        FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
+//
+////        //Get modifyPart_page Controller : ModifyPartController
+////        ModifyPartController modifyPartController = modifyPartPageLoader.getController();
+////
+////        //Pass any data we want, we can have multiple method calls here
+////        modifyPartController.showSelectedPartDataInformation(nameScene1.getText(), ageScene1.getText());
+//
+//
+//        //set view in ppMainWindow
+//        modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
+//
+//        //launch
+//        modifyPartPageWindow.show();
+//
+//    }
 
     public void closeBtnAction(ActionEvent e) {
         Stage stage = (Stage) landingPage_closeBtn.getScene().getWindow();
@@ -558,8 +708,9 @@ public class HelloController implements Initializable {
 
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
-        //**new
+
         String productsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
+
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
@@ -616,17 +767,15 @@ public class HelloController implements Initializable {
         }
         try {
             Statement statement = connectDB.createStatement();
-            //**new
             ResultSet queryProductsOutput = statement.executeQuery(productsViewQuery);
 
-            //**new
             while (queryProductsOutput.next()) {
                 productList.add(new ProductData(queryProductsOutput.getInt("productID"),
                         queryProductsOutput.getString("product_name"),
                         queryProductsOutput.getInt("stock"),
                         queryProductsOutput.getBigDecimal("price_unit")));
             }
-            //**new
+
             products_tableView_col_productID.setCellValueFactory(new PropertyValueFactory<>("productID"));
             products_tableView_col_productName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
             products_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -639,5 +788,6 @@ public class HelloController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
+
     }
 }

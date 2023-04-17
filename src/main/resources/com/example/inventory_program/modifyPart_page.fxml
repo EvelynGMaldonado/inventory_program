@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="modifyPart_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventory_program.ModifyPartController">
+<StackPane fx:id="modifyPart_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -27,7 +27,7 @@
                      <children>
                         <AnchorPane prefHeight="40.0" prefWidth="600.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="modifyPart_closeBtn" layoutX="574.0" layoutY="1.0" mnemonicParsing="false" onAction="#modifyPartRedirectsToEMIMSHomePage" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
+                              <Button fx:id="modifyPart_closeBtn" layoutX="574.0" layoutY="1.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
                               <Label layoutX="42.0" layoutY="8.0" text="Inventory Management System">
                                  <textFill>
                                     <LinearGradient endX="1.0" endY="1.0">
@@ -98,23 +98,23 @@
                                  </font>
                               </Label>
                               <Line endX="-14.000022888183594" endY="-1.52587890625E-5" layoutX="113.0" layoutY="114.0" startX="-104.5" startY="-1.52587890625E-5" stroke="#808080c5" />
-                              <Button fx:id="startBtn" layoutX="11.0" layoutY="129.0" mnemonicParsing="false" onAction="#modifyPartRedirectsToEMIMSHomePage" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Home" textFill="WHITE" />
-                              <Button fx:id="addProductPageBtn" layoutX="11.0" layoutY="163.0" mnemonicParsing="false" onAction="#modifyPartRedirectsToAddProductPage" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Product" textFill="WHITE">
+                              <Button fx:id="startBtn" layoutX="11.0" layoutY="129.0" mnemonicParsing="false" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Home" textFill="WHITE" />
+                              <Button fx:id="addProductPageBtn" layoutX="11.0" layoutY="163.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Product" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="modifyProductPageBtn" layoutX="11.0" layoutY="201.0" mnemonicParsing="false" onAction="#modifyPartRedirectsToModifyProductPage" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Modify Product" textFill="WHITE">
+                              <Button fx:id="modifyProductPageBtn" layoutX="11.0" layoutY="201.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Modify Product" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" onAction="#modifyPartRedirectsToAddPartPage" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
+                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="11.0" layoutY="274.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" styleClass="em-currentBtn" stylesheets="@startPageDesign.css" text="Modify Part" textFill="WHITE">
+                              <Button fx:id="modifyPart_displayCompanyOrMachineLabel" layoutX="11.0" layoutY="274.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" styleClass="em-currentBtn" stylesheets="@startPageDesign.css" text="Modify Part" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -151,7 +151,7 @@
                                     <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <AnchorPane layoutX="15.0" layoutY="38.0" prefHeight="297.0" prefWidth="451.0" stylesheets="@startPageDesign.css">
+                              <AnchorPane fx:id="modifyPart_View" layoutX="15.0" layoutY="38.0" prefHeight="297.0" prefWidth="451.0" stylesheets="@startPageDesign.css">
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
@@ -170,49 +170,49 @@
                                        </styleClass>
                                        <children>
                                           <Label layoutX="14.0" layoutY="19.0" prefHeight="17.0" prefWidth="83.0" text="Part ID:" />
-                                          <TextField fx:id="modifyPart_partIDTextField" editable="false" layoutX="108.0" layoutY="14.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
+                                          <TextField fx:id="modifyPart_partIDTextField" editable="false" layoutX="108.0" layoutY="14.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font name="System Italic" size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="53.0" prefHeight="17.0" prefWidth="83.0" text="Part Name:" />
-                                          <TextField fx:id="modifyPart_setPartName" layoutX="108.0" layoutY="48.0" prefHeight="27.0" prefWidth="101.0" promptText="part name" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="modifyPart_setPartName" layoutX="108.0" layoutY="48.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="87.0" prefHeight="17.0" prefWidth="83.0" text="Inventory Level:" />
-                                          <TextField fx:id="modifyPart_setInventoryLevel" layoutX="108.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" promptText="inventory level" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="modifyPart_setInventoryLevel" layoutX="108.0" layoutY="82.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="121.0" prefHeight="17.0" prefWidth="83.0" text="Price per Unit:" />
-                                          <TextField fx:id="modifyPart_setPriceUnit" layoutX="108.0" layoutY="116.0" prefHeight="27.0" prefWidth="101.0" promptText="price per unit:" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="modifyPart_setPriceUnit" layoutX="108.0" layoutY="116.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="155.0" prefHeight="17.0" prefWidth="83.0" text="Max:" textAlignment="RIGHT" />
-                                          <TextField fx:id="modifyPart_setMax" layoutX="108.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="max" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="modifyPart_setMax" layoutX="108.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <Label layoutX="14.0" layoutY="189.0" prefHeight="17.0" prefWidth="83.0" text="Machine ID:" textAlignment="RIGHT" />
-                                          <TextField fx:id="modifyPart_inputCompanyOrMachineInputField" layoutX="108.0" layoutY="184.0" prefHeight="27.0" prefWidth="101.0" promptText="machine ID" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <Label fx:id="modifyPart_displayCompanyOrMachineLabel" layoutX="14.0" layoutY="189.0" prefHeight="17.0" prefWidth="83.0" text="Machine ID:" textAlignment="RIGHT" />
+                                          <TextField fx:id="modifyPart_inputCompanyOrMachineInputField" layoutX="108.0" layoutY="184.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Label layoutX="238.0" layoutY="155.0" prefHeight="17.0" prefWidth="37.0" text="Min:" textAlignment="RIGHT" />
-                                          <TextField fx:id="modifyPart_setMin" layoutX="275.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="min" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="modifyPart_setMin" layoutX="275.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                           <Button fx:id="modifyPart_saveBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
-                                          <Button fx:id="modifyPart_cancelBtn" layoutX="326.0" layoutY="198.0" mnemonicParsing="false" onAction="#modifyPartRedirectsToEMIMSHomePage" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
+                                          <Button fx:id="modifyPart_cancelBtn" layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>
                                  </children>

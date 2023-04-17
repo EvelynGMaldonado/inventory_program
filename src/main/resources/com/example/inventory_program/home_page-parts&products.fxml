@@ -200,7 +200,7 @@
                                           <Font name="Tahoma" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="products_tableView" layoutX="10.0" layoutY="70.0" onMouseClicked="#getSelectedProduct" prefHeight="159.0" prefWidth="300.0">
+                                    <TableView fx:id="products_tableView" layoutX="10.0" layoutY="70.0" prefHeight="159.0" prefWidth="300.0">
                                        <columns>
                                           <TableColumn fx:id="products_tableView_col_productID" prefWidth="75.0" text="Product ID" />
                                           <TableColumn fx:id="products_tableView_col_productName" prefWidth="75.0" text="Product Name" />

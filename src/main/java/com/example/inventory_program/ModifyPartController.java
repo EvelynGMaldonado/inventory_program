@@ -1,19 +1,33 @@
 package com.example.inventory_program;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import com.example.inventory_program.HelloController;
+import com.example.inventory_program.PartData;
+import com.example.inventory_program.PartsAndProductsInventory;
+import java.sql.*;
 
-public class ModifyPartController {
+public class ModifyPartController implements Initializable {
+
+    HelloController helloController;
+    PartData partData;
+    PartsAndProductsInventory partsAndProductsInventory;
+
 
     @FXML
     private Button addPartPageBtn;
@@ -55,7 +69,7 @@ public class ModifyPartController {
     private TextField modifyPart_partIDTextField;
 
     @FXML
-    private TextField modifyPart_setPartName;
+    private TextField modifyPart_setPartName = new TextField();
 
     @FXML
     private TextField modifyPart_setInventoryLevel;
@@ -81,77 +95,54 @@ public class ModifyPartController {
 
 
 
-    //MENU
-    public void modifyPartRedirectsToEMIMSHomePage() throws IOException {
-        startBtn.getScene().getWindow().hide();
-//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
-//        stage1.close();
-        //create new stage
-        Stage ppMainWindow = new Stage();
-        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
-
-        //set view in ppMainWindow
-        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
-
-        //launch
-        ppMainWindow.show();
-
+    public static String modPart;
+//**new ok!!
+    public ModifyPartController(PartsAndProductsInventory partsAndProductsInventory, PartData partData) {
+        this.partsAndProductsInventory = partsAndProductsInventory;
+        this.partData = partData;
     }
 
-    public void modifyPartRedirectsToAddPartPage (ActionEvent event) throws IOException {
-        addPartPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage addPartPageWindow = new Stage();
-        addPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+    //**new ok!!
+    public void startingToModify(String getPartName) {
+//        modifyPart_setPartName.setText(getPartName);
+//        modifyPart_setPartName.setPromptText(getPartName);
+        System.out.println("we are in modify part controller now!! showing the: " + getPartName);
 
-        //create view for FXML
-        FXMLLoader addPartPageLoader = new FXMLLoader(getClass().getResource("addPart_page.fxml"));
+        if(modifyPart_setPartName.getText() == "" || modifyPart_setPartName == null) {
+           modifyPart_setPartName.setText(getPartName);
 
-        //set view in ppMainWindow
-        addPartPageWindow.setScene(new Scene(addPartPageLoader.load(), 600, 400));
-
-        //launch
-        addPartPageWindow.show();
-
-    }
-
-    public void modifyPartRedirectsToAddProductPage (ActionEvent event) throws IOException {
-        addProductPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage addProductPageWindow = new Stage();
-        addProductPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader addProductPageLoader = new FXMLLoader(getClass().getResource("addProduct_page.fxml"));
-
-        //set view in ppMainWindow
-        addProductPageWindow.setScene(new Scene(addProductPageLoader.load(), 800, 610));
-
-        //launch
-        addProductPageWindow.show();
+        }
+//        if (!(modifyPart_setPartName == null) || modifyPart_setPartName.equals("")) {
+//            modifyPart_setPartName.setText("hello!");
+//        }
 
     }
 
 
-    public void modifyPartRedirectsToModifyProductPage (ActionEvent event) throws IOException {
-        modifyProductPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyProductPageWindow = new Stage();
-        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+//    @FXML
+//    void Initalize(MouseEvent event) {
+//        System.out.println("Constructor for Part");
+//    }
 
-        //create view for FXML
-        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
 
-        //set view in ppMainWindow
-        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
+//    public void showSelectedPartDataInformation(String part_name) {
+//        System.out.println("we are on showselectedpartDataInformation");
+//        modifyPart_setPartName.setText(part_name);
+//    }
 
-        //launch
-        modifyProductPageWindow.show();
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        modifyPart_setPartName.setText("hellooooo");
 
+
+//        Platform.runLater(() -> {
+//            startingToModify();
+//        });
+//
     }
+
+
+
 
 //    public void closeBtnAction(ActionEvent e) {
 //        Stage stage = (Stage) close.getScene().getWindow();
