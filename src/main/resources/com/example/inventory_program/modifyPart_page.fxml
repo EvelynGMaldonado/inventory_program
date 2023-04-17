@@ -114,7 +114,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="modifyPart_displayCompanyOrMachineLabel" layoutX="11.0" layoutY="274.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" styleClass="em-currentBtn" stylesheets="@startPageDesign.css" text="Modify Part" textFill="WHITE">
+                              <Button layoutX="11.0" layoutY="274.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" styleClass="em-currentBtn" stylesheets="@startPageDesign.css" text="Modify Part" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>

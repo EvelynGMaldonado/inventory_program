@@ -166,9 +166,6 @@ public class HelloController implements Initializable {
     @FXML
     private Button landingPage_closeBtn;
 
-    @FXML
-    private TextField modifyPart_setPartName = new TextField();
-
     int index = -1;
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
@@ -338,12 +335,12 @@ public class HelloController implements Initializable {
             PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
             String getSinglePartID = "";
             String getSinglePartName = "";
-//            String getSinglePartStock = "";
-//            String getSinglePartPriceUnit = "";
-//            String getSinglePartMin = "";
-//            String getSinglePartMax = "";
-//            String getSinglePartMachineID = "";
-//            String getSinglePartCompanyName = "";
+            String getSinglePartStock = "";
+            String getSinglePartPriceUnit = "";
+            String getSinglePartMin = "";
+            String getSinglePartMax = "";
+            String getSinglePartMachineID = "";
+            String getSinglePartCompanyName = "";
 
             String modifySelectedPart = "SELECT * FROM parts WHERE partID = '" + selectedItem.getPartID() + "'";
             try {
@@ -356,12 +353,15 @@ public class HelloController implements Initializable {
                     getSinglePartID = querySelectedPartResult.getString("partID");
                     getSinglePartName = querySelectedPartResult.getString("part_name");
                     System.out.println("getPartName is: " + getSinglePartName);
-//                    getSinglePartStock = querySelectedPartResult.getString("stock");
-//                    getSinglePartPriceUnit = querySelectedPartResult.getString("price_unit");
-//                    getSinglePartMin = querySelectedPartResult.getString("min");
-//                    getSinglePartMax = querySelectedPartResult.getString("max");
-//                    getSinglePartMachineID = querySelectedPartResult.getString("machineID");
-//                    getSinglePartCompanyName = querySelectedPartResult.getString("company_name");
+                    getSinglePartStock = querySelectedPartResult.getString("stock");
+                    getSinglePartPriceUnit = querySelectedPartResult.getString("price_unit");
+                    getSinglePartMin = querySelectedPartResult.getString("min");
+                    getSinglePartMax = querySelectedPartResult.getString("max");
+
+                    getSinglePartMachineID = querySelectedPartResult.getString("machineID");
+                    System.out.println("getSinglePartMachineID is: " + getSinglePartMachineID);
+                    getSinglePartCompanyName = querySelectedPartResult.getString("company_name");
+                    System.out.println("getSinglePartCompanyName is: " + getSinglePartCompanyName);
                 }
                 modifyPartPageBtn.getScene().getWindow().hide();
                 //create new stage
@@ -377,13 +377,10 @@ public class HelloController implements Initializable {
 ////        //Pass any data we want, we can have multiple method calls here
 //        modifyPartController.showSelectedPartDataInformation(getPartName);
 
-
                 //***give it a try*****
-//                ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem, getSinglePartID, getSinglePartName, getSinglePartStock, getSinglePartPriceUnit, getSinglePartMin, getSinglePartMax);
-                ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem, getSinglePartID, getSinglePartName);
+                ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem, getSinglePartID, getSinglePartName, getSinglePartStock, getSinglePartPriceUnit, getSinglePartMin, getSinglePartMax, getSinglePartMachineID, getSinglePartCompanyName);
                 modifyPartPageLoader.setController(modifyPartController);
-//                modifyPartController.startingToModify(getPartName);
-
+//                modifyPartController.checkingIfInOrOutSourced(getSinglePartMachineID, getSinglePartCompanyName);
 
                 //set view in ppMainWindow
                 modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
