@@ -2,6 +2,7 @@ package com.example.inventory_program;
 
 import java.math.BigDecimal;
 
+//public class RowPartData extends PartData {
 public class RowPartData {
     private Integer partID;
     private String part_name;
@@ -13,14 +14,22 @@ public class RowPartData {
     private String company_name;
 
     public RowPartData(Integer partID, String part_name, Integer stock,BigDecimal price_unit, Integer min, Integer max, Integer machineID, String company_name) {
-        this.partID = partID;
-        this.part_name = part_name;
-        this.stock = stock;
-        this.price_unit = price_unit;
-        this.min = min;
-        this.max = max;
-        this.machineID = machineID;
-        this.company_name = company_name;
+        setPartID(partID);
+        setPart_name(part_name);
+        setStock(stock);
+        setPrice_unit(price_unit);
+        setMin(min);
+        setMax(max);
+        setMachineID(machineID);
+        setCompany_name(company_name);
+        //        this.partID = partID;
+//        this.part_name = part_name;
+//        this.stock = stock;
+//        this.price_unit = price_unit;
+//        this.min = min;
+//        this.max = max;
+//        this.machineID = machineID;
+//        this.company_name = company_name;
     }
 
     public Integer getPartID() {

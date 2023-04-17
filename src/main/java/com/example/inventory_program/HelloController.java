@@ -1,10 +1,7 @@
 package com.example.inventory_program;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,14 +18,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.example.inventory_program.PartData;
-import com.example.inventory_program.PartsAndProductsInventory;
 
 public class HelloController implements Initializable {
 //public class HelloController {
@@ -341,7 +334,15 @@ public class HelloController implements Initializable {
             PreparedStatement pst;
 
             PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
-            String getPartName = "";
+            String getSinglePartID = "";
+            String getSinglePartName = "";
+//            String getSinglePartStock = "";
+//            String getSinglePartPriceUnit = "";
+//            String getSinglePartMin = "";
+//            String getSinglePartMax = "";
+//            String getSinglePartMachineID = "";
+//            String getSinglePartCompanyName = "";
+
             String modifySelectedPart = "SELECT * FROM parts WHERE partID = '" + selectedItem.getPartID() + "'";
             try {
                 Statement statement = connectDB.createStatement();
@@ -350,11 +351,16 @@ public class HelloController implements Initializable {
                 while(querySelectedPartResult.next()) {
 //                    System.out.println(querySelectedPartResult.getString("partID"));
 //                    System.out.println(querySelectedPartResult.getString("part_name"));
-                    getPartName = querySelectedPartResult.getString("part_name");
-                    System.out.println("getPartName is: " + getPartName);
-
+                    getSinglePartID = querySelectedPartResult.getString("partID");
+                    getSinglePartName = querySelectedPartResult.getString("part_name");
+                    System.out.println("getPartName is: " + getSinglePartName);
+//                    getSinglePartStock = querySelectedPartResult.getString("stock");
+//                    getSinglePartPriceUnit = querySelectedPartResult.getString("price_unit");
+//                    getSinglePartMin = querySelectedPartResult.getString("min");
+//                    getSinglePartMax = querySelectedPartResult.getString("max");
+//                    getSinglePartMachineID = querySelectedPartResult.getString("machineID");
+//                    getSinglePartCompanyName = querySelectedPartResult.getString("company_name");
                 }
-
                 modifyPartPageBtn.getScene().getWindow().hide();
                 //create new stage
                 Stage modifyPartPageWindow = new Stage();
@@ -365,16 +371,16 @@ public class HelloController implements Initializable {
 
 ////        //Get modifyPart_page Controller : ModifyPartController
 //        ModifyPartController modifyPartController = modifyPartPageLoader.getController();
-
 ////
 ////        //Pass any data we want, we can have multiple method calls here
 //        modifyPartController.showSelectedPartDataInformation(getPartName);
 
 
                 //***give it a try*****
-                ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem);
+//                ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem, getSinglePartID, getSinglePartName, getSinglePartStock, getSinglePartPriceUnit, getSinglePartMin, getSinglePartMax);
+                ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem, getSinglePartID, getSinglePartName);
                 modifyPartPageLoader.setController(modifyPartController);
-                modifyPartController.startingToModify(getPartName);
+//                modifyPartController.startingToModify(getPartName);
 
 
                 //set view in ppMainWindow
@@ -383,14 +389,12 @@ public class HelloController implements Initializable {
                 //launch
                 modifyPartPageWindow.show();
 
-
             } catch (IOException e) {
                 e.printStackTrace();
                 e.getCause();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
@@ -398,7 +402,6 @@ public class HelloController implements Initializable {
             alert.setContentText("Please select the data row that you want to delete.");
             alert.showAndWait();
         }
-
     }
 
     //Method to delete selected product records

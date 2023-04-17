@@ -1,26 +1,12 @@
 package com.example.inventory_program;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.example.inventory_program.HelloController;
-import com.example.inventory_program.PartData;
-import com.example.inventory_program.PartsAndProductsInventory;
-import java.sql.*;
 
 public class ModifyPartController implements Initializable {
 
@@ -86,6 +72,18 @@ public class ModifyPartController implements Initializable {
     @FXML
     private TextField modifyPart_inputCompanyOrMachineInputField;
 
+//    @FXML
+//    private Label modifyPart_displayCompanyOrMachineLabel;
+
+    private final String getSinglePartID;
+    private final String getSinglePartName;
+//    private final String getSinglePartStock;
+//    private final String getSinglePartPriceUnit;
+//    private final String getSinglePartMin;
+//    private final String getSinglePartMax;
+//    private final String getSinglePartMachineID;
+//    private final String getSinglePartCompanyName;
+
     //display info from the row selected to be modified/edited at the home_page
 //    public void showSelectedPartDataInformation(String name, String age) {
 //        nameScene2.setText(name);
@@ -97,26 +95,33 @@ public class ModifyPartController implements Initializable {
 
     public static String modPart;
 //**new ok!!
-    public ModifyPartController(PartsAndProductsInventory partsAndProductsInventory, PartData partData) {
-        this.partsAndProductsInventory = partsAndProductsInventory;
+
+//    public ModifyPartController(PartsAndProductsInventory partsAndProductsInventory, PartData partData, String getSinglePartID, String getSinglePartName, String getSinglePartStock, String getSinglePartPriceUnit, String getSinglePartMin, String getSinglePartMax) {
+public ModifyPartController(PartsAndProductsInventory partsAndProductsInventory, PartData partData, String getSinglePartID, String getSinglePartName) {
+    this.partsAndProductsInventory = partsAndProductsInventory;
         this.partData = partData;
-    }
+        this.getSinglePartID = getSinglePartID;
+        this.getSinglePartName = getSinglePartName;
+//        this.getSinglePartStock= getSinglePartStock;
+//        this.getSinglePartPriceUnit= getSinglePartPriceUnit;
+//        this.getSinglePartMin= getSinglePartMin;
+//        this.getSinglePartMax= getSinglePartMax;
+//        this.getSinglePartMachineID= getSinglePartMachineID;
+//        this.getSinglePartCompanyName= getSinglePartCompanyName;
+}
 
-    //**new ok!!
-    public void startingToModify(String getPartName) {
-//        modifyPart_setPartName.setText(getPartName);
-//        modifyPart_setPartName.setPromptText(getPartName);
-        System.out.println("we are in modify part controller now!! showing the: " + getPartName);
-
-        if(modifyPart_setPartName.getText() == "" || modifyPart_setPartName == null) {
-           modifyPart_setPartName.setText(getPartName);
-
-        }
-//        if (!(modifyPart_setPartName == null) || modifyPart_setPartName.equals("")) {
-//            modifyPart_setPartName.setText("hello!");
+//    //**new ok!! testing
+//    public void startingToModify(String getSinglePartName) {
+////        modifyPart_setPartName.setText(getPartName);
+////        modifyPart_setPartName.setPromptText(getPartName);
+//        System.out.println("we are in modify part controller now!! showing the: " + getSinglePartName);
+//        if(modifyPart_setPartName.getText() == "" || modifyPart_setPartName == null) {
+//           modifyPart_setPartName.setText(getSinglePartName);
 //        }
-
-    }
+////        if (!(modifyPart_setPartName == null) || modifyPart_setPartName.equals("")) {
+////            modifyPart_setPartName.setText("hello!");
+////        }
+//    }
 
 
 //    @FXML
@@ -132,7 +137,22 @@ public class ModifyPartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        modifyPart_setPartName.setText("hellooooo");
+//        modifyPart_setPartName.setText("hellooooo");
+        modifyPart_partIDTextField.setText(getSinglePartID);
+        modifyPart_setPartName.setText(getSinglePartName);
+//        modifyPart_setInventoryLevel.setText(getSinglePartStock);
+//        modifyPart_setPriceUnit.setText(getSinglePartPriceUnit);
+//        modifyPart_setMin.setText(getSinglePartMin);
+//        modifyPart_setMax.setText(getSinglePartMax);
+//        if(!getSinglePartMachineID.trim().isEmpty()) {
+//            modifyPartInHouseRadioBtn.setSelected(true);
+//            modifyPart_displayCompanyOrMachineLabel.setText("Machine ID:");
+//            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartMachineID);
+//        } else if(!getSinglePartCompanyName.trim().isEmpty()) {
+//            modifyPartOutsourcedRadioBtn.setSelected(true);
+//            modifyPart_displayCompanyOrMachineLabel.setText("Company Name:");
+//            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartCompanyName);
+//        }
 
 
 //        Platform.runLater(() -> {
