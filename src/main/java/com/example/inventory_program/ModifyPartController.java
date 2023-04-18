@@ -1,11 +1,20 @@
 package com.example.inventory_program;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModifyPartController implements Initializable {
@@ -104,6 +113,162 @@ public class ModifyPartController implements Initializable {
         this.getSinglePartMax= getSinglePartMax;
         this.getSinglePartMachineID= getSinglePartMachineID;
         this.getSinglePartCompanyName= getSinglePartCompanyName;
+    }
+
+    @FXML
+    public void clickSaveUpdatedPartBtn(ActionEvent event) {
+        //Part Category Selection Validation - No null Accepted ~ it has to select inHouse or Outsourced
+        if(modifyPartInHouseRadioBtn.isSelected() || modifyPartOutsourcedRadioBtn.isSelected()) {
+            //Not null accepted Input validation checks that none of the fields are blank or empty...
+            if(!modifyPart_setPartName.getText().trim().isEmpty() || !modifyPart_setInventoryLevel.getText().trim().isEmpty() || modifyPart_setPriceUnit.getText().trim().isEmpty() || !modifyPart_setMax.getText().trim().isEmpty() || !modifyPart_setMin.getText().trim().isEmpty() || !modifyPart_inputCompanyOrMachineInputField.getText().trim().isEmpty()) {
+                //check if the part name is available or if it already exists using the validatePartName method
+                validateUpdatedPartNameAndPartID();
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields.");
+                alert.showAndWait();
+            }
+        } else {
+            //alert error when part category hasn't been selected
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the Part Category: In-House or Outsourced.");
+            alert.showAndWait();
+        }
+    }
+
+    public void validateUpdatedPartNameAndPartID() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        String verifyUpdatedPartNameMatchesPartID = "SELECT count(1) FROM parts WHERE part_name = '" + modifyPart_setPartName.getText() + "' AND partID = '" + modifyPart_partIDTextField.getText() +"'";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryUniqueUpdatedPartNameAndPartIDResult = statement.executeQuery(verifyUpdatedPartNameMatchesPartID);
+
+            while(queryUniqueUpdatedPartNameAndPartIDResult.next()) {
+                //if updated part name matches with the ID... call the UpdatePart(); method
+                if(queryUniqueUpdatedPartNameAndPartIDResult.getInt(1) == 1) {
+                    //                    messageLabel.setText("Part Name already exists. Please try again.");
+                    UpdatePart();
+                } else {
+                    //if updated part name does not match with the ID... call the verifyIfPartNameAlreadyExists(); method
+                  verifyIfPartNameAlreadyExists();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    };
+
+    public void verifyIfPartNameAlreadyExists() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        String verifyPartNameAvailability = "SELECT count(1) FROM parts WHERE part_name = '" + modifyPart_setPartName.getText() + "'";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryUniqueUpdatedPartNameResult = statement.executeQuery(verifyPartNameAvailability);
+
+            while(queryUniqueUpdatedPartNameResult.next()) {
+                //if updated part name already exists in our DB, but it does not match with the current ID ... show an error alert
+                if(queryUniqueUpdatedPartNameResult.getInt(1) == 1) {
+                    //                    messageLabel.setText("Part Name already exists. Please try again.");
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Part Name already exists and has a different ID. Please use a different part name or look for the part name in the dashboard, select the row, and click on the Modify button.");
+                    alert.showAndWait();
+                } else {
+                    //if updated part name does not exist in our DB, and it does not match with the current ID... then call the call the UpdatePart(); method.
+                    UpdatePart();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    };
+
+    public void UpdatePart() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String modifyPage_partID = modifyPart_partIDTextField.getText();
+        String updatedPartName = modifyPart_setPartName.getText();
+        String updatedPartInventoryLevel = modifyPart_setInventoryLevel.getText();
+        String updatedPartPriceUnit = modifyPart_setPriceUnit.getText();
+        String updatedPartMax= modifyPart_setMax.getText();
+        String updatedPartMin = modifyPart_setMin.getText();
+
+
+        if(modifyPartInHouseRadioBtn.isSelected()) {
+            String updatedMachineId = modifyPart_inputCompanyOrMachineInputField.getText();
+            String updateInHousePartInDB = "UPDATE parts SET part_name = '" + updatedPartName + "', stock = '" + updatedPartInventoryLevel + "', price_unit = '" + updatedPartPriceUnit + "', min = '" + updatedPartMin + "', max = '" + updatedPartMax + "', machineID = '" + updatedMachineId + "' WHERE partID = '" + modifyPage_partID + "' ";
+
+            try {
+                Statement statement = connectDB.createStatement();
+                statement.executeUpdate(updateInHousePartInDB);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful In-House Part Update");
+                alert.setHeaderText(null);
+                alert.setContentText("In House Part has been successfully updated in EM Inventory Management System");
+                alert.showAndWait();
+
+                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                modifyPartRedirectsToEMIMSHomePage();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+
+        } else if(modifyPartOutsourcedRadioBtn.isSelected()){
+            String updatedCompanyName = modifyPart_inputCompanyOrMachineInputField.getText();
+            String updateOutsourcedPartInDB = "UPDATE parts SET part_name = '" + updatedPartName + "', stock = '" + updatedPartInventoryLevel + "', price_unit = '" + updatedPartPriceUnit + "', min = '" + updatedPartMin + "', max = '" + updatedPartMax + "', company_name = '" + updatedCompanyName + "' WHERE partID = '" + modifyPage_partID + "' ";
+
+            try {
+                Statement statement = connectDB.createStatement();
+                statement.executeUpdate(updateOutsourcedPartInDB);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful Outsourced Part Update");
+                alert.setHeaderText(null);
+                alert.setContentText("Outsourced Part has been successfully updated in EM Inventory Management System");
+                alert.showAndWait();
+
+                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                modifyPartRedirectsToEMIMSHomePage();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+        }
+    };
+
+    public void modifyPartRedirectsToEMIMSHomePage() throws IOException {
+        startBtn.getScene().getWindow().hide();
+
+        //create new stage
+        Stage ppMainWindow = new Stage();
+        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+
+        //set view in ppMainWindow
+        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
+
+        //launch
+        ppMainWindow.show();
     }
 
 //    //**new ok!! testing

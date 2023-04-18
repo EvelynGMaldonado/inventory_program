@@ -211,7 +211,7 @@
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <Button fx:id="modifyPart_saveBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
+                                          <Button fx:id="modifyPart_saveBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" onAction="#clickSaveUpdatedPartBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
                                           <Button fx:id="modifyPart_cancelBtn" layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>
