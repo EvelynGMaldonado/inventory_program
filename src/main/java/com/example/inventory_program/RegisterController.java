@@ -176,7 +176,7 @@ public class RegisterController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Message");
             alert.setHeaderText(null);
-            alert.setContentText("New profile hasn't been saved. Are you sure that you want to cancel?");
+            alert.setContentText("New profile hasn't been saved yet. Are you sure that you want to cancel?");
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {

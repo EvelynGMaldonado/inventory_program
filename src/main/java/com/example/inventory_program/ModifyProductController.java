@@ -7,9 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -21,6 +19,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +36,7 @@ public class ModifyProductController implements Initializable {
     private StackPane addProduct_page;
 
     @FXML
-    private Button close;
+    private Button modifyProduct_closeBtn;
 
     @FXML
     private Button modifyPartPageBtn;
@@ -68,6 +67,39 @@ public class ModifyProductController implements Initializable {
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
 
+    public void modifyProduct_cancelBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Updated product hasn't been saved yet. Are you sure that you want to leave the window?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)) {
+//              go back to the landing page by doing ...
+                modifyProduct_cancelBtn.getScene().getWindow().hide();
+                //create new stage
+                Stage ppMainWindow = new Stage();
+                ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+                //create view for FXML
+                FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+
+                //set view in ppMainWindow
+                ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
+
+                //launch
+                ppMainWindow.show();
+            } else {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    //SIDE MENU
     public void modifyProductRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
 //        Stage stage1 = (Stage) startBtn.getScene().getWindow();
@@ -136,11 +168,6 @@ public class ModifyProductController implements Initializable {
         //launch
         modifyPartPageWindow.show();
 
-    }
-
-    public void closeBtnAction(ActionEvent e) {
-        Stage stage = (Stage) close.getScene().getWindow();
-        stage.close();
     }
 
     @Override
