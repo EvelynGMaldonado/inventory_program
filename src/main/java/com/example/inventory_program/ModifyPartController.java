@@ -100,8 +100,6 @@ public class ModifyPartController implements Initializable {
 //
 //    };
 
-
-//**new ok!!
     public ModifyPartController(PartsAndProductsInventory partsAndProductsInventory, PartData partData, String getSinglePartID, String getSinglePartName, String getSinglePartStock, String getSinglePartPriceUnit, String getSinglePartMin, String getSinglePartMax, String getSinglePartMachineID, String getSinglePartCompanyName) {
         this.partsAndProductsInventory = partsAndProductsInventory;
         this.partData = partData;
@@ -113,6 +111,16 @@ public class ModifyPartController implements Initializable {
         this.getSinglePartMax= getSinglePartMax;
         this.getSinglePartMachineID= getSinglePartMachineID;
         this.getSinglePartCompanyName= getSinglePartCompanyName;
+    }
+
+    public void displayMachineIDOrCompanyName_modifyPartPage(ActionEvent event) {
+        if(modifyPartInHouseRadioBtn.isSelected()) {
+            modifyPart_displayCompanyOrMachineLabel.setText("Machine ID:");
+            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartMachineID);
+        } else if(modifyPartOutsourcedRadioBtn.isSelected()) {
+            modifyPart_displayCompanyOrMachineLabel.setText("Company Name:");
+            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartCompanyName);
+        }
     }
 
     @FXML
@@ -210,11 +218,13 @@ public class ModifyPartController implements Initializable {
 
         if(modifyPartInHouseRadioBtn.isSelected()) {
             String updatedMachineId = modifyPart_inputCompanyOrMachineInputField.getText();
+            String updateCompanyNameToNull = "UPDATE parts SET company_name = NULL WHERE partID = '" + getSinglePartID + "' ";
             String updateInHousePartInDB = "UPDATE parts SET part_name = '" + updatedPartName + "', stock = '" + updatedPartInventoryLevel + "', price_unit = '" + updatedPartPriceUnit + "', min = '" + updatedPartMin + "', max = '" + updatedPartMax + "', machineID = '" + updatedMachineId + "' WHERE partID = '" + modifyPage_partID + "' ";
 
             try {
                 Statement statement = connectDB.createStatement();
                 statement.executeUpdate(updateInHousePartInDB);
+                statement.executeUpdate(updateCompanyNameToNull);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Successful In-House Part Update");
@@ -232,10 +242,12 @@ public class ModifyPartController implements Initializable {
 
         } else if(modifyPartOutsourcedRadioBtn.isSelected()){
             String updatedCompanyName = modifyPart_inputCompanyOrMachineInputField.getText();
-            String updateOutsourcedPartInDB = "UPDATE parts SET part_name = '" + updatedPartName + "', stock = '" + updatedPartInventoryLevel + "', price_unit = '" + updatedPartPriceUnit + "', min = '" + updatedPartMin + "', max = '" + updatedPartMax + "', company_name = '" + updatedCompanyName + "' WHERE partID = '" + modifyPage_partID + "' ";
+            String updateMachineIDToNull = "UPDATE parts SET machineID = NULL WHERE partID = '" + getSinglePartID + "' ";
+            String updateOutsourcedPartInDB = "UPDATE parts SET part_name = '" + updatedPartName + "', stock = '" + updatedPartInventoryLevel + "', price_unit = '" + updatedPartPriceUnit + "', min = '" + updatedPartMin + "', max = '" + updatedPartMax + "',  company_name = '" + updatedCompanyName + "' WHERE partID = '" + modifyPage_partID + "' ";
 
             try {
                 Statement statement = connectDB.createStatement();
+                statement.executeUpdate(updateMachineIDToNull);
                 statement.executeUpdate(updateOutsourcedPartInDB);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -271,6 +283,39 @@ public class ModifyPartController implements Initializable {
         ppMainWindow.show();
     }
 
+    public void modifyPart_cancelBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Updated part hasn't been saved yet. Are you sure that you want to leave the window?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)) {
+//              go back to the landing page by doing ...
+                modifyPart_cancelBtn.getScene().getWindow().hide();
+                //create new stage
+                Stage ppMainWindow = new Stage();
+                ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+                //create view for FXML
+                FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+
+                //set view in ppMainWindow
+                ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
+
+                //launch
+                ppMainWindow.show();
+            } else {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+
 //    //**new ok!! testing
 //    public void checkingIfInOrOutSourced(String getSinglePartMachineID, String getSinglePartCompanyName) {
 //        System.out.println("we are in checkingIfInOrOutSourced function located in Modify controller!! showing the machineID number as : " + getSinglePartMachineID + " and the company name for outsourced as : " + getSinglePartCompanyName );
@@ -302,55 +347,56 @@ public class ModifyPartController implements Initializable {
         modifyPart_setMin.setText(getSinglePartMin);
         modifyPart_setMax.setText(getSinglePartMax);
 
+        //if machineID DOES exist && companyName DOES NOT exist t --> we have a in-house item so...
         if(getSinglePartMachineID != null && !getSinglePartMachineID.trim().isEmpty()) {
             System.out.println("part machine -In Home data is in the database!!");
+            //we are displaying the in-house radio button selected, the machineID label, and the machineID in the inputfield
             modifyPartInHouseRadioBtn.setSelected(true);
             modifyPart_displayCompanyOrMachineLabel.setText("Machine ID:");
             modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartMachineID);
+            //if company_name DOES exist && machineID DOES NOT EXIST--> we have an outsourced item so...
         } else if (getSinglePartCompanyName != null && !getSinglePartCompanyName.trim().isEmpty()){
             System.out.println("company name - outsourced data is in the database!!");
+            //we are displaying the outsourced radio button selected, the companyName label, and the companyName in the inputfield
             modifyPartOutsourcedRadioBtn.setSelected(true);
             modifyPart_displayCompanyOrMachineLabel.setText("Company Name:");
             modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartCompanyName);
         }
+        //if machineID DOES NOT EXIST && companyName DOES NOT EXIST --> user was already playing with the radiobuttons so...
+        //display in-house radio button as SELECTED, the machineID label, and inputfield="", and machineID in the promptText
 
+
+
+        //on change
+        //if the in-house radio button is selected && machineID exists...
+        //display the in-house radio button selected, the machineID label, and the machineID in the promptText, and inputfield="" ~OR~the machineID in the inputfield~
+
+        //if outsourced radio button is selected && company_name exists...
+        //display the outsourced radio button selected, the companyName label, and the companyName in the promptText, and the inputfield="" ~OR~the companyName in the inputfield~
+
+        //if the in-house radio button is selected && machineID DOES NOT exist && companyName DOES EXIST...
+        //set getSingleCompanyName = ""; ???
+        //display the in-house radio button selected, the machineID label, the machineID word as promptText, and inputField=""
+
+        //if the outsourced radio button is selected && companyName DOES NOT EXIST && machineID DOES EXIST...
+        //set getSingleMachineID = ""; ??
+        //display the outsourced radio button selected, the companyName label, the company name phrase as promptText, and inputfield = ""
+
+
+
+
+        //2pink
+//        if(modifyPartInHouseRadioBtn.isSelected()) {
+//            modifyPart_displayCompanyOrMachineLabel.setText("Machine ID:");
+//            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartMachineID);
+//        } else if(modifyPartInHouseRadioBtn.isSelected()) {
+//            modifyPart_displayCompanyOrMachineLabel.setText("Company Name:");
+//            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartCompanyName);
+//        }
 //        Platform.runLater(() -> {
 //            startingToModify();
 //        });
 //
-    }
-
-
-    public void modifyPart_cancelBtnAction(ActionEvent event) {
-        try {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Updated part hasn't been saved yet. Are you sure that you want to leave the window?");
-            Optional<ButtonType> option = alert.showAndWait();
-
-            if(option.get().equals(ButtonType.OK)) {
-//              go back to the landing page by doing ...
-                modifyPart_cancelBtn.getScene().getWindow().hide();
-                //create new stage
-                Stage ppMainWindow = new Stage();
-                ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
-
-                //create view for FXML
-                FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
-
-                //set view in ppMainWindow
-                ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
-
-                //launch
-                ppMainWindow.show();
-            } else {
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
     }
 
 //    public void closeBtnAction(ActionEvent e) {
