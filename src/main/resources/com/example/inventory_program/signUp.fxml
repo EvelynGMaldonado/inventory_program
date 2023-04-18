@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="addProfile_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.inventory_program.RegisterController">
+<StackPane fx:id="addProfile_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventory_program.RegisterController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -23,7 +23,7 @@
                      <children>
                         <AnchorPane prefHeight="40.0" prefWidth="600.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="close" layoutX="462.0" layoutY="1.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
+                              <Button fx:id="signUp_closeBtn" layoutX="462.0" layoutY="1.0" mnemonicParsing="false" onAction="#signUp_cancelBtnAction" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
                               <Label layoutX="42.0" layoutY="8.0" text="Inventory Management System">
                                  <textFill>
                                     <LinearGradient endX="1.0" endY="1.0">
@@ -125,7 +125,7 @@
                                           </TextField>
                                           <Label layoutX="14.0" layoutY="155.0" prefHeight="17.0" prefWidth="83.0" text="Password:" textAlignment="RIGHT" />
                                           <Button fx:id="saveUserBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" onAction="#clickSaveUserBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
-                                          <Button layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
+                                          <Button fx:id="signUp_cancelBtn" layoutX="326.0" layoutY="198.0" mnemonicParsing="false" onAction="#signUp_cancelBtnAction" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                           <PasswordField fx:id="setpasswordField" layoutX="125.0" layoutY="150.0" prefHeight="27.0" prefWidth="101.0" promptText="password" styleClass="textfield" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />

@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -17,6 +14,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
@@ -45,7 +43,11 @@ public class RegisterController implements Initializable {
     private Button saveUserBtn;
 
     @FXML
-    private Button close;
+    private Button signUp_cancelBtn;
+
+    @FXML
+    private Button signUp_closeBtn;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -143,9 +145,62 @@ public class RegisterController implements Initializable {
             alert.setContentText("New user has been registered in EM Inventory Management System!");
             alert.showAndWait();
 
+            signupPartRedirectsToEMIMSHomePage();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void signupPartRedirectsToEMIMSHomePage() throws IOException {
+        saveUserBtn.getScene().getWindow().hide();
+
+        //create new stage
+        Stage landingPageWindow = new Stage();
+        landingPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader landingPageLoader = new FXMLLoader(getClass().getResource("landing_page.fxml"));
+
+        //set view in ppMainWindow
+        landingPageWindow.setScene(new Scene(landingPageLoader.load(), 600, 400));
+
+        //launch
+        landingPageWindow.show();
+    }
+
+    public void signUp_cancelBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("New profile hasn't been saved. Are you sure that you want to cancel?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)) {
+//              go back to the landing page by doing ...
+                signUp_cancelBtn.getScene().getWindow().hide();
+                //create new stage
+                Stage landingPageWindow = new Stage();
+                landingPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+                //create view for FXML
+                FXMLLoader landingPageLoader = new FXMLLoader(getClass().getResource("landing_page.fxml"));
+
+                //set view in ppMainWindow
+                landingPageWindow.setScene(new Scene(landingPageLoader.load(), 600, 400));
+
+                //launch
+                landingPageWindow.show();
+            } else {
+                return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
     }
 }
+

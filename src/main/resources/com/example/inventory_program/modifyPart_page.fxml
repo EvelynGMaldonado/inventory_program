@@ -27,7 +27,7 @@
                      <children>
                         <AnchorPane prefHeight="40.0" prefWidth="600.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="modifyPart_closeBtn" layoutX="574.0" layoutY="1.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
+                              <Button fx:id="modifyPart_closeBtn" layoutX="574.0" layoutY="1.0" mnemonicParsing="false" onAction="#modifyPart_cancelBtnAction" prefHeight="12.0" prefWidth="12.0" styleClass="close" stylesheets="@startPageDesign.css" text="X" />
                               <Label layoutX="42.0" layoutY="8.0" text="Inventory Management System">
                                  <textFill>
                                     <LinearGradient endX="1.0" endY="1.0">
@@ -212,7 +212,7 @@
                                              </font>
                                           </TextField>
                                           <Button fx:id="modifyPart_saveBtn" layoutX="275.0" layoutY="198.0" mnemonicParsing="false" onAction="#clickSaveUpdatedPartBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
-                                          <Button fx:id="modifyPart_cancelBtn" layoutX="326.0" layoutY="198.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
+                                          <Button fx:id="modifyPart_cancelBtn" layoutX="326.0" layoutY="198.0" mnemonicParsing="false" onAction="#modifyPart_cancelBtnAction" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>
                                  </children>

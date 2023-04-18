@@ -31,9 +31,6 @@ public class ModifyPartController implements Initializable {
     private Button addProductPageBtn;
 
     @FXML
-    private Button modifyPart_closeBtn;
-
-    @FXML
     private Button modifyPart_cancelBtn;
 
     @FXML
@@ -47,6 +44,9 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     private Button startBtn;
+
+    @FXML
+    private Button modifyPart_closeBtn;
 
     @FXML
     private Button modifyPart_saveBtn;
@@ -321,7 +321,37 @@ public class ModifyPartController implements Initializable {
     }
 
 
+    public void modifyPart_cancelBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Updated part hasn't been saved. Are you sure that you want to cancel?");
+            Optional<ButtonType> option = alert.showAndWait();
 
+            if(option.get().equals(ButtonType.OK)) {
+//              go back to the landing page by doing ...
+                modifyPart_cancelBtn.getScene().getWindow().hide();
+                //create new stage
+                Stage ppMainWindow = new Stage();
+                ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+                //create view for FXML
+                FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+
+                //set view in ppMainWindow
+                ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
+
+                //launch
+                ppMainWindow.show();
+            } else {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
 //    public void closeBtnAction(ActionEvent e) {
 //        Stage stage = (Stage) close.getScene().getWindow();
