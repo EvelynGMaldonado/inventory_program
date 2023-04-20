@@ -376,18 +376,18 @@ public class AddProductController implements Initializable {
 
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
-//        String clearAssociatedPartsTable = "DELETE FROM associated_parts";
+        String clearAssociatedPartsTable = "DELETE FROM associated_parts";
         //**new
         String associatedPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM associated_parts";
-//        try {
-//            Statement statement = connectDB.createStatement();
-//            statement.executeUpdate(clearAssociatedPartsTable);
-//
-//        } catch(SQLException e) {
-//            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
-//            e.printStackTrace();
-//            e.getCause();
-//        }
+        try {
+            Statement statement = connectDB.createStatement();
+            statement.executeUpdate(clearAssociatedPartsTable);
+
+        } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            e.getCause();
+        }
         try {
             Statement statement = connectDB.createStatement();
 //            statement.executeUpdate(clearAssociatedPartsTable);
