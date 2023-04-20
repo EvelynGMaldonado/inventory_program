@@ -15,10 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -118,7 +115,8 @@ public class AddProductController implements Initializable {
     ObservableList<PartData> partList = FXCollections.observableArrayList();
     ObservableList<RowPartData> associatedPartList = FXCollections.observableArrayList();
 
-
+    //on click addBtn located on Add Product page, I check if a row has been selected,
+    //retrieve data from parts table (choose part data), and insert it into associated part data table.
     @FXML
     public void clickAddAssociatedPartBtn (ActionEvent event){
 //        DatabaseConnection connectNow = new DatabaseConnection();
@@ -243,7 +241,7 @@ public class AddProductController implements Initializable {
         }
     }
 
-
+    //display the current associated parts data after add a new associated part
     public void displayAssociatedPartDataTableView() {
         associatedPartList.clear();
         DatabaseConnection connectNow = new DatabaseConnection();
@@ -274,14 +272,6 @@ public class AddProductController implements Initializable {
 
             associatedParts_tableview.setItems(associatedPartList);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Successful Outsourced Part Registration");
-            alert.setHeaderText(null);
-            alert.setContentText("New Outsourced Part has been successfully added to EM Inventory Management System");
-            alert.showAndWait();
-
-            //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
-    //                addPartRedirectsToEMIMSHomePage();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -290,7 +280,59 @@ public class AddProductController implements Initializable {
 
     }
 
+    //remove associated part btn removes the data of the selected row from the associated part data table
+    @FXML
+    private void deleteSelectedAssociatedPart (ActionEvent event) {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        index = associatedParts_tableview.getSelectionModel().getSelectedIndex();
+//        parts_tableView.getItems().remove(selectedItem);
 
+        if(index > -1) {
+            PreparedStatement pst;
+            RowPartData selectedItem = associatedParts_tableview.getSelectionModel().getSelectedItem();
+
+            String deleteSelectedAssociatedPart = "DELETE FROM associated_parts WHERE partID = ?";
+
+            try {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure that you want to delete this Associated Part from your Product?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if(option.get().equals(ButtonType.OK)) {
+                    pst = connectDB.prepareStatement(deleteSelectedAssociatedPart);
+                    pst.setString(1, selectedItem.getPartID().toString());
+                    pst.execute();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Deletion information");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Associated Part has been successfully removed from Current Product");
+                    alert.showAndWait();
+
+                    displayAssociatedPartDataTableView();
+                } else {
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the associated part data row that you want to delete.");
+            alert.showAndWait();
+        }
+
+    }
+
+    //cancelBtn confirms that changes haven't been saved and takes us to homepage
     public void addProduct_cancelBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
