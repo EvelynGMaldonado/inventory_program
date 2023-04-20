@@ -221,6 +221,7 @@ public class AddProductController implements Initializable {
     }
 
     public void displayAssociatedPartDataTableView() {
+        associatedPartList.clear();
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
