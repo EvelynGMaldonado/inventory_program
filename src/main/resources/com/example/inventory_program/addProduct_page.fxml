@@ -158,37 +158,37 @@
                                  </styleClass>
                                  <children>
                                     <Label layoutX="17.0" layoutY="27.0" prefHeight="17.0" prefWidth="83.0" text="Product ID:" />
-                                    <TextField editable="false" layoutX="111.0" layoutY="22.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
+                                    <TextField fx:id="addProduct_productIDTextField" editable="false" layoutX="111.0" layoutY="22.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
                                        <font>
                                           <Font name="System Italic" size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Label layoutX="17.0" layoutY="61.0" prefHeight="17.0" prefWidth="83.0" text="Part Name:" />
-                                    <TextField layoutX="111.0" layoutY="56.0" prefHeight="27.0" prefWidth="101.0" promptText="part name" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <Label layoutX="17.0" layoutY="61.0" prefHeight="17.0" prefWidth="83.0" text="Product Name:" />
+                                    <TextField fx:id="addProduct_setProductName" layoutX="111.0" layoutY="56.0" prefHeight="27.0" prefWidth="101.0" promptText="product name" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="95.0" prefHeight="17.0" prefWidth="83.0" text="Inventory Level:" />
-                                    <TextField layoutX="111.0" layoutY="90.0" prefHeight="27.0" prefWidth="101.0" promptText="inventory level" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="addProduct_setInventoryLevel" layoutX="111.0" layoutY="90.0" prefHeight="27.0" prefWidth="101.0" promptText="inventory level" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Label layoutX="17.0" layoutY="129.0" prefHeight="17.0" prefWidth="83.0" text="Price per Unit:" />
-                                    <TextField layoutX="111.0" layoutY="124.0" prefHeight="27.0" prefWidth="101.0" promptText="price per unit:" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <Label layoutX="17.0" layoutY="129.0" prefHeight="17.0" prefWidth="83.0" text="Price:" />
+                                    <TextField fx:id="addProduct_setPrice" layoutX="111.0" layoutY="124.0" prefHeight="27.0" prefWidth="101.0" promptText="price per unit:" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="163.0" prefHeight="17.0" prefWidth="83.0" text="Max:" textAlignment="RIGHT" />
-                                    <TextField layoutX="111.0" layoutY="158.0" prefHeight="27.0" prefWidth="101.0" promptText="max" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="addProduct_setMax" layoutX="111.0" layoutY="158.0" prefHeight="27.0" prefWidth="101.0" promptText="max" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="197.0" prefHeight="17.0" prefWidth="37.0" text="Min:" textAlignment="RIGHT" />
-                                    <TextField layoutX="111.0" layoutY="192.0" prefHeight="27.0" prefWidth="101.0" promptText="min" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="addProduct_setMin" layoutX="111.0" layoutY="192.0" prefHeight="27.0" prefWidth="101.0" promptText="min" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
@@ -212,12 +212,12 @@
                                                 <TableColumn fx:id="parts_tableView_col_priceUnit" prefWidth="95.0" text="Price/Unit" />
                                              </columns>
                                           </TableView>
-                                          <TextField layoutX="287.0" layoutY="36.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="addProduct_searchPartInputField" layoutX="287.0" layoutY="36.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <Button layoutX="358.0" layoutY="36.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                          <Button fx:id="addProduct_searchPartBtn" layoutX="358.0" layoutY="36.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                              <graphic>
                                                 <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -226,7 +226,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
-                                          <Button layoutX="351.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                          <Button fx:id="addProduct_addAssociatedPartBtn" layoutX="351.0" layoutY="189.0" mnemonicParsing="false" onAction="#clickAddAssociatedPartBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutX="238.0" layoutY="261.0" prefHeight="225.0" prefWidth="403.0" stylesheets="@startPageDesign.css">
@@ -240,16 +240,16 @@
                                                 <Font name="Tahoma" size="12.0" />
                                              </font>
                                           </Label>
-                                          <TableView layoutX="12.0" layoutY="38.0" prefHeight="108.0" prefWidth="380.0">
+                                          <TableView fx:id="associatedParts_tableview" layoutX="12.0" layoutY="38.0" prefHeight="108.0" prefWidth="380.0">
                                              <columns>
-                                                <TableColumn prefWidth="95.0" text="Part ID" />
-                                                <TableColumn prefWidth="95.0" text="Part Name" />
-                                                <TableColumn prefWidth="95.0" text="Inventory Level" />
-                                                <TableColumn prefWidth="95.0" text="Price/Unit" />
+                                                <TableColumn fx:id="associatedParts_tableView_col_partID" prefWidth="95.0" text="Part ID" />
+                                                <TableColumn fx:id="associatedParts_tableView_col_partName" prefWidth="95.0" text="Part Name" />
+                                                <TableColumn fx:id="associatedParts_tableView_col_inventoryLevel" prefWidth="95.0" text="Inventory Level" />
+                                                <TableColumn fx:id="associatedParts_tableView_col_priceUnit" prefWidth="95.0" text="Price/Unit" />
                                              </columns>
                                           </TableView>
-                                          <Button layoutX="249.0" layoutY="153.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Remove associated part" />
-                                          <Button layoutX="288.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
+                                          <Button fx:id="addProduct_removeAssociatedPartBtn" layoutX="249.0" layoutY="153.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Remove associated part" />
+                                          <Button fx:id="addProduct_saveBtn" layoutX="288.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
                                           <Button fx:id="addProduct_cancelBtn" layoutX="340.0" layoutY="189.0" mnemonicParsing="false" onAction="#addProduct_cancelBtnAction" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>

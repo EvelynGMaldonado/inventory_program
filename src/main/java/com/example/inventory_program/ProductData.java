@@ -9,7 +9,7 @@ public class ProductData {
     private BigDecimal price_unit;
     private Integer min;
     private Integer max;
-    private Integer partID;
+//    private Integer partID;
 //    private String part_name;
 //    private Integer part_stock;
 //    private Integer part_price_unit;
@@ -70,13 +70,13 @@ public class ProductData {
         this.max = max;
     }
 
-    public Integer getPartID() {
-        return partID;
-    }
-
-    public void setPartID(Integer partID) {
-        this.partID = partID;
-    }
+//    public Integer getPartID() {
+//        return partID;
+//    }
+//
+//    public void setPartID(Integer partID) {
+//        this.partID = partID;
+//    }
 
 //    public String getPart_name() {
 //        return part_name;

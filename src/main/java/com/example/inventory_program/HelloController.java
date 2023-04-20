@@ -172,6 +172,8 @@ public class HelloController implements Initializable {
 
     ObservableList<ProductData> productList = FXCollections.observableArrayList();
 
+    ObservableList<RowPartData> rowPartDataList = FXCollections.observableArrayList();
+
     //**new**
     PartsAndProductsInventory partsAndProductsInventory;
 
@@ -188,7 +190,6 @@ public class HelloController implements Initializable {
 //
 //        }
     }
-
 
     //Method to delete selected part records
     @FXML
@@ -218,9 +219,9 @@ public class HelloController implements Initializable {
                     pst.execute();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Data Part has been deleted");
+                    alert.setTitle("Deletion information");
                     alert.setHeaderText(null);
-                    alert.setContentText("Data Part has been successfully removed from the EM Inventory Management System");
+                    alert.setContentText("Part has been successfully removed from the EM Inventory Management System");
                     alert.showAndWait();
 
 
@@ -244,7 +245,57 @@ public class HelloController implements Initializable {
 
     }
 
-    private ObservableList<RowPartData> rowPartDataList = FXCollections.observableArrayList();
+    //Method to delete selected product records
+    @FXML
+    private void deleteSelectedProduct (ActionEvent event) {
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
+//        index = parts_tableView.getSelectionModel().getSelectedIndex();
+////        parts_tableView.getItems().remove(selectedItem);
+//
+//        if(index > -1) {
+//            PreparedStatement pst;
+//            ProductData selectedItemProduct = products_tableView.getSelectionModel().getSelectedItem();
+//
+//            String deleteSelectedProduct = "DELETE FROM products WHERE productID = ?";
+//
+//            try {
+//
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setTitle("Confirmation Message");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Are you sure that you want to delete this Product from the EM Inventory Management System?");
+//                Optional<ButtonType> option = alert.showAndWait();
+//
+//                if(option.get().equals(ButtonType.OK)) {
+//                    pst = connectDB.prepareStatement(deleteSelectedProduct);
+//                    pst.setString(1, selectedItemProduct.getProductID().toString());
+//                    pst.execute();
+//
+//                    alert = new Alert(Alert.AlertType.INFORMATION);
+//                    alert.setTitle("Deletion information");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText("Product has been successfully removed from the EM Inventory Management System");
+//                    alert.showAndWait();
+//
+//                    homePage_modifyPartBtn.getScene().getWindow().hide();
+//                    viewEMInventoryManagementSystem();
+//                } else {
+//                    return;
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                e.getCause();
+//            }
+//
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error message");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Please select the data row that you want to delete.");
+//            alert.showAndWait();
+//        }
+    }
 
 
     //********#2 Modify part
@@ -330,7 +381,7 @@ public class HelloController implements Initializable {
 //        parts_tableView.getItems().remove(selectedItem);
 
         if(index > -1) {
-            PreparedStatement pst;
+//            PreparedStatement pst;
 
             PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
             String getSinglePartID = "";
@@ -403,9 +454,20 @@ public class HelloController implements Initializable {
         }
     }
 
-    //Method to delete selected product records
-    @FXML
-    private void deleteSelectedProduct (ActionEvent event) {
+        public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
+        modifyProductPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage modifyProductPageWindow = new Stage();
+        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
+
+        //set view in ppMainWindow
+        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
+
+        //launch
+        modifyProductPageWindow.show();
 
     }
 
@@ -573,22 +635,22 @@ public class HelloController implements Initializable {
     }
 
 
-    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
-        modifyProductPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyProductPageWindow = new Stage();
-        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
-
-        //set view in ppMainWindow
-        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
-
-        //launch
-        modifyProductPageWindow.show();
-
-    }
+//    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
+//        modifyProductPageBtn.getScene().getWindow().hide();
+//        //create new stage
+//        Stage modifyProductPageWindow = new Stage();
+//        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+//
+//        //create view for FXML
+//        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
+//
+//        //set view in ppMainWindow
+//        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
+//
+//        //launch
+//        modifyProductPageWindow.show();
+//
+//    }
 
 //    @FXML
 //    public void clickModifyPartPageBtn (ActionEvent event) throws IOException {
@@ -732,7 +794,8 @@ public class HelloController implements Initializable {
                 String price = queryPartsOutput.getBigDecimal("price_unit").toString();
                 Double obj = Double.parseDouble(price);
                 BigDecimal num = BigDecimal.valueOf(obj);
-                PartData data = new PartData(Integer.parseInt(partID),
+                PartData data = new PartData(
+                        Integer.parseInt(partID),
                         name,
                         Integer.parseInt(inv),
                         num
