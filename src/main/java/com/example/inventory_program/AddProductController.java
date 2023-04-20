@@ -121,8 +121,8 @@ public class AddProductController implements Initializable {
 
     @FXML
     public void clickAddAssociatedPartBtn (ActionEvent event){
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getConnection();
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
         index = parts_tableView.getSelectionModel().getSelectedIndex();
 
         String getSingleAssociatedPartID = "";
@@ -136,89 +136,113 @@ public class AddProductController implements Initializable {
 
         //check if a row has been selected
         if(index > -1) {
+            DatabaseConnection connectNow = new DatabaseConnection();
+            Connection connectDB = connectNow.getConnection();
 
             PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
-
-            String associateSelectedPartToNewProduct = "SELECT * FROM parts WHERE partID = '" + selectedItem.getPartID() + "'";
-
+            String verifyIfAssociatedPartIDAlreadyExists = "SELECT count(1) FROM associated_parts WHERE partID = '" + selectedItem.getPartID() + "'";
             try {
                 Statement statement = connectDB.createStatement();
-                ResultSet querySelectedPartToAssociateResult = statement.executeQuery(associateSelectedPartToNewProduct);
-                // System.out.println("The selected part to associate is: "+querySelectedPartResult.);
-                while(querySelectedPartToAssociateResult.next()) {
-                    System.out.println(querySelectedPartToAssociateResult.getString("partID"));
-                    System.out.println(querySelectedPartToAssociateResult.getString("part_name"));
-                    getSingleAssociatedPartID = querySelectedPartToAssociateResult.getString("partID");
-                    getSingleAssociatedPartName = querySelectedPartToAssociateResult.getString("part_name");
-//                    System.out.println("getSingleAssociatedPartName is: " + getSingleAssociatedPartName);
-                    getSingleAssociatedPartStock = querySelectedPartToAssociateResult.getString("stock");
-                    getSingleAssociatedPartPriceUnit = querySelectedPartToAssociateResult.getString("price_unit");
-                    getSingleAssociatedPartMin = querySelectedPartToAssociateResult.getString("min");
-                    getSingleAssociatedPartMax = querySelectedPartToAssociateResult.getString("max");
-                    getSingleAssociatedPartMachineID = querySelectedPartToAssociateResult.getString("machineID");
-//                    System.out.println("getSinglePartMachineID is: " + getSingleAssociatedPartMachineID);
-                    getSingleAssociatedPartCompanyName = querySelectedPartToAssociateResult.getString("company_name");
-//                    System.out.println("getSinglePartCompanyName is: " + getSingleAssociatedPartCompanyName);
-                }
+                ResultSet queryUniqueAssociatedPartIDResult = statement.executeQuery(verifyIfAssociatedPartIDAlreadyExists);
 
-            } catch (SQLException e) {
+                while(queryUniqueAssociatedPartIDResult.next()) {
+                    if(queryUniqueAssociatedPartIDResult.getInt(1) == 1) {
+                        //                    messageLabel.setText("Part Name already exists. Please try again.");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Part is already associated to this product.");
+                        alert.showAndWait();
+                    } else {
+                        //retrieve data of selected item
+                        String associateSelectedPartToNewProduct = "SELECT * FROM parts WHERE partID = '" + selectedItem.getPartID() + "'";
+
+                        try {
+                            statement = connectDB.createStatement();
+                            ResultSet querySelectedPartToAssociateResult = statement.executeQuery(associateSelectedPartToNewProduct);
+                            // System.out.println("The selected part to associate is: "+querySelectedPartResult.);
+                            while(querySelectedPartToAssociateResult.next()) {
+                                System.out.println(querySelectedPartToAssociateResult.getString("partID"));
+                                System.out.println(querySelectedPartToAssociateResult.getString("part_name"));
+                                getSingleAssociatedPartID = querySelectedPartToAssociateResult.getString("partID");
+                                getSingleAssociatedPartName = querySelectedPartToAssociateResult.getString("part_name");
+            //                    System.out.println("getSingleAssociatedPartName is: " + getSingleAssociatedPartName);
+                                getSingleAssociatedPartStock = querySelectedPartToAssociateResult.getString("stock");
+                                getSingleAssociatedPartPriceUnit = querySelectedPartToAssociateResult.getString("price_unit");
+                                getSingleAssociatedPartMin = querySelectedPartToAssociateResult.getString("min");
+                                getSingleAssociatedPartMax = querySelectedPartToAssociateResult.getString("max");
+                                getSingleAssociatedPartMachineID = querySelectedPartToAssociateResult.getString("machineID");
+            //                    System.out.println("getSinglePartMachineID is: " + getSingleAssociatedPartMachineID);
+                                getSingleAssociatedPartCompanyName = querySelectedPartToAssociateResult.getString("company_name");
+            //                    System.out.println("getSinglePartCompanyName is: " + getSingleAssociatedPartCompanyName);
+                            }
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            e.getCause();
+                        }
+                        if(getSingleAssociatedPartCompanyName == null) {
+                            String insertNewInHouseAssociatedPartFields = "INSERT INTO associated_parts (partID, part_name, stock, price_unit, min, max, machineID) VALUES ('";
+                            String insertNewInHouseAssociatedPartValues = getSingleAssociatedPartID + "', '" + getSingleAssociatedPartName + "',  '" + getSingleAssociatedPartStock + "', '" + getSingleAssociatedPartPriceUnit + "', '" + getSingleAssociatedPartMin + "', '" + getSingleAssociatedPartMax + "', '" + getSingleAssociatedPartMachineID + "')";
+                            String insertNewInHouseAssociatedPartToDB_associated_partsTable = insertNewInHouseAssociatedPartFields + insertNewInHouseAssociatedPartValues;
+
+                            try {
+                                statement = connectDB.createStatement();
+                                statement.executeUpdate(insertNewInHouseAssociatedPartToDB_associated_partsTable);
+
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Successful In-House Part Registration");
+                                alert.setHeaderText(null);
+                                alert.setContentText("New In House  Part has been successfully added to EM Inventory Management System");
+                                alert.showAndWait();
+
+                                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                                displayAssociatedPartDataTableView();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                e.getCause();
+                            }
+
+                        } else if(getSingleAssociatedPartMachineID == null) {
+                            String insertNewOutsourcedAssociatedPartFields = "INSERT INTO associated_parts (partID, part_name, stock, price_unit, min, max, company_name) VALUES ('";
+                            String insertNewOutsourcedAssociatedPartValues = getSingleAssociatedPartID + "', '" + getSingleAssociatedPartName + "', '" + getSingleAssociatedPartStock + "', '" + getSingleAssociatedPartPriceUnit + "', '" + getSingleAssociatedPartMin + "', '" + getSingleAssociatedPartMax + "', '" + getSingleAssociatedPartCompanyName + "')";
+                            String insertNewOutsourcedAssociatedPartToDB_associated_partsTable = insertNewOutsourcedAssociatedPartFields + insertNewOutsourcedAssociatedPartValues;
+
+                            try {
+                                statement = connectDB.createStatement();
+                                statement.executeUpdate(insertNewOutsourcedAssociatedPartToDB_associated_partsTable);
+
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Successful Outsourced Part Registration");
+                                alert.setHeaderText(null);
+                                alert.setContentText("New Outsourced Associated Part has been successfully added to EM Inventory Management System");
+                                alert.showAndWait();
+
+                                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                                displayAssociatedPartDataTableView();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                e.getCause();
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
                 e.getCause();
             }
-            if(getSingleAssociatedPartCompanyName == null) {
-                String insertNewInHouseAssociatedPartFields = "INSERT INTO associated_parts (partID, part_name, stock, price_unit, min, max, machineID) VALUES ('";
-                String insertNewInHouseAssociatedPartValues = getSingleAssociatedPartID + "', '" + getSingleAssociatedPartName + "',  '" + getSingleAssociatedPartStock + "', '" + getSingleAssociatedPartPriceUnit + "', '" + getSingleAssociatedPartMin + "', '" + getSingleAssociatedPartMax + "', '" + getSingleAssociatedPartMachineID + "')";
-                String insertNewInHouseAssociatedPartToDB_associated_partsTable = insertNewInHouseAssociatedPartFields + insertNewInHouseAssociatedPartValues;
 
-                try {
-                    Statement statement = connectDB.createStatement();
-                    statement.executeUpdate(insertNewInHouseAssociatedPartToDB_associated_partsTable);
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Successful In-House Part Registration");
-                    alert.setHeaderText(null);
-                    alert.setContentText("New In House  Part has been successfully added to EM Inventory Management System");
-                    alert.showAndWait();
-
-                    //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
-                    displayAssociatedPartDataTableView();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    e.getCause();
-                }
-
-            } else if(getSingleAssociatedPartMachineID == null){
-                String insertNewOutsourcedAssociatedPartFields = "INSERT INTO associated_parts (partID, part_name, stock, price_unit, min, max, company_name) VALUES ('";
-                String insertNewOutsourcedAssociatedPartValues = getSingleAssociatedPartID + "', '" + getSingleAssociatedPartName + "', '" + getSingleAssociatedPartStock + "', '" + getSingleAssociatedPartPriceUnit + "', '" + getSingleAssociatedPartMin + "', '" + getSingleAssociatedPartMax + "', '" + getSingleAssociatedPartCompanyName + "')";
-                String insertNewOutsourcedAssociatedPartToDB_associated_partsTable = insertNewOutsourcedAssociatedPartFields + insertNewOutsourcedAssociatedPartValues;
-
-                try {
-                    Statement statement = connectDB.createStatement();
-                    statement.executeUpdate(insertNewOutsourcedAssociatedPartToDB_associated_partsTable);
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Successful Outsourced Part Registration");
-                    alert.setHeaderText(null);
-                    alert.setContentText("New Outsourced Associated Part has been successfully added to EM Inventory Management System");
-                    alert.showAndWait();
-
-                    //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
-                    displayAssociatedPartDataTableView();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    e.getCause();
-                }
-            } else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
             alert.setHeaderText(null);
             alert.setContentText("Please select the data row that you want to delete.");
             alert.showAndWait();
-            }
         }
     }
+
 
     public void displayAssociatedPartDataTableView() {
         associatedPartList.clear();
