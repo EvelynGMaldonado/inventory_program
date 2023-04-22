@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="addProduct_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventory_program.ModifyProductController">
+<StackPane fx:id="addProduct_page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -158,37 +158,37 @@
                                  </styleClass>
                                  <children>
                                     <Label layoutX="17.0" layoutY="27.0" prefHeight="17.0" prefWidth="83.0" text="Product ID:" />
-                                    <TextField editable="false" layoutX="111.0" layoutY="22.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
+                                    <TextField fx:id="modifyProduct_productIDTextField" editable="false" layoutX="111.0" layoutY="22.0" prefHeight="27.0" prefWidth="101.0" promptText="Auto gen - disabled" styleClass="textfield-disabled" stylesheets="@startPageDesign.css" text="Auto gen - disabled">
                                        <font>
                                           <Font name="System Italic" size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="61.0" prefHeight="17.0" prefWidth="83.0" text="Part Name:" />
-                                    <TextField layoutX="111.0" layoutY="56.0" prefHeight="27.0" prefWidth="101.0" promptText="part name" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="modifyProduct_setPartName" layoutX="111.0" layoutY="56.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="95.0" prefHeight="17.0" prefWidth="83.0" text="Inventory Level:" />
-                                    <TextField layoutX="111.0" layoutY="90.0" prefHeight="27.0" prefWidth="101.0" promptText="inventory level" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="modifyProduct_setInventoryLevel" layoutX="111.0" layoutY="90.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="129.0" prefHeight="17.0" prefWidth="83.0" text="Price per Unit:" />
-                                    <TextField layoutX="111.0" layoutY="124.0" prefHeight="27.0" prefWidth="101.0" promptText="price per unit:" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="modifyProduct_setPriceUnit" layoutX="111.0" layoutY="124.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="163.0" prefHeight="17.0" prefWidth="83.0" text="Max:" textAlignment="RIGHT" />
-                                    <TextField layoutX="111.0" layoutY="158.0" prefHeight="27.0" prefWidth="101.0" promptText="max" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="modifyProduct_setMax" layoutX="111.0" layoutY="158.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
                                     </TextField>
                                     <Label layoutX="17.0" layoutY="197.0" prefHeight="17.0" prefWidth="37.0" text="Min:" textAlignment="RIGHT" />
-                                    <TextField layoutX="111.0" layoutY="192.0" prefHeight="27.0" prefWidth="101.0" promptText="min" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <TextField fx:id="modifyProduct_setMin" layoutX="111.0" layoutY="192.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>

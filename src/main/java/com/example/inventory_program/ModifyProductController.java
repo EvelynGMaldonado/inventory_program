@@ -26,6 +26,10 @@ import java.util.logging.Logger;
 
 public class ModifyProductController implements Initializable {
 
+    HelloController helloController;
+    ProductData productData;
+    PartsAndProductsInventory partsAndProductsInventory;
+
     @FXML
     private Button addPartPageBtn;
 
@@ -65,7 +69,60 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TableColumn<PartData, String> parts_tableView_col_partName = new TableColumn<>("part_name");
 
+    @FXML
+    private TableView<RowPartData> associatedParts_tableview = new TableView<RowPartData>();
+
+    @FXML
+    private TableColumn<RowPartData, Integer> associatedParts_tableView_col_inventoryLevel = new TableColumn<>("stock");
+
+    @FXML
+    private TableColumn<RowPartData, Integer> associatedParts_tableView_col_partID = new TableColumn<>("partID");
+
+    @FXML
+    private TableColumn<RowPartData, String> associatedParts_tableView_col_partName = new TableColumn<>("part_name");
+
+    @FXML
+    private TableColumn<RowPartData, BigDecimal> associatedParts_tableView_col_priceUnit = new TableColumn<>("price_unit");
+
+    @FXML
+    private TextField modifyProduct_productIDTextField;
+
+    @FXML
+    private TextField modifyProduct_setInventoryLevel;
+
+    @FXML
+    private TextField modifyProduct_setMax;
+
+    @FXML
+    private TextField modifyProduct_setMin;
+
+    @FXML
+    private TextField modifyProduct_setPartName;
+
+    @FXML
+    private TextField modifyProduct_setPriceUnit;
+
     ObservableList<PartData> partList = FXCollections.observableArrayList();
+    ObservableList<RowPartData> associatedPartList = FXCollections.observableArrayList();
+
+    private final String getSingleProductID;
+    private final String getSingleProductName;
+    private final String getSingleProductStock;
+    private final String getSingleProductPriceUnit;
+    private final String getSingleProductMin;
+    private final String getSingleProductMax;
+
+    public ModifyProductController(PartsAndProductsInventory partsAndProductsInventory, ProductData productData, String getSingleProductID, String getSingleProductName, String getSingleProductStock, String getSingleProductPriceUnit, String getSingleProductMin, String getSingleProductMax) {
+        this.partsAndProductsInventory = partsAndProductsInventory;
+        this.productData = productData;
+        this.getSingleProductID = getSingleProductID;
+        this.getSingleProductName = getSingleProductName;
+        this.getSingleProductStock= getSingleProductStock;
+        this.getSingleProductPriceUnit= getSingleProductPriceUnit;
+        this.getSingleProductMin= getSingleProductMin;
+        this.getSingleProductMax= getSingleProductMax;
+    }
+
 
     public void modifyProduct_cancelBtnAction(ActionEvent event) {
         try {
@@ -174,6 +231,13 @@ public class ModifyProductController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
+
+        modifyProduct_productIDTextField.setText(getSingleProductID);
+        modifyProduct_setPartName.setText(getSingleProductName);
+        modifyProduct_setInventoryLevel.setText(getSingleProductStock);
+        modifyProduct_setPriceUnit.setText(getSingleProductPriceUnit);
+        modifyProduct_setMin.setText(getSingleProductMin);
+        modifyProduct_setMax.setText(getSingleProductMax);
 
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";

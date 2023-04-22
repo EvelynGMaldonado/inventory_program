@@ -297,83 +297,7 @@ public class HelloController implements Initializable {
 //        }
     }
 
-
-    //********#2 Modify part
-//    public void clickModifyPartPageBtn (ActionEvent event){
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
-//
-//        index = parts_tableView.getSelectionModel().getSelectedIndex();
-////        parts_tableView.getItems().remove(selectedItem);
-//
-//        if(index > -1) {
-//            PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
-//            String rowPartName = "";
-////            String rowSql = "SELECT partID, part_name, stock, price_unit, min, max, machineID, company_name FROM parts WHERE partID =?";
-//
-//            String modifySelectedPart = "SELECT * FROM parts WHERE partID = '" + selectedItem.getPartID() + "'";
-////
-//            try {
-//                Statement statement = connectDB.createStatement();
-//                ResultSet querySelectedPartResult = statement.executeQuery(modifySelectedPart);
-////                PreparedStatement pst = connectDB.prepareStatement(rowSql);
-////                pst.setString(1, selectedItem.getPartID().toString());
-////                ResultSet rs = pst.executeQuery();
-//                 if(querySelectedPartResult.next()) {
-//                     String rowPartID = querySelectedPartResult.getString("partID");
-//
-//                     rowPartName = querySelectedPartResult.getString("part_name");
-//                     modifyPart_setPartName.setText(rowPartName);
-//                     String rowPartStock = querySelectedPartResult.getString("stock");
-//                     String rowPartPriceUnit = querySelectedPartResult.getString("price_unit");
-//                     String rowPartMin = querySelectedPartResult.getString("min");
-//                     String rowPartMax = querySelectedPartResult.getString("max");
-//                     String rowPartMachineID = querySelectedPartResult.getString("machineID");
-//                     String rowPartCompanyName = querySelectedPartResult.getString("company_name");
-//
-//                     System.out.println(rowPartID + rowPartName+ rowPartStock+ rowPartPriceUnit+ rowPartMin+ rowPartMax+ rowPartMachineID+ rowPartCompanyName);
-//
-//                 }
-//////                while(querySelectedPartResult.next()) {
-//////                    System.out.println(querySelectedPartResult.getString("partID"));
-//////////                    System.out.println(querySelectedPartResult.getString("part_name"));
-//////                    getRowPartName = querySelectedPartResult.getString("part_name");
-//////                    System.out.println("This new try... getRowPartName is: " + getRowPartName);
-//////
-//////                }
-//                modifyPartPageBtn.getScene().getWindow().hide();
-//                Stage modifyPartPageWindow = new Stage();
-//                modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
-//
-//                //create view for FXML
-//                FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
-//
-//                //set view in ppMainWindow
-//                modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
-//
-//                //launch
-//                modifyPartPageWindow.show();
-//
-//                if(modifyPart_setPartName.getText() == null || modifyPart_setPartName.getText() == "") {
-//                    modifyPart_setPartName.setText(rowPartName);
-//                }
-//            } catch(Exception e) {
-//                e.printStackTrace();
-//                e.getCause();
-//            }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error message");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Please select the data row that you want to delete.");
-//            alert.showAndWait();
-//        }
-//
-//        modifyPart_setPartName.setText("hello!!");
-//
-//    }
-
-    @FXML
+   @FXML
     public void clickModifyPartPageBtn (ActionEvent event){
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -449,27 +373,92 @@ public class HelloController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
             alert.setHeaderText(null);
-            alert.setContentText("Please select the data row that you want to delete.");
+            alert.setContentText("Please select the data row that you want to modify.");
             alert.showAndWait();
         }
     }
 
-    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
-        modifyProductPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyProductPageWindow = new Stage();
-        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+    public void clickModifyProductPageBtn (ActionEvent event) {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        index = products_tableView.getSelectionModel().getSelectedIndex();
+//        parts_tableView.getItems().remove(selectedItem);
 
-        //create view for FXML
-        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
+        if(index > -1) {
+//            PreparedStatement pst;
 
-        //set view in ppMainWindow
-        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
+            ProductData selectedItem = products_tableView.getSelectionModel().getSelectedItem();
+            String getSingleProductID = "";
+            String getSingleProductName = "";
+            String getSingleProductStock = "";
+            String getSingleProductPriceUnit = "";
+            String getSingleProductMin = "";
+            String getSingleProductMax = "";
 
-        //launch
-        modifyProductPageWindow.show();
+            String modifySelectedProduct = "SELECT * FROM products WHERE productID = '" + selectedItem.getProductID() + "'";
+            try {
+                Statement statement = connectDB.createStatement();
+                ResultSet querySelectedProductResult = statement.executeQuery(modifySelectedProduct);
+                // System.out.println("Modify part is: "+querySelectedPartResult.);
+                while(querySelectedProductResult.next()) {
+//                    System.out.println(querySelectedPartResult.getString("partID"));
+//                    System.out.println(querySelectedPartResult.getString("part_name"));
+                    getSingleProductID = querySelectedProductResult.getString("productID");
+                    getSingleProductName = querySelectedProductResult.getString("product_name");
+                    System.out.println("getProductName is: " + getSingleProductName);
+                    getSingleProductStock = querySelectedProductResult.getString("stock");
+                    getSingleProductPriceUnit = querySelectedProductResult.getString("price_unit");
+                    getSingleProductMin = querySelectedProductResult.getString("min");
+                    getSingleProductMax = querySelectedProductResult.getString("max");
+                }
+                modifyProductPageBtn.getScene().getWindow().hide();
+                //create new stage
+                Stage modifyProductPageWindow = new Stage();
+                modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
 
+                //create view for FXML
+                FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
+
+                ModifyProductController modifyProductController = new ModifyProductController(partsAndProductsInventory, selectedItem, getSingleProductID, getSingleProductName, getSingleProductStock, getSingleProductPriceUnit, getSingleProductMin, getSingleProductMax);
+                modifyProductPageLoader.setController(modifyProductController);
+
+                //set view in ppMainWindow
+                modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
+
+                //launch
+                modifyProductPageWindow.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                e.getCause();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the data row that you want to modify.");
+            alert.showAndWait();
+        }
     }
+
+//    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
+//        modifyProductPageBtn.getScene().getWindow().hide();
+//        //create new stage
+//        Stage modifyProductPageWindow = new Stage();
+//        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+//
+//        //create view for FXML
+//        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
+//
+//        //set view in ppMainWindow
+//        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
+//
+//        //launch
+//        modifyProductPageWindow.show();
+//
+//    }
 
 
     //!!!!!!REFRESH TABLE AFTER ADDING A NEW USER!!!!
