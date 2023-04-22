@@ -280,6 +280,199 @@ public class AddProductController implements Initializable {
 
     }
 
+    //on click addProduct_saveBtn
+    @FXML
+    void clickSaveNewProductAndAssociatedParts(ActionEvent event) {
+        if(!addProduct_setProductName.getText().trim().isEmpty() || !addProduct_setInventoryLevel.getText().trim().isEmpty() || !addProduct_setPrice.getText().trim().isEmpty() || !addProduct_setMax.getText().trim().isEmpty() || !addProduct_setMin.getText().isEmpty()) {
+            validateProductName();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields.");
+            alert.showAndWait();
+        }
+    }
+
+    public void validateProductName() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        String verifyProductName = "SELECT count(1) FROM products WHERE product_name = '" + addProduct_setProductName.getText() + "'";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryUniqueProductNameResult = statement.executeQuery(verifyProductName);
+
+            while(queryUniqueProductNameResult.next()) {
+                if(queryUniqueProductNameResult.getInt(1) == 1) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Product Name already exists. Please try again.");
+                    alert.showAndWait();
+                } else {
+                    registerNewProduct();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void registerNewProduct() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String productName = addProduct_setProductName.getText();
+        String inventoryLevel = addProduct_setInventoryLevel.getText();
+        String priceUnit = addProduct_setPrice.getText();
+        String max= addProduct_setMax.getText();
+        String min = addProduct_setMin.getText();
+
+        String insertNewProductFields = "INSERT INTO products (product_name, stock, price_unit, min, max) VALUES ('";
+        String insertNewProductValues = productName + "', '" + inventoryLevel + "', '" + priceUnit + "', '" + min + "', '" + max + "')";
+        String insertNewProductToDB = insertNewProductFields + insertNewProductValues;
+
+        try {
+            Statement statement = connectDB.createStatement();
+            statement.executeUpdate(insertNewProductToDB);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successful Product Registration");
+            alert.setHeaderText(null);
+            alert.setContentText("New Product has been successfully added to EM Inventory Management System");
+            alert.showAndWait();
+
+            retrieveProductID();
+
+            //After successfully saving a new product we call the registerCurrentProductAssociatedPart() method
+//            registerCurrentProductAssociatedPart();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void retrieveProductID() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        String currentProductName = addProduct_setProductName.getText();
+        System.out.println("the product name is: " + currentProductName);
+
+        String currentProductID = "";
+        String getCurrentProductIDQuery = "SELECT productID FROM products WHERE product_name = '" + currentProductName + "'";
+
+        String currentAssociatedPartsIDs = "";
+
+        String getCurrentAssociatedPartsIDsQuery = "SELECT partID FROM associated_parts";
+
+        try{
+            Statement statement = connectDB.createStatement();
+            ResultSet queryCurrentProductIDResult = statement.executeQuery(getCurrentProductIDQuery);
+
+
+            while(queryCurrentProductIDResult.next()) {
+                currentProductID = queryCurrentProductIDResult.getString("productID");
+                System.out.println("The current productID on line 379 is: " + currentProductID);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+
+        }
+
+        try{
+            Statement statement = connectDB.createStatement();
+            ResultSet queryCurrentAssociatedPartsIDsResult = statement.executeQuery(getCurrentAssociatedPartsIDsQuery);
+
+            while(queryCurrentAssociatedPartsIDsResult.next()) {
+                currentAssociatedPartsIDs = queryCurrentAssociatedPartsIDsResult.getString("partID");
+                System.out.println("The current partsID on line 395 is: " + currentAssociatedPartsIDs);
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
+
+    public void registerCurrentProductAssociatedPart() {
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
+//
+//        String currentProductName = addProduct_setProductName.getText();
+//        System.out.println("the product name is: " + currentProductName);
+//
+//        String getCurrentProductID = "SELECT productID FROM products WHERE product_name = '" + currentProductName + "'";
+//        String getAllAssociatedPartsID = "SELECT partID FROM associated_parts";
+
+
+
+//        String insertPartsPerProductFields = "INSERT INTO products_associated_parts (productID, partID) VALUES ('";
+//        String insertPartsPerProductValues = partName + "', '" + inventoryLevel + "')";
+//        String insertPartsPerProductToDB_products_associated_parts = insertNewInHousePartFields + insertNewInHousePartValues;
+//        String insertProductIDQuery = "INSERT INTO products_associated_parts (productID, partID) SELECT products.productID FROM products WHERE product_name = '" + currentProductName + "' ";
+
+        try {
+//            Statement statement = connectDB.createStatement();
+//            ResultSet currentProductID = statement.executeQuery(getCurrentProductID);
+//            ResultSet allAssociatedPartsID = statement.executeQuery(getAllAssociatedPartsID);
+//
+//            System.out.println("the current productID on line 375 is: " + getCurrentProductID);
+//            System.out.println("the current productID on line 376 is: " + currentProductID);
+//            System.out.println("all the associated partsID on line 377 are: " + getAllAssociatedPartsID);
+//            System.out.println("all the associated partsID on line 378 are: " + allAssociatedPartsID);
+
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Successful ProductID Association");
+//            alert.setHeaderText(null);
+//            alert.setContentText("ProductID has been successfully added to products_associated_parts database table");
+//            alert.showAndWait();
+
+//            //Register all associated parts in products associated parts
+//            insertAssociatedPartsToCurrentProduct();
+
+            //            //After successfully saving a new product we redirect to the home_page and are able to see the updated data table
+//            addProductRedirectsToEMIMSHomePage();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+//    public void insertAssociatedPartsToCurrentProduct() {
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
+//
+//        String insertAssociatedPartsIDsQuery = "INSERT INTO products_associated_parts (partID) SELECT partID FROM associated_parts";
+//        System.out.println("we are on insertAssociatedPartsToCurrentProduct method!! line 390");
+//        try {
+//            Statement statement = connectDB.createStatement();
+//            statement.executeUpdate(insertAssociatedPartsIDsQuery);
+//
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Successful PartID Association");
+//            alert.setHeaderText(null);
+//            alert.setContentText("PartID has been successfully added to products_associated_parts database table");
+//            alert.showAndWait();
+//
+//            //After successfully saving a new product we redirect to the home_page and are able to see the updated data table
+//            addProductRedirectsToEMIMSHomePage();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            e.getCause();
+//        }
+//
+//    }
+
+
     //remove associated part btn removes the data of the selected row from the associated part data table
     @FXML
     private void deleteSelectedAssociatedPart (ActionEvent event) {

@@ -454,7 +454,7 @@ public class HelloController implements Initializable {
         }
     }
 
-        public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
+    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
         modifyProductPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage modifyProductPageWindow = new Stage();

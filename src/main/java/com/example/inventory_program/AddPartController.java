@@ -102,7 +102,7 @@ public class AddPartController implements Initializable {
         //Part Category Selection Validation - No null Accepted ~ it has to select inHouse or Outsourced
         if(inHouseRadioBtn.isSelected() || outsourcedRadioBtn.isSelected()) {
             //Not null accepted Input validation checks that none of the fields are blank or empty...
-            if(!addPart_setPartName.getText().trim().isEmpty() || !addPart_setInventoryLevel.getText().trim().isEmpty() || addPart_setPriceUnit.getText().trim().isEmpty() || !addPart_setMax.getText().trim().isEmpty() || !addPart_setMin.getText().trim().isEmpty() || !inputCompanyOrMachineInputField.getText().trim().isEmpty()) {
+            if(!addPart_setPartName.getText().trim().isEmpty() || !addPart_setInventoryLevel.getText().trim().isEmpty() || !addPart_setPriceUnit.getText().trim().isEmpty() || !addPart_setMax.getText().trim().isEmpty() || !addPart_setMin.getText().trim().isEmpty() || !inputCompanyOrMachineInputField.getText().trim().isEmpty()) {
                 //check if the part name is available or if it already exists using the validatePartName method
                 validatePartName();
 

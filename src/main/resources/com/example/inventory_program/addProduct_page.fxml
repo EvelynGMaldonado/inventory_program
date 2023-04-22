@@ -249,7 +249,7 @@
                                              </columns>
                                           </TableView>
                                           <Button fx:id="addProduct_removeAssociatedPartBtn" layoutX="249.0" layoutY="153.0" mnemonicParsing="false" onAction="#deleteSelectedAssociatedPart" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Remove associated part" />
-                                          <Button fx:id="addProduct_saveBtn" layoutX="288.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
+                                          <Button fx:id="addProduct_saveBtn" layoutX="288.0" layoutY="189.0" mnemonicParsing="false" onAction="#clickSaveNewProductAndAssociatedParts" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
                                           <Button fx:id="addProduct_cancelBtn" layoutX="340.0" layoutY="189.0" mnemonicParsing="false" onAction="#addProduct_cancelBtnAction" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>
