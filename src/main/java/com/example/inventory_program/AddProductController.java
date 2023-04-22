@@ -364,11 +364,6 @@ public class AddProductController implements Initializable {
 
         String currentProductID = "";
         String getCurrentProductIDQuery = "SELECT productID FROM products WHERE product_name = '" + currentProductName + "'";
-
-        String currentAssociatedPartsIDs = "";
-
-        String getCurrentAssociatedPartsIDsQuery = "SELECT partID FROM associated_parts";
-
         try{
             Statement statement = connectDB.createStatement();
             ResultSet queryCurrentProductIDResult = statement.executeQuery(getCurrentProductIDQuery);
@@ -376,7 +371,7 @@ public class AddProductController implements Initializable {
 
             while(queryCurrentProductIDResult.next()) {
                 currentProductID = queryCurrentProductIDResult.getString("productID");
-                System.out.println("The current productID on line 379 is: " + currentProductID);
+                System.out.println("The current productID on line 374 is: " + currentProductID);
             }
 
         } catch (SQLException e) {
@@ -385,20 +380,47 @@ public class AddProductController implements Initializable {
 
         }
 
+        String currentAssociatedPartsIDs = "";
+        String getCurrentAssociatedPartsIDsQuery = "SELECT partID FROM associated_parts";
         try{
             Statement statement = connectDB.createStatement();
             ResultSet queryCurrentAssociatedPartsIDsResult = statement.executeQuery(getCurrentAssociatedPartsIDsQuery);
 
             while(queryCurrentAssociatedPartsIDsResult.next()) {
                 currentAssociatedPartsIDs = queryCurrentAssociatedPartsIDsResult.getString("partID");
-                System.out.println("The current partsID on line 395 is: " + currentAssociatedPartsIDs);
+                System.out.println("The current partsID on line 391 is: " + currentAssociatedPartsIDs);
+
+                String insertPartsPerProductFields = "INSERT INTO products_associated_parts (productID, partID) VALUES ('";
+                String insertPartsPerProductValues = currentProductID + "', '" + currentAssociatedPartsIDs + "') ";
+
+                String finalAssociation = insertPartsPerProductFields + insertPartsPerProductValues;
+
+                try{
+                    statement = connectDB.createStatement();
+                    statement.executeUpdate(finalAssociation);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful Product and PartsID data association");
+                    alert.setHeaderText(null);
+                    alert.setContentText("New Product and its PartsID have been successfully added to table products_associated_parts at the EM Inventory Management System");
+                    alert.showAndWait();
+
+                //After successfully saving a new product we redirect to the home_page and are able to see the updated data table
+                addProductRedirectsToEMIMSHomePage();
+
+                }catch(SQLException e){
+                    e.printStackTrace();
+                    e.getCause();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
         } catch(SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
-
     }
 
     public void registerCurrentProductAssociatedPart() {
