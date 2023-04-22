@@ -344,7 +344,7 @@ public class AddProductController implements Initializable {
             alert.setContentText("New Product has been successfully added to EM Inventory Management System");
             alert.showAndWait();
 
-            retrieveProductID();
+            registerCurrentProductAssociatedParts();
 
             //After successfully saving a new product we call the registerCurrentProductAssociatedPart() method
 //            registerCurrentProductAssociatedPart();
@@ -355,7 +355,7 @@ public class AddProductController implements Initializable {
         }
     }
 
-    public void retrieveProductID() {
+    public void registerCurrentProductAssociatedParts() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
@@ -399,100 +399,28 @@ public class AddProductController implements Initializable {
                     statement = connectDB.createStatement();
                     statement.executeUpdate(finalAssociation);
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Successful Product and PartsID data association");
-                    alert.setHeaderText(null);
-                    alert.setContentText("New Product and its PartsID have been successfully added to table products_associated_parts at the EM Inventory Management System");
-                    alert.showAndWait();
-
-                //After successfully saving a new product we redirect to the home_page and are able to see the updated data table
-                addProductRedirectsToEMIMSHomePage();
-
                 }catch(SQLException e){
                     e.printStackTrace();
                     e.getCause();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
 
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successful Product and PartsID data association");
+            alert.setHeaderText(null);
+            alert.setContentText("New Product and its PartsID have been successfully added to table products_associated_parts at the EM Inventory Management System");
+            alert.showAndWait();
+
+            //After successfully saving a new product we redirect to the home_page and are able to see the updated data table
+            addProductRedirectsToEMIMSHomePage();
 
         } catch(SQLException e) {
             e.printStackTrace();
             e.getCause();
-        }
-    }
-
-    public void registerCurrentProductAssociatedPart() {
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
-//
-//        String currentProductName = addProduct_setProductName.getText();
-//        System.out.println("the product name is: " + currentProductName);
-//
-//        String getCurrentProductID = "SELECT productID FROM products WHERE product_name = '" + currentProductName + "'";
-//        String getAllAssociatedPartsID = "SELECT partID FROM associated_parts";
-
-
-
-//        String insertPartsPerProductFields = "INSERT INTO products_associated_parts (productID, partID) VALUES ('";
-//        String insertPartsPerProductValues = partName + "', '" + inventoryLevel + "')";
-//        String insertPartsPerProductToDB_products_associated_parts = insertNewInHousePartFields + insertNewInHousePartValues;
-//        String insertProductIDQuery = "INSERT INTO products_associated_parts (productID, partID) SELECT products.productID FROM products WHERE product_name = '" + currentProductName + "' ";
-
-        try {
-//            Statement statement = connectDB.createStatement();
-//            ResultSet currentProductID = statement.executeQuery(getCurrentProductID);
-//            ResultSet allAssociatedPartsID = statement.executeQuery(getAllAssociatedPartsID);
-//
-//            System.out.println("the current productID on line 375 is: " + getCurrentProductID);
-//            System.out.println("the current productID on line 376 is: " + currentProductID);
-//            System.out.println("all the associated partsID on line 377 are: " + getAllAssociatedPartsID);
-//            System.out.println("all the associated partsID on line 378 are: " + allAssociatedPartsID);
-
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Successful ProductID Association");
-//            alert.setHeaderText(null);
-//            alert.setContentText("ProductID has been successfully added to products_associated_parts database table");
-//            alert.showAndWait();
-
-//            //Register all associated parts in products associated parts
-//            insertAssociatedPartsToCurrentProduct();
-
-            //            //After successfully saving a new product we redirect to the home_page and are able to see the updated data table
-//            addProductRedirectsToEMIMSHomePage();
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            e.getCause();
         }
     }
-
-//    public void insertAssociatedPartsToCurrentProduct() {
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
-//
-//        String insertAssociatedPartsIDsQuery = "INSERT INTO products_associated_parts (partID) SELECT partID FROM associated_parts";
-//        System.out.println("we are on insertAssociatedPartsToCurrentProduct method!! line 390");
-//        try {
-//            Statement statement = connectDB.createStatement();
-//            statement.executeUpdate(insertAssociatedPartsIDsQuery);
-//
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Successful PartID Association");
-//            alert.setHeaderText(null);
-//            alert.setContentText("PartID has been successfully added to products_associated_parts database table");
-//            alert.showAndWait();
-//
-//            //After successfully saving a new product we redirect to the home_page and are able to see the updated data table
-//            addProductRedirectsToEMIMSHomePage();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause();
-//        }
-//
-//    }
 
 
     //remove associated part btn removes the data of the selected row from the associated part data table
