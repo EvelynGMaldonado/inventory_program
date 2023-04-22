@@ -403,7 +403,6 @@ public class AddProductController implements Initializable {
                     e.printStackTrace();
                     e.getCause();
                 }
-
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successful Product and PartsID data association");
