@@ -355,6 +355,7 @@ public class AddProductController implements Initializable {
         }
     }
 
+    //Last step on add New product functionality
     public void registerCurrentProductAssociatedParts() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
