@@ -422,7 +422,6 @@ public class AddProductController implements Initializable {
         }
     }
 
-
     //remove associated part btn removes the data of the selected row from the associated part data table
     @FXML
     private void deleteSelectedAssociatedPart (ActionEvent event) {
