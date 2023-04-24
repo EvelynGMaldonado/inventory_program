@@ -623,49 +623,6 @@ public class HelloController implements Initializable {
 
     }
 
-
-//    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
-//        modifyProductPageBtn.getScene().getWindow().hide();
-//        //create new stage
-//        Stage modifyProductPageWindow = new Stage();
-//        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
-//
-//        //create view for FXML
-//        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
-//
-//        //set view in ppMainWindow
-//        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
-//
-//        //launch
-//        modifyProductPageWindow.show();
-//
-//    }
-
-//    @FXML
-//    public void clickModifyPartPageBtn (ActionEvent event) throws IOException {
-//        modifyPartPageBtn.getScene().getWindow().hide();
-//        //create new stage
-//        Stage modifyPartPageWindow = new Stage();
-//        modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
-//
-//        //create view for FXML
-//        FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
-//
-////        //Get modifyPart_page Controller : ModifyPartController
-////        ModifyPartController modifyPartController = modifyPartPageLoader.getController();
-////
-////        //Pass any data we want, we can have multiple method calls here
-////        modifyPartController.showSelectedPartDataInformation(nameScene1.getText(), ageScene1.getText());
-//
-//
-//        //set view in ppMainWindow
-//        modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
-//
-//        //launch
-//        modifyPartPageWindow.show();
-//
-//    }
-
     public void closeBtnAction(ActionEvent e) {
         Stage stage = (Stage) landingPage_closeBtn.getScene().getWindow();
         stage.close();

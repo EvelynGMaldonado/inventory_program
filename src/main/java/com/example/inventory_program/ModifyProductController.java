@@ -70,19 +70,19 @@ public class ModifyProductController implements Initializable {
     private TableColumn<PartData, String> parts_tableView_col_partName = new TableColumn<>("part_name");
 
     @FXML
-    private TableView<RowPartData> associatedParts_tableview = new TableView<RowPartData>();
+    private TableView<ProductPartsData> associatedParts_tableview = new TableView<ProductPartsData>();
 
     @FXML
-    private TableColumn<RowPartData, Integer> associatedParts_tableView_col_inventoryLevel = new TableColumn<>("stock");
+    private TableColumn<ProductPartsData, Integer> associatedParts_tableView_col_inventoryLevel = new TableColumn<>("stock");
 
     @FXML
-    private TableColumn<RowPartData, Integer> associatedParts_tableView_col_partID = new TableColumn<>("partID");
+    private TableColumn<ProductPartsData, Integer> associatedParts_tableView_col_partID = new TableColumn<>("partID");
 
     @FXML
-    private TableColumn<RowPartData, String> associatedParts_tableView_col_partName = new TableColumn<>("part_name");
+    private TableColumn<ProductPartsData, String> associatedParts_tableView_col_partName = new TableColumn<>("part_name");
 
     @FXML
-    private TableColumn<RowPartData, BigDecimal> associatedParts_tableView_col_priceUnit = new TableColumn<>("price_unit");
+    private TableColumn<ProductPartsData, BigDecimal> associatedParts_tableView_col_priceUnit = new TableColumn<>("price_unit");
 
     @FXML
     private TextField modifyProduct_productIDTextField;
@@ -103,7 +103,7 @@ public class ModifyProductController implements Initializable {
     private TextField modifyProduct_setPriceUnit;
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
-    ObservableList<RowPartData> associatedPartList = FXCollections.observableArrayList();
+    ObservableList<ProductPartsData> associatedPartsByProductList = FXCollections.observableArrayList();
 
     private final String getSingleProductID;
     private final String getSingleProductName;
@@ -241,8 +241,7 @@ public class ModifyProductController implements Initializable {
 
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
-        //**new
-        String productsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
+
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
@@ -271,6 +270,84 @@ public class ModifyProductController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
+
+        String getPartsIDByProductQuery = "SELECT partID FROM products_associated_parts WHERE productID = '" + getSingleProductID + "' ";
+        String allPartsIDByProduct = "";
+        try{
+            Statement statement = connectDB.createStatement();
+            ResultSet queryCurrentAssociatedPartsIDsResult = statement.executeQuery(getPartsIDByProductQuery);
+
+            while(queryCurrentAssociatedPartsIDsResult.next()) {
+                allPartsIDByProduct = queryCurrentAssociatedPartsIDsResult.getString("partID");
+                System.out.println("The current partsID on line 282 is: " + allPartsIDByProduct);
+
+                String associatedPartsByProductsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts WHERE partID = '" + allPartsIDByProduct + "' ";
+                try{
+                    statement = connectDB.createStatement();
+//                    statement.executeUpdate(finalAssociation);
+                    ResultSet queryAssociatedPartsByProductsOutput = statement.executeQuery(associatedPartsByProductsViewQuery);
+
+                    while(queryAssociatedPartsByProductsOutput.next()) {
+                        associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsByProductsOutput.getInt("partID"),
+                        queryAssociatedPartsByProductsOutput.getString("part_name"),
+                        queryAssociatedPartsByProductsOutput.getInt("stock"),
+                        queryAssociatedPartsByProductsOutput.getBigDecimal("price_unit")));
+                    }
+
+                    //PropertyValueFactory corresponds to the new PartData fields
+                    //the table column is the one we annotate above
+                    associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+                    associatedParts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+                    associatedParts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                    associatedParts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+                    associatedParts_tableview.setItems(associatedPartsByProductList);
+
+
+                }catch(SQLException e){
+                    e.printStackTrace();
+                    e.getCause();
+                }
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+//        String associatedPartsByProductsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts WHERE partID = '" + allPartsIDByProduct + "' ";
+//        String allDataFromAssociatedParts = "";
+//        String allPartsNamesByProduct = "";
+//        try {
+//            Statement statement = connectDB.createStatement();
+//            ResultSet queryAssociatedPartsByProductsOutput = statement.executeQuery(associatedPartsByProductsViewQuery);
+//
+//            while (queryAssociatedPartsByProductsOutput.next()) {
+//                allPartsNamesByProduct = queryAssociatedPartsByProductsOutput.getString("part_name");
+//                System.out.println("The current parts_names on line 286 is: " + allPartsNamesByProduct);
+//
+//                //populate the observableList
+//                associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsByProductsOutput.getInt("partID"),
+//                        queryAssociatedPartsByProductsOutput.getString("part_name"),
+//                        queryAssociatedPartsByProductsOutput.getInt("stock"),
+//                        queryAssociatedPartsByProductsOutput.getBigDecimal("price_unit")));
+//            }
+//
+//
+//            //PropertyValueFactory corresponds to the new PartData fields
+//            //the table column is the one we annotate above
+//            associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+//            associatedParts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+//            associatedParts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//            associatedParts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+//
+//            associatedParts_tableview.setItems(associatedPartsByProductList);
+//
+//        } catch(SQLException e) {
+//            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+//            e.printStackTrace();
+//            e.getCause();
+//        }
     }
 
 
