@@ -226,7 +226,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
-                                          <Button layoutX="351.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
+                                          <Button fx:id="modifyProduct_addAssociatedPartBtn" layoutX="351.0" layoutY="189.0" mnemonicParsing="false" onAction="#clickAddAssociatedPartBtn" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Add" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutX="238.0" layoutY="261.0" prefHeight="225.0" prefWidth="403.0" stylesheets="@startPageDesign.css">
@@ -248,8 +248,8 @@
                                                 <TableColumn fx:id="associatedParts_tableView_col_priceUnit" prefWidth="95.0" text="Price/Unit" />
                                              </columns>
                                           </TableView>
-                                          <Button layoutX="249.0" layoutY="153.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Remove associated part" />
-                                          <Button layoutX="288.0" layoutY="189.0" mnemonicParsing="false" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
+                                          <Button fx:id="modifyProduct_removeAssociatedPartBtn" layoutX="249.0" layoutY="153.0" mnemonicParsing="false" onAction="#deleteSelectedAssociatedPart" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Remove associated part" />
+                                          <Button fx:id="modifyProduct_saveBtn" layoutX="288.0" layoutY="189.0" mnemonicParsing="false" onAction="#clickSaveUpdatedProductAndAssociatedParts" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Save" />
                                           <Button fx:id="modifyProduct_cancelBtn" layoutX="340.0" layoutY="189.0" mnemonicParsing="false" onAction="#modifyProduct_cancelBtnAction" styleClass="editions-btns" stylesheets="@startPageDesign.css" text="Cancel" />
                                        </children>
                                     </AnchorPane>
