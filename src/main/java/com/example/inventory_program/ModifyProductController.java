@@ -267,9 +267,15 @@ public class ModifyProductController implements Initializable {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
         index = associatedParts_tableview.getSelectionModel().getSelectedIndex();
+//        parts_tableView.getItems().remove(selectedItem);
 
         if(index > -1) {
+            PreparedStatement pst;
             ProductPartsData selectedItem = associatedParts_tableview.getSelectionModel().getSelectedItem();
+
+            String deleteSelectedAssociatedPart = "DELETE FROM modify_associated_parts WHERE partID = ?";
+
+            try {
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
@@ -278,8 +284,9 @@ public class ModifyProductController implements Initializable {
                 Optional<ButtonType> option = alert.showAndWait();
 
                 if(option.get().equals(ButtonType.OK)) {
-
-                    associatedParts_tableview.getItems().remove(selectedItem);
+                    pst = connectDB.prepareStatement(deleteSelectedAssociatedPart);
+                    pst.setString(1, selectedItem.getPartID().toString());
+                    pst.execute();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Deletion information");
@@ -287,16 +294,55 @@ public class ModifyProductController implements Initializable {
                     alert.setContentText("Associated Part has been successfully removed from Current Product");
                     alert.showAndWait();
 
+                    displayAssociatedPartDataTableView();
                 } else {
                     return;
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
             alert.setHeaderText(null);
-            alert.setContentText("Please select the associated part that you want to delete.");
+            alert.setContentText("Please select the associated part data row that you want to delete.");
             alert.showAndWait();
         }
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
+//        index = associatedParts_tableview.getSelectionModel().getSelectedIndex();
+//
+//        if(index > -1) {
+//            ProductPartsData selectedItem = associatedParts_tableview.getSelectionModel().getSelectedItem();
+//
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setTitle("Confirmation Message");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Are you sure that you want to delete this Associated Part from your Product?");
+//                Optional<ButtonType> option = alert.showAndWait();
+//
+//                if(option.get().equals(ButtonType.OK)) {
+//
+//                    associatedParts_tableview.getItems().remove(selectedItem);
+//
+//                    alert = new Alert(Alert.AlertType.INFORMATION);
+//                    alert.setTitle("Deletion information");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText("Associated Part has been successfully removed from Current Product");
+//                    alert.showAndWait();
+//
+//                } else {
+//                    return;
+//                }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error message");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Please select the associated part that you want to delete.");
+//            alert.showAndWait();
+//        }
     }
 
     //display the current associated parts data after add a new associated part
@@ -305,76 +351,80 @@ public class ModifyProductController implements Initializable {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
-        String getRemaindingPartsIDByProductQuery = "SELECT partID FROM products_associated_parts WHERE productID = '" + getSingleProductID + "' ";
-        String remaindingPartsIDByProduct = "";
-        try{
+        String associatedPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM modify_associated_parts";
+
+        try {
             Statement statement = connectDB.createStatement();
-            ResultSet queryCurrentAssociatedPartsIDsResult = statement.executeQuery(getRemaindingPartsIDByProductQuery);
+            ResultSet queryAssociatedPartsView = statement.executeQuery(associatedPartsViewQuery);
 
-            while(queryCurrentAssociatedPartsIDsResult.next()) {
-                remaindingPartsIDByProduct = queryCurrentAssociatedPartsIDsResult.getString("partID");
-                System.out.println("The remainding partsID on line 328 is: " + remaindingPartsIDByProduct);
+            while (queryAssociatedPartsView.next()) {
 
-                String allPartsByProductsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts WHERE partID = '" + remaindingPartsIDByProduct + "' ";
-                try{
-                    statement = connectDB.createStatement();
-                    ResultSet queryAssociatedPartsByProductsOutput = statement.executeQuery(allPartsByProductsViewQuery);
-
-                    while(queryAssociatedPartsByProductsOutput.next()) {
-                        associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsByProductsOutput.getInt("partID"),
-                                queryAssociatedPartsByProductsOutput.getString("part_name"),
-                                queryAssociatedPartsByProductsOutput.getInt("stock"),
-                                queryAssociatedPartsByProductsOutput.getBigDecimal("price_unit")));
-                    }
-
-                    //PropertyValueFactory corresponds to the new PartData fields
-                    //the table column is the one we annotate above
-                    associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
-                    associatedParts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
-                    associatedParts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-                    associatedParts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
-
-                    associatedParts_tableview.setItems(associatedPartsByProductList);
-
-                }catch(SQLException e){
-                    e.printStackTrace();
-                    e.getCause();
-                }
+                //populate the observableList
+                associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsView.getInt("partID"),
+                        queryAssociatedPartsView.getString("part_name"),
+                        queryAssociatedPartsView.getInt("stock"),
+                        queryAssociatedPartsView.getBigDecimal("price_unit")));
             }
+            //PropertyValueFactory corresponds to the new PartData fields
+            //the table column is the one we annotate above
+            associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+            associatedParts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+            associatedParts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            associatedParts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
 
-        } catch(SQLException e) {
+            associatedParts_tableview.setItems(associatedPartsByProductList);
+
+
+        } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
 
-//        String associatedPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM products_associated_parts";
+//        DatabaseConnection connectNow = new DatabaseConnection();
+//        Connection connectDB = connectNow.getConnection();
 //
-//        try {
+//        String getRemaindingPartsIDByProductQuery = "SELECT partID FROM products_associated_parts WHERE productID = '" + getSingleProductID + "' ";
+//        String remaindingPartsIDByProduct = "";
+//        try{
 //            Statement statement = connectDB.createStatement();
-//            ResultSet queryAssociatedPartsView = statement.executeQuery(associatedPartsViewQuery);
+//            ResultSet queryCurrentAssociatedPartsIDsResult = statement.executeQuery(getRemaindingPartsIDByProductQuery);
 //
-//            while (queryAssociatedPartsView.next()) {
+//            while(queryCurrentAssociatedPartsIDsResult.next()) {
+//                remaindingPartsIDByProduct = queryCurrentAssociatedPartsIDsResult.getString("partID");
+//                System.out.println("The remainding partsID on line 328 is: " + remaindingPartsIDByProduct);
 //
-//                //populate the observableList
-//                associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsView.getInt("partID"),
-//                        queryAssociatedPartsView.getString("part_name"),
-//                        queryAssociatedPartsView.getInt("stock"),
-//                        queryAssociatedPartsView.getBigDecimal("price_unit")));
+//                String allPartsByProductsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts WHERE partID = '" + remaindingPartsIDByProduct + "' ";
+//                try{
+//                    statement = connectDB.createStatement();
+//                    ResultSet queryAssociatedPartsByProductsOutput = statement.executeQuery(allPartsByProductsViewQuery);
+//
+//                    while(queryAssociatedPartsByProductsOutput.next()) {
+//                        associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsByProductsOutput.getInt("partID"),
+//                                queryAssociatedPartsByProductsOutput.getString("part_name"),
+//                                queryAssociatedPartsByProductsOutput.getInt("stock"),
+//                                queryAssociatedPartsByProductsOutput.getBigDecimal("price_unit")));
+//                    }
+//
+//                    //PropertyValueFactory corresponds to the new PartData fields
+//                    //the table column is the one we annotate above
+//                    associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+//                    associatedParts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+//                    associatedParts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//                    associatedParts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+//
+//                    associatedParts_tableview.setItems(associatedPartsByProductList);
+//
+//                }catch(SQLException e){
+//                    e.printStackTrace();
+//                    e.getCause();
+//                }
 //            }
 //
-//            //PropertyValueFactory corresponds to the new PartData fields
-//            //the table column is the one we annotate above
-//            associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
-//            associatedParts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
-//            associatedParts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//            associatedParts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
-//
-//            associatedParts_tableview.setItems(associatedPartsByProductList);
-//
-//        } catch (Exception e) {
+//        } catch(SQLException e) {
 //            e.printStackTrace();
 //            e.getCause();
 //        }
+
     }
 
     public void modifyProduct_cancelBtnAction(ActionEvent event) {
@@ -485,6 +535,27 @@ public class ModifyProductController implements Initializable {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
+        String getSingleAssociatedPartID = "";
+        String getSingleAssociatedPartName = "";
+        String getSingleAssociatedPartStock = "";
+        String getSingleAssociatedPartPriceUnit = "";
+        String getSingleAssociatedPartMin = "";
+        String getSingleAssociatedPartMax = "";
+        String getSingleAssociatedPartMachineID = "";
+        String getSingleAssociatedPartCompanyName = "";
+
+        //CLEAR THE MODIFY ASSOCIATED PARTS TABLE
+        String clearAssociatedPartsTable = "DELETE FROM modify_associated_parts";
+        try {
+            Statement statement = connectDB.createStatement();
+            statement.executeUpdate(clearAssociatedPartsTable);
+
+        } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            e.getCause();
+        }
+
         modifyProduct_productIDTextField.setText(getSingleProductID);
         modifyProduct_setPartName.setText(getSingleProductName);
         modifyProduct_setInventoryLevel.setText(getSingleProductStock);
@@ -494,7 +565,6 @@ public class ModifyProductController implements Initializable {
 
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
-
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
@@ -538,6 +608,12 @@ public class ModifyProductController implements Initializable {
                     ResultSet queryAssociatedPartsByProductsOutput = statement.executeQuery(associatedPartsByProductsViewQuery);
 
                     while(queryAssociatedPartsByProductsOutput.next()) {
+                        getSingleAssociatedPartID = queryAssociatedPartsByProductsOutput.getString("partID");
+                        getSingleAssociatedPartName = queryAssociatedPartsByProductsOutput.getString("part_name");
+                        System.out.println("Line 563 -- getSingleAssociatedPartName is: " + getSingleAssociatedPartName);
+                        getSingleAssociatedPartStock = queryAssociatedPartsByProductsOutput.getString("stock");
+                        getSingleAssociatedPartPriceUnit = queryAssociatedPartsByProductsOutput.getString("price_unit");
+
                         associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsByProductsOutput.getInt("partID"),
                         queryAssociatedPartsByProductsOutput.getString("part_name"),
                         queryAssociatedPartsByProductsOutput.getInt("stock"),
@@ -554,6 +630,18 @@ public class ModifyProductController implements Initializable {
                     associatedParts_tableview.setItems(associatedPartsByProductList);
 
                 }catch(SQLException e){
+                    e.printStackTrace();
+                    e.getCause();
+                }
+                String insertPreviouslyAssociatedPartFields = "INSERT INTO modify_associated_parts (partID, part_name, stock, price_unit) VALUES ('";
+                String insertPreviouslyAssociatedPartValues = getSingleAssociatedPartID + "', '" + getSingleAssociatedPartName + "',  '" + getSingleAssociatedPartStock + "', '" + getSingleAssociatedPartPriceUnit + "')";
+                String insertPreviouslyAssociatedPartsToDB_modify_associated_parts = insertPreviouslyAssociatedPartFields + insertPreviouslyAssociatedPartValues;
+
+                try {
+                    statement = connectDB.createStatement();
+                    statement.executeUpdate(insertPreviouslyAssociatedPartsToDB_modify_associated_parts );
+
+                } catch (Exception e) {
                     e.printStackTrace();
                     e.getCause();
                 }
