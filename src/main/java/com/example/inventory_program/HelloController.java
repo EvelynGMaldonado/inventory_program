@@ -248,53 +248,53 @@ public class HelloController implements Initializable {
     //Method to delete selected product records
     @FXML
     private void deleteSelectedProduct (ActionEvent event) {
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
-//        index = parts_tableView.getSelectionModel().getSelectedIndex();
-////        parts_tableView.getItems().remove(selectedItem);
-//
-//        if(index > -1) {
-//            PreparedStatement pst;
-//            ProductData selectedItemProduct = products_tableView.getSelectionModel().getSelectedItem();
-//
-//            String deleteSelectedProduct = "DELETE FROM products WHERE productID = ?";
-//
-//            try {
-//
-//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                alert.setTitle("Confirmation Message");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Are you sure that you want to delete this Product from the EM Inventory Management System?");
-//                Optional<ButtonType> option = alert.showAndWait();
-//
-//                if(option.get().equals(ButtonType.OK)) {
-//                    pst = connectDB.prepareStatement(deleteSelectedProduct);
-//                    pst.setString(1, selectedItemProduct.getProductID().toString());
-//                    pst.execute();
-//
-//                    alert = new Alert(Alert.AlertType.INFORMATION);
-//                    alert.setTitle("Deletion information");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText("Product has been successfully removed from the EM Inventory Management System");
-//                    alert.showAndWait();
-//
-//                    homePage_modifyPartBtn.getScene().getWindow().hide();
-//                    viewEMInventoryManagementSystem();
-//                } else {
-//                    return;
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                e.getCause();
-//            }
-//
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error message");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Please select the data row that you want to delete.");
-//            alert.showAndWait();
-//        }
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        index = products_tableView.getSelectionModel().getSelectedIndex();
+//        parts_tableView.getItems().remove(selectedItem);
+
+        if(index > -1) {
+            PreparedStatement pst;
+            ProductData selectedItemProduct = products_tableView.getSelectionModel().getSelectedItem();
+
+            String deleteSelectedProduct = "DELETE FROM products WHERE productID = ?";
+
+            try {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure that you want to delete this Product from the EM Inventory Management System?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if(option.get().equals(ButtonType.OK)) {
+                    pst = connectDB.prepareStatement(deleteSelectedProduct);
+                    pst.setString(1, selectedItemProduct.getProductID().toString());
+                    pst.execute();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Deletion information");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Product has been successfully removed from the EM Inventory Management System");
+                    alert.showAndWait();
+
+                    homePage_modifyPartBtn.getScene().getWindow().hide();
+                    viewEMInventoryManagementSystem();
+                } else {
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the data row that you want to delete.");
+            alert.showAndWait();
+        }
     }
 
    @FXML
