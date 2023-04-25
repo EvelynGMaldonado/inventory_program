@@ -163,8 +163,8 @@
                                           <Font name="System Italic" size="10.0" />
                                        </font>
                                     </TextField>
-                                    <Label layoutX="17.0" layoutY="61.0" prefHeight="17.0" prefWidth="83.0" text="Part Name:" />
-                                    <TextField fx:id="modifyProduct_setPartName" layoutX="111.0" layoutY="56.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
+                                    <Label layoutX="17.0" layoutY="61.0" prefHeight="17.0" prefWidth="83.0" text="Product Name:" />
+                                    <TextField fx:id="modifyProduct_setProductName" layoutX="111.0" layoutY="56.0" prefHeight="27.0" prefWidth="101.0" styleClass="textfield" stylesheets="@startPageDesign.css">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
