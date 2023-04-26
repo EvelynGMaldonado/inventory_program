@@ -98,8 +98,8 @@
                                  </font>
                               </Label>
                               <Line endX="-14.000022888183594" endY="-1.52587890625E-5" layoutX="113.0" layoutY="114.0" startX="-104.5" startY="-1.52587890625E-5" stroke="#808080c5" />
-                              <Button fx:id="startBtn" layoutX="11.0" layoutY="129.0" mnemonicParsing="false" onAction="#modifyProductRedirectsToEMIMSHomePage" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Home" textFill="WHITE" />
-                              <Button fx:id="addProductPageBtn" layoutX="11.0" layoutY="163.0" mnemonicParsing="false" onAction="#modifyProductRedirectsToAddProductPage" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Product" textFill="WHITE">
+                              <Button fx:id="startBtn" layoutX="11.0" layoutY="129.0" mnemonicParsing="false" onAction="#modifyProduct_cancelBtnAction" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Home" textFill="WHITE" />
+                              <Button fx:id="addProductPageBtn" layoutX="11.0" layoutY="163.0" mnemonicParsing="false" onAction="#modifyProduct_addProductBtnAction" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Product" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -109,12 +109,12 @@
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" onAction="#modifyProductRedirectsToAddPartPage" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
+                              <Button fx:id="addPartPageBtn" layoutX="11.0" layoutY="237.0" mnemonicParsing="false" onAction="#modifyProduct_addPartBtnAction" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Add Part" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="modifyPartPageBtn" layoutX="11.0" layoutY="274.0" mnemonicParsing="false" onAction="#modifyProductRedirectsToModifyPartPage" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Modify Part" textFill="WHITE">
+                              <Button fx:id="modifyPartPageBtn" layoutX="11.0" layoutY="274.0" mnemonicParsing="false" onAction="#modifyProduct_modifyPartBtnAction_Error" prefHeight="27.0" prefWidth="85.0" styleClass="em-buttons" stylesheets="@startPageDesign.css" text="Modify Part" textFill="WHITE">
                                  <font>
                                     <Font size="10.0" />
                                  </font>

@@ -243,6 +243,52 @@ public class AddPartController implements Initializable {
         }
     }
 
+    public void addPart_modifyPartBtnAction_Error(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please go to Home and select the part that you want to modify.");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void addPart_modifyProductBtnAction_Error(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please go to Home and select the product that you want to modify.");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void addPart_addProductBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("New part hasn't been saved yet. Are you sure that you want to switch to the Add Product window?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)) {
+                addPartRedirectsToAddProductPage ();
+            } else {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
     //SIDE MENU
     public void addPartRedirectsToEMIMSHomePage() throws IOException {
@@ -262,7 +308,7 @@ public class AddPartController implements Initializable {
         ppMainWindow.show();
     }
 
-    public void addPartRedirectsToAddProductPage (ActionEvent event) throws IOException {
+    public void addPartRedirectsToAddProductPage () throws IOException {
         addProductPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addProductPageWindow = new Stage();
@@ -276,38 +322,6 @@ public class AddPartController implements Initializable {
 
         //launch
         addProductPageWindow.show();
-    }
-
-    public void addPartRedirectsToModifyProductPage (ActionEvent event) throws IOException {
-        modifyProductPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyProductPageWindow = new Stage();
-        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
-
-        //set view in ppMainWindow
-        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
-
-        //launch
-        modifyProductPageWindow.show();
-    }
-
-    public void addPartRedirectsToModifyPartPage (ActionEvent event) throws IOException {
-        modifyPartPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyPartPageWindow = new Stage();
-        modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
-
-        //set view in ppMainWindow
-        modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
-
-        //launch
-        modifyPartPageWindow.show();
     }
 
 //    public void closeBtnAction(ActionEvent e) {
