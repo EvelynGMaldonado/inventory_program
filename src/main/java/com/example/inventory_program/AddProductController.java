@@ -507,6 +507,53 @@ public class AddProductController implements Initializable {
         }
     }
 
+    public void addProduct_addPartBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("New product hasn't been saved yet. Are you sure that you want to switch to the Add Part window?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)) {
+                addProductRedirectsToAddPartPage ();
+            } else {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void addProduct_modifyPartBtnAction_Error(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please go to Home and select the part that you want to modify.");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void addProduct_modifyProductBtnAction_Error(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please go to Home and select the product that you want to modify.");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
 //SIDE MENU
     public void addProductRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
@@ -526,7 +573,7 @@ public class AddProductController implements Initializable {
 
     }
 
-    public void addProductRedirectsToAddPartPage (ActionEvent event) throws IOException {
+    public void addProductRedirectsToAddPartPage () throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addPartPageWindow = new Stage();
@@ -543,39 +590,6 @@ public class AddProductController implements Initializable {
 
     }
 
-    public void addProductRedirectsToModifyProductPage (ActionEvent event) throws IOException {
-        modifyProductPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyProductPageWindow = new Stage();
-        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
-
-        //set view in ppMainWindow
-        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
-
-        //launch
-        modifyProductPageWindow.show();
-
-    }
-
-    public void addProductRedirectsToModifyPartPage (ActionEvent event) throws IOException {
-        modifyPartPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage modifyPartPageWindow = new Stage();
-        modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
-
-        //set view in ppMainWindow
-        modifyPartPageWindow.setScene(new Scene(modifyPartPageLoader.load(), 600, 400));
-
-        //launch
-        modifyPartPageWindow.show();
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
