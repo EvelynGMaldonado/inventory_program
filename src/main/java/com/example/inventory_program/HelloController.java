@@ -257,37 +257,66 @@ public class HelloController implements Initializable {
             PreparedStatement pst;
             ProductData selectedItemProduct = products_tableView.getSelectionModel().getSelectedItem();
 
-            String deleteSelectedProduct = "DELETE FROM products WHERE productID = ?";
+            String selectedProductID = selectedItemProduct.getProductID().toString();
+            String selectedProductName = selectedItemProduct.getProduct_name();
+            String verifyAssociatedParts = "SELECT * FROM products_associated_parts WHERE productID = '" + selectedProductID + "'";
+            String getAssociatedRowsDataProduct = "";
+            String getAssociatedRowsDataParts = "";
 
             try {
+                Statement statement = connectDB.createStatement();
+                ResultSet associatedRows = statement.executeQuery(verifyAssociatedParts);
+                int countAssociatedRows;
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure that you want to delete this Product from the EM Inventory Management System?");
-                Optional<ButtonType> option = alert.showAndWait();
+                if(!associatedRows.next() || associatedRows == null) {
+                    System.out.println("line 273 ---- " + selectedProductID + " get the associatedRows value: " + associatedRows.getRow());
+                    System.out.println("the selected productID: " + selectedProductID + " does not have associated parts");
 
-                if(option.get().equals(ButtonType.OK)) {
-                    pst = connectDB.prepareStatement(deleteSelectedProduct);
-                    pst.setString(1, selectedItemProduct.getProductID().toString());
-                    pst.execute();
+                    String deleteSelectedProduct = "DELETE FROM products WHERE productID = ?";
+                    try {
 
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Deletion information");
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmation Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Are you sure that you want to delete " + selectedProductName + " from the EM Inventory Management System?");
+                        Optional<ButtonType> option = alert.showAndWait();
+
+                        if(option.get().equals(ButtonType.OK)) {
+                            pst = connectDB.prepareStatement(deleteSelectedProduct);
+                            pst.setString(1, selectedItemProduct.getProductID().toString());
+                            pst.execute();
+
+                            alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Deletion information");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Product has been successfully removed from the EM Inventory Management System");
+                            alert.showAndWait();
+
+                            homePage_modifyPartBtn.getScene().getWindow().hide();
+                            viewEMInventoryManagementSystem();
+                        } else {
+                            return;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        e.getCause();
+                    }
+
+                } else if (associatedRows.next() || associatedRows != null){
+
+                    countAssociatedRows = associatedRows.getRow() +1;
+                    System.out.println("line 303 ---- " + selectedProductID + " get the associatedRows value: " + associatedRows.getRow());
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Product has been successfully removed from the EM Inventory Management System");
+                    alert.setContentText("The product " + selectedProductName + " with ID: " + selectedProductID + " can't be deleted because it has associated parts. Please remove the associated parts on the modify product section, and try again");
                     alert.showAndWait();
 
-                    homePage_modifyPartBtn.getScene().getWindow().hide();
-                    viewEMInventoryManagementSystem();
-                } else {
-                    return;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getCause();
             }
-
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
