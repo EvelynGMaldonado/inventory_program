@@ -266,23 +266,6 @@ public class ModifyPartController implements Initializable {
         }
     };
 
-    public void modifyPartRedirectsToEMIMSHomePage() throws IOException {
-        startBtn.getScene().getWindow().hide();
-
-        //create new stage
-        Stage ppMainWindow = new Stage();
-        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
-
-        //set view in ppMainWindow
-        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
-
-        //launch
-        ppMainWindow.show();
-    }
-
     public void modifyPart_cancelBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -315,24 +298,109 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    public void modifyPart_addProductBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Updated part hasn't been saved yet. Are you sure that you want to switch to the Add Product window?");
+            Optional<ButtonType> option = alert.showAndWait();
 
-//    //**new ok!! testing
-//    public void checkingIfInOrOutSourced(String getSinglePartMachineID, String getSinglePartCompanyName) {
-//        System.out.println("we are in checkingIfInOrOutSourced function located in Modify controller!! showing the machineID number as : " + getSinglePartMachineID + " and the company name for outsourced as : " + getSinglePartCompanyName );
+            if(option.get().equals(ButtonType.OK)) {
+                modifyPartRedirectsToAddProductPage();
+            } else {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
-//        if(modifyPart_setPartName.getText() == "" || modifyPart_setPartName == null) {
-//           modifyPart_setPartName.setText(getSinglePartName);
-//        }
-//        if (!(modifyPart_setPartName == null) || modifyPart_setPartName.equals("")) {
-//            modifyPart_setPartName.setText("hello!");
-//        }
-//    }
+    public void modifyPart_modifyProductBtnAction_Error(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please go to Home and select the product that you want to modify.");
+            alert.showAndWait();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
-//    public void showSelectedPartDataInformation(String part_name) {
-//        System.out.println("we are on showselectedpartDataInformation");
-//        modifyPart_setPartName.setText(part_name);
-//    }
+    public void modifyPart_addPartBtnAction(ActionEvent event) {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Updated part hasn't been saved yet. Are you sure that you want to switch to the Add Part window?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)) {
+                modifyPartRedirectsToAddPartPage();
+            } else {
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    //SIDE MENU
+    public void modifyPartRedirectsToEMIMSHomePage() throws IOException {
+        startBtn.getScene().getWindow().hide();
+
+        //create new stage
+        Stage ppMainWindow = new Stage();
+        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+
+        //set view in ppMainWindow
+        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
+
+        //launch
+        ppMainWindow.show();
+    }
+
+    public void modifyPartRedirectsToAddProductPage () throws IOException {
+        addProductPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage addProductPageWindow = new Stage();
+        addProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader addProductPageLoader = new FXMLLoader(getClass().getResource("addProduct_page.fxml"));
+
+        //set view in ppMainWindow
+        addProductPageWindow.setScene(new Scene(addProductPageLoader.load(), 800, 610));
+
+        //launch
+        addProductPageWindow.show();
+
+    }
+
+    public void modifyPartRedirectsToAddPartPage () throws IOException {
+        addPartPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage addPartPageWindow = new Stage();
+        addPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader addPartPageLoader = new FXMLLoader(getClass().getResource("addPart_page.fxml"));
+
+        //set view in ppMainWindow
+        addPartPageWindow.setScene(new Scene(addPartPageLoader.load(), 600, 400));
+
+        //launch
+        addPartPageWindow.show();
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
