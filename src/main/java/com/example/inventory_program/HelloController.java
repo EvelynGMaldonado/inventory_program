@@ -472,24 +472,6 @@ public class HelloController implements Initializable {
         }
     }
 
-//    public void clickModifyProductPageBtn (ActionEvent event) throws IOException {
-//        modifyProductPageBtn.getScene().getWindow().hide();
-//        //create new stage
-//        Stage modifyProductPageWindow = new Stage();
-//        modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
-//
-//        //create view for FXML
-//        FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
-//
-//        //set view in ppMainWindow
-//        modifyProductPageWindow.setScene(new Scene(modifyProductPageLoader.load(), 800, 610));
-//
-//        //launch
-//        modifyProductPageWindow.show();
-//
-//    }
-
-
     //!!!!!!REFRESH TABLE AFTER ADDING A NEW USER!!!!
 //    public void refreshPartsTable() {
 //        partList.clear();
@@ -742,8 +724,7 @@ public class HelloController implements Initializable {
 
 
     @FXML
-    void btnSearchPart(MouseEvent event)
-    {
+    void btnSearchPart(MouseEvent event) {
         String text = homePage_searchPartInputField.getText();
         System.out.println(text);
 
@@ -777,7 +758,6 @@ public class HelloController implements Initializable {
                 );
                 if(inv.equals(text) || price.equals(text))
                 {
-
                     partList.add(data);
                 }
             }
@@ -804,8 +784,7 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    void KeyRelease(KeyEvent event)
-    {
+    void KeyReleaseSearchPart(KeyEvent event) {
         String text = homePage_searchPartInputField.getText();
 //        System.out.println(text);
 
@@ -814,8 +793,6 @@ public class HelloController implements Initializable {
 
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
-
-        String productsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
 
         try {
             Statement statement = connectDB.createStatement();
@@ -832,11 +809,9 @@ public class HelloController implements Initializable {
                         queryPartsOutput.getBigDecimal("price_unit"));
                 if(name.toLowerCase().contains(text.toLowerCase()) && partList.contains(data) == false || partID.equals(text))
                 {
-
                     partList.add(data);
                 }
             }
-
 
             //PropertyValueFactory corresponds to the new PartData fields
             //the table column is the one we annotate above
@@ -846,11 +821,11 @@ public class HelloController implements Initializable {
             parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
 
             parts_tableView.setItems(partList);
+
             //closing statement once I am done with the query to avoid crashing!!
             statement.close();
             queryPartsOutput.close();
             connectDB.close();
-
 
         } catch(SQLException e) {
             Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
@@ -858,6 +833,111 @@ public class HelloController implements Initializable {
             e.getCause();
         }
     }
+
+    @FXML
+    void btnSearchProduct(MouseEvent event) {
+        String text = homePage_searchProductInputField.getText();
+        System.out.println(text);
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        //SQL Query - executed in the backend database
+        String productsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryProductsOutput = statement.executeQuery(productsViewQuery);
+            products_tableView.getItems().clear();
+            while (queryProductsOutput.next()) {
+                //populate the observableList
+                String productName = queryProductsOutput.getString("product_name");
+                String productID = Integer.toString(queryProductsOutput.getInt("productID"));
+                String inv = Integer.toString(queryProductsOutput.getInt("stock"));
+//                String price = DecimalFormat.getInstance().format(queryPartsOutput.getBigDecimal("price_unit"));
+                String price = queryProductsOutput.getBigDecimal("price_unit").toString();
+                Double obj = Double.parseDouble(price);
+                BigDecimal num = BigDecimal.valueOf(obj);
+                ProductData searchProductData = new ProductData(
+                        Integer.parseInt(productID),
+                        productName,
+                        Integer.parseInt(inv),
+                        num
+                );
+                if(inv.equals(text) || price.equals(text))
+                {
+                    productList.add(searchProductData);
+                }
+            }
+
+            //PropertyValueFactory corresponds to the new PartData fields
+            //the table column is the one we annotate above
+            products_tableView_col_productID.setCellValueFactory(new PropertyValueFactory<>("productID"));
+            products_tableView_col_productName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
+            products_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            products_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+            products_tableView.setItems(productList);
+            //closing statement once I am done with the query to avoid crashing!!
+            statement.close();
+            queryProductsOutput.close();
+            connectDB.close();
+
+        } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    @FXML
+    void KeyReleaseSearchProduct(KeyEvent event) {
+        String text = homePage_searchProductInputField.getText();
+//        System.out.println(text);
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        //SQL Query - executed in the backend database
+        String productsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryProductsOutput = statement.executeQuery(productsViewQuery);
+            products_tableView.getItems().clear();
+            while (queryProductsOutput.next()) {
+                //populate the observableList
+                String productName = queryProductsOutput.getString("product_name");
+                String productID = Integer.toString(queryProductsOutput.getInt("productID"));
+                ProductData searchData = new ProductData(Integer.parseInt(
+                        productID),
+                        productName,
+                        queryProductsOutput.getInt("stock"),
+                        queryProductsOutput.getBigDecimal("price_unit"));
+                if(productName.toLowerCase().contains(text.toLowerCase()) && productList.contains(searchData) == false || productID.equals(text))
+                {
+                    productList.add(searchData);
+                }
+            }
+            //PropertyValueFactory corresponds to the new PartData fields
+            //the table column is the one we annotate above
+            products_tableView_col_productID.setCellValueFactory(new PropertyValueFactory<>("productID"));
+            products_tableView_col_productName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
+            products_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            products_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+            products_tableView.setItems(productList);
+
+            //closing statement once I am done with the query to avoid crashing!!
+            statement.close();
+            queryProductsOutput.close();
+            connectDB.close();
+
+        } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DatabaseConnection connectNow = new DatabaseConnection();
