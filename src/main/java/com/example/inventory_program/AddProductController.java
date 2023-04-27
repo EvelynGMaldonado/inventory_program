@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -594,6 +596,115 @@ public class AddProductController implements Initializable {
             alert.showAndWait();
 
         } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    @FXML
+    void btnSearchPart(MouseEvent event) {
+        String text = addProduct_searchPartInputField.getText();
+        System.out.println(text);
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        //SQL Query - executed in the backend database
+        String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
+            parts_tableView.getItems().clear();
+            while (queryPartsOutput.next()) {
+
+                //populate the observableList
+                String name = queryPartsOutput.getString("part_name");
+                String partID = Integer.toString(queryPartsOutput.getInt("partID"));
+                String inv = Integer.toString(queryPartsOutput.getInt("stock"));
+//                String price = DecimalFormat.getInstance().format(queryPartsOutput.getBigDecimal("price_unit"));
+                String price = queryPartsOutput.getBigDecimal("price_unit").toString();
+                Double obj = Double.parseDouble(price);
+                BigDecimal num = BigDecimal.valueOf(obj);
+                PartData data = new PartData(
+                        Integer.parseInt(partID),
+                        name,
+                        Integer.parseInt(inv),
+                        num
+                );
+                if(inv.equals(text) || price.equals(text))
+                {
+                    partList.add(data);
+                }
+            }
+
+            //PropertyValueFactory corresponds to the new PartData fields
+            //the table column is the one we annotate above
+            parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+            parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+            parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+            parts_tableView.setItems(partList);
+            //closing statement once I am done with the query to avoid crashing!!
+            statement.close();
+            queryPartsOutput.close();
+            connectDB.close();
+
+
+        } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    @FXML
+    void keyReleaseSearchPart(KeyEvent event) {
+        String text = addProduct_searchPartInputField.getText();
+//        System.out.println(text);
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+
+        //SQL Query - executed in the backend database
+        String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
+            parts_tableView.getItems().clear();
+            while (queryPartsOutput.next()) {
+
+                //populate the observableList
+                String name = queryPartsOutput.getString("part_name");
+                String partID = Integer.toString(queryPartsOutput.getInt("partID"));
+                PartData data = new PartData(Integer.parseInt(partID),
+                        name,
+                        queryPartsOutput.getInt("stock"),
+                        queryPartsOutput.getBigDecimal("price_unit"));
+                if(name.toLowerCase().contains(text.toLowerCase()) && partList.contains(data) == false || partID.equals(text))
+                {
+                    partList.add(data);
+                }
+            }
+
+            //PropertyValueFactory corresponds to the new PartData fields
+            //the table column is the one we annotate above
+            parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+            parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+            parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+            parts_tableView.setItems(partList);
+
+            //closing statement once I am done with the query to avoid crashing!!
+            statement.close();
+            queryPartsOutput.close();
+            connectDB.close();
+
+        } catch(SQLException e) {
+            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
             e.printStackTrace();
             e.getCause();
         }

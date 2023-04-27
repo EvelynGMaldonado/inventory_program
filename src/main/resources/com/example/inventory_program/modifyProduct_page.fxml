@@ -212,12 +212,12 @@
                                                 <TableColumn fx:id="parts_tableView_col_priceUnit" prefWidth="95.0" text="Price/Unit" />
                                              </columns>
                                           </TableView>
-                                          <TextField layoutX="287.0" layoutY="36.0" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
+                                          <TextField fx:id="modifyProduct_searchPartInputField" layoutX="287.0" layoutY="36.0" onKeyReleased="#keyReleaseSearchPart" prefHeight="26.5" prefWidth="74.0" promptText="Search" styleClass="textfield-search" stylesheets="@startPageDesign.css">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <Button layoutX="358.0" layoutY="36.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
+                                          <Button fx:id="modifyProduct_searchPartBtn" layoutX="358.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#btnSearchPart" prefHeight="19.0" prefWidth="31.0" styleClass="searchbar-btn" stylesheets="@startPageDesign.css">
                                              <graphic>
                                                 <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
