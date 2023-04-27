@@ -212,8 +212,55 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void clickSaveUpdatedProductAndAssociatedParts(ActionEvent event) {
+        //retrieve variables for max, min, and inventory validation.
+        String min = modifyProduct_setMin.getText().trim();
+        String max = modifyProduct_setMax.getText().trim();
+        String stock = modifyProduct_setInventoryLevel.getText().trim();
+        int min_check;
+        int max_check;
+        int stock_check;
+
         if(!modifyProduct_setProductName.getText().trim().isEmpty() || !modifyProduct_setInventoryLevel.getText().trim().isEmpty() || !modifyProduct_setPriceUnit.getText().trim().isEmpty() || !modifyProduct_setMax.getText().trim().isEmpty() || !modifyProduct_setMin.getText().isEmpty()) {
-            validateUpdatedProductNameAndProductID();
+            if(min.matches("\\d+") && max.matches("\\d+") && stock.matches("\\d+")){
+                min_check = Integer.parseInt(min);
+                max_check = Integer.parseInt(max);
+                stock_check = Integer.parseInt(stock);
+                //min validation --> min has to be >= 0
+                if(min_check >= 0) {
+                    //max validation --> max has to be > min
+                    if(max_check > min_check) {
+                        //inventory validation --> inventory level has to be >= than min, and <= than max
+                        if(stock_check >= min_check && stock_check <= max_check){
+                            //check if the product name is available or if it already exists using the validateProductName method
+                            validateUpdatedProductNameAndProductID();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error message");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Your Inventory value should be more or equal than your Min value, and less or equal than your Max value.");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Your Max value should be more than your Min value.");
+                        alert.showAndWait();
+                    }
+                } else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your Min value should be more or equal than 0.");
+                    alert.showAndWait();
+                }
+            } else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error message");
+                alert.setHeaderText(null);
+                alert.setContentText("Your must enter positive whole numbers only, for: Inventory Level, Min, and Max");
+                alert.showAndWait();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
