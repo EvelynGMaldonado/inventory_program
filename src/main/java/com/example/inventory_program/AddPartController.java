@@ -149,7 +149,7 @@ public class AddPartController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Your must enter positive whole numbers only for: Inventory Level, Min, and Max");
+                    alert.setContentText("Your must enter positive whole numbers only, for: Inventory Level, Min, and Max");
                     alert.showAndWait();
                 }
             } else {
