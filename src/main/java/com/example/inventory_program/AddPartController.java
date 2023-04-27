@@ -99,13 +99,59 @@ public class AddPartController implements Initializable {
     }
 
     public void clickSavePartBtn(ActionEvent event) throws IOException{
+
+        //retrieve variables for max, min, and inventory validation.
+        String min = addPart_setMin.getText().trim();
+        String max = addPart_setMax.getText().trim();
+        String stock = addPart_setInventoryLevel.getText().trim();
+        int min_check;
+        int max_check;
+        int stock_check;
+
         //Part Category Selection Validation - No null Accepted ~ it has to select inHouse or Outsourced
         if(inHouseRadioBtn.isSelected() || outsourcedRadioBtn.isSelected()) {
             //Not null accepted Input validation checks that none of the fields are blank or empty...
             if(!addPart_setPartName.getText().trim().isEmpty() || !addPart_setInventoryLevel.getText().trim().isEmpty() || !addPart_setPriceUnit.getText().trim().isEmpty() || !addPart_setMax.getText().trim().isEmpty() || !addPart_setMin.getText().trim().isEmpty() || !inputCompanyOrMachineInputField.getText().trim().isEmpty()) {
-                //check if the part name is available or if it already exists using the validatePartName method
-                validatePartName();
-
+                if(min.matches("\\d+") && max.matches("\\d+") && stock.matches("\\d+")){
+                    min_check = Integer.parseInt(min);
+                    max_check = Integer.parseInt(max);
+                    stock_check = Integer.parseInt(stock);
+                    //min validation --> min has to be >= 0
+                    if(min_check >= 0) {
+                        //max validation --> max has to be > min
+                        if(max_check > min_check) {
+                            //inventory validation --> inventory level has to be >= than min, and <= than max
+                            if(stock_check >= min_check && stock_check <= max_check){
+                                //check if the part name is available or if it already exists using the validatePartName method
+                                validatePartName();
+                            } else{
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error message");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Your Inventory value should be more or equal than your Min value, and less or equal than your Max value.");
+                                alert.showAndWait();
+                            }
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error message");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Your Max value should be more than your Min value.");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Your Min value should be more or equal than 0.");
+                        alert.showAndWait();
+                    }
+                } else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your must enter positive whole numbers only for: Inventory Level, Min, and Max");
+                    alert.showAndWait();
+                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error message");
