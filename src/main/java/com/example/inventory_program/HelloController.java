@@ -739,26 +739,68 @@ public class HelloController implements Initializable {
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
+            //populate the observableList
+            String name = "";
+            String partID = "";
+            String inv = "";
+            String price = "";
+            BigDecimal num;
+
             parts_tableView.getItems().clear();
-            while (queryPartsOutput.next()) {
+            if (queryPartsOutput.next()) {
 
                 //populate the observableList
-                String name = queryPartsOutput.getString("part_name");
-                String partID = Integer.toString(queryPartsOutput.getInt("partID"));
-                String inv = Integer.toString(queryPartsOutput.getInt("stock"));
-//                String price = DecimalFormat.getInstance().format(queryPartsOutput.getBigDecimal("price_unit"));
-                String price = queryPartsOutput.getBigDecimal("price_unit").toString();
+                name = queryPartsOutput.getString("part_name");
+                partID = Integer.toString(queryPartsOutput.getInt("partID"));
+                inv = Integer.toString(queryPartsOutput.getInt("stock"));
+                price = queryPartsOutput.getBigDecimal("price_unit").toString();
                 Double obj = Double.parseDouble(price);
-                BigDecimal num = BigDecimal.valueOf(obj);
+                num = BigDecimal.valueOf(obj);
                 PartData data = new PartData(
                         Integer.parseInt(partID),
                         name,
                         Integer.parseInt(inv),
                         num
                 );
-                if(inv.equals(text) || price.equals(text))
-                {
+                if(inv.equals(text) || price.equals(text)) {
                     partList.add(data);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.showAndWait();
+
+                    homePage_searchPartInputField.clear();
+
+                    //SQL Query - executed in the backend database
+                    String refreshPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+                    try {
+                        statement = connectDB.createStatement();
+                        ResultSet queryRefreshPartsOutput = statement.executeQuery(refreshPartsViewQuery);
+
+                        while (queryRefreshPartsOutput.next()) {
+
+                            //populate the observableList
+                            partList.add(new PartData(queryRefreshPartsOutput.getInt("partID"),
+                                    queryRefreshPartsOutput.getString("part_name"),
+                                    queryRefreshPartsOutput.getInt("stock"),
+                                    queryRefreshPartsOutput.getBigDecimal("price_unit")));
+                        }
+                        //PropertyValueFactory corresponds to the new PartData fields
+                        //the table column is the one we annotate above
+                        parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+                        parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+                        parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                        parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+                        parts_tableView.setItems(partList);
+
+                    } catch(SQLException e) {
+                        Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+                        e.printStackTrace();
+                        e.getCause();
+                    }
                 }
             }
 
@@ -847,16 +889,22 @@ public class HelloController implements Initializable {
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryProductsOutput = statement.executeQuery(productsViewQuery);
+            //populate the observableList
+            String productName = "";
+            String productID = "";
+            String inv = "";
+            String price = "";
+            BigDecimal num;
+
             products_tableView.getItems().clear();
-            while (queryProductsOutput.next()) {
+            if (queryProductsOutput.next()) {
                 //populate the observableList
-                String productName = queryProductsOutput.getString("product_name");
-                String productID = Integer.toString(queryProductsOutput.getInt("productID"));
-                String inv = Integer.toString(queryProductsOutput.getInt("stock"));
-//                String price = DecimalFormat.getInstance().format(queryPartsOutput.getBigDecimal("price_unit"));
-                String price = queryProductsOutput.getBigDecimal("price_unit").toString();
+                productName = queryProductsOutput.getString("product_name");
+                productID = Integer.toString(queryProductsOutput.getInt("productID"));
+                inv = Integer.toString(queryProductsOutput.getInt("stock"));
+                price = queryProductsOutput.getBigDecimal("price_unit").toString();
                 Double obj = Double.parseDouble(price);
-                BigDecimal num = BigDecimal.valueOf(obj);
+                num = BigDecimal.valueOf(obj);
                 ProductData searchProductData = new ProductData(
                         Integer.parseInt(productID),
                         productName,
@@ -866,6 +914,39 @@ public class HelloController implements Initializable {
                 if(inv.equals(text) || price.equals(text))
                 {
                     productList.add(searchProductData);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.showAndWait();
+
+                    homePage_searchProductInputField.clear();
+
+                    String refreshProductsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
+                    try {
+                        statement = connectDB.createStatement();
+                        ResultSet queryRefreshProductsOutput = statement.executeQuery(refreshProductsViewQuery);
+
+                        while (queryRefreshProductsOutput.next()) {
+                            productList.add(new ProductData(queryRefreshProductsOutput.getInt("productID"),
+                                    queryRefreshProductsOutput.getString("product_name"),
+                                    queryRefreshProductsOutput.getInt("stock"),
+                                    queryRefreshProductsOutput.getBigDecimal("price_unit")));
+                        }
+
+                        products_tableView_col_productID.setCellValueFactory(new PropertyValueFactory<>("productID"));
+                        products_tableView_col_productName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
+                        products_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                        products_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+                        products_tableView.setItems(productList);
+
+                    } catch (SQLException e) {
+                        Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+                        e.printStackTrace();
+                        e.getCause();
+                    }
                 }
             }
 

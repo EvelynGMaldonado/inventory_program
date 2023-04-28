@@ -652,15 +652,15 @@ public class AddProductController implements Initializable {
                     String refreshPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
                     try {
                         statement = connectDB.createStatement();
-                        ResultSet queryrRefreshPartsOutput = statement.executeQuery(refreshPartsViewQuery);
+                        ResultSet queryRefreshPartsOutput = statement.executeQuery(refreshPartsViewQuery);
 
-                        while (queryrRefreshPartsOutput.next()) {
+                        while (queryRefreshPartsOutput.next()) {
 
                             //populate the observableList
-                            partList.add(new PartData(queryrRefreshPartsOutput.getInt("partID"),
-                                    queryrRefreshPartsOutput.getString("part_name"),
-                                    queryrRefreshPartsOutput.getInt("stock"),
-                                    queryrRefreshPartsOutput.getBigDecimal("price_unit")));
+                            partList.add(new PartData(queryRefreshPartsOutput.getInt("partID"),
+                                    queryRefreshPartsOutput.getString("part_name"),
+                                    queryRefreshPartsOutput.getInt("stock"),
+                                    queryRefreshPartsOutput.getBigDecimal("price_unit")));
                         }
                         //PropertyValueFactory corresponds to the new PartData fields
                         //the table column is the one we annotate above
@@ -676,7 +676,6 @@ public class AddProductController implements Initializable {
                         e.printStackTrace();
                         e.getCause();
                     }
-
                 }
             }
             //PropertyValueFactory corresponds to the new PartData fields
