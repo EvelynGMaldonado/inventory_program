@@ -21,7 +21,9 @@ public class HelloApplication extends Application {
     /**
      * Public void start() method is called when the JavaFX application is started.
      * @param stage of the type Stage is taken.
-     * @return the visual parts of the JavaFX Application (displayed)
+     * The visual parts of the JavaFX Application (displayed).
+     * @exception IOException if an input or output error occurred.
+     * @see IOException
      */
     @Override
     public void start(Stage stage) throws IOException {

@@ -11,26 +11,23 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
-import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Evelyn G Morrow.
+ * @version 1.0.
+ * Public class HelloController is used to retrieve and display the updated data on the part and product tables after the user successfully signs in, as well as to manage some functionality such as delete, search, etc.
+ */
 public class HelloController implements Initializable {
 //public class HelloController {
-
-    @FXML
-    private AnchorPane landing_page;
-
     @FXML
     private PasswordField passwordField;
 
@@ -41,67 +38,19 @@ public class HelloController implements Initializable {
     private TextField usernameField;
 
     @FXML
-    private Label messageLabel;
-
-    @FXML
     private Button signUpBtn;
-
-    @FXML
-    private StackPane addProfile_page;
-
-    @FXML
-    private PasswordField confirmpasswordField;
-
-    @FXML
-    private Button saveUserBtn;
-
-    @FXML
-    private TextField setfullnameField;
-
-    @FXML
-    private PasswordField setpasswordField;
-
-    @FXML
-    private TextField setroleField;
-
-    @FXML
-    private TextField setusernameField;
-
-    @FXML
-    private StackPane home_page;
 
     @FXML
     private Button LogOut_btn;
 
     @FXML
-    private Button homePage_searchPartBtn;
-
-    @FXML
     private TextField homePage_searchPartInputField;
-
-    @FXML
-    private Button homePage_searchProductBtn;
 
     @FXML
     private TextField homePage_searchProductInputField;
 
     @FXML
-    private Button homePage_addNewPartBtn;
-
-    @FXML
-    private Button homePage_addNewProductBtn;
-
-    @FXML
-    private Button homePage_deletePartBtn;
-
-    @FXML
-    private Button homePage_deleteProductBtn;
-
-    @FXML
     private Button homePage_modifyPartBtn;
-
-    @FXML
-    private Button homePage_modifyProductBtn;
 
     @FXML
     private TableView<PartData> parts_tableView = new TableView<PartData>();
@@ -146,54 +95,152 @@ public class HelloController implements Initializable {
     private Button modifyProductPageBtn;
 
     @FXML
-    private Button settingsBtn;
-
-    @FXML
-    private StackPane addPart_page;
-
-    @FXML
-    private StackPane addProduct_page;
-
-    @FXML
-    private StackPane modifyPart_page;
-
-    @FXML
-    private StackPane modifyProduct_page;
-
-    @FXML
-    private Button homePage_closeBtn;
-
-    @FXML
     private Button landingPage_closeBtn;
 
+    /**
+     * It is used to validate if a row from a table has been selected.
+     */
     int index = -1;
 
     ObservableList<PartData> partList = FXCollections.observableArrayList();
 
     ObservableList<ProductData> productList = FXCollections.observableArrayList();
 
-    ObservableList<RowPartData> rowPartDataList = FXCollections.observableArrayList();
-
-    //**new**
     PartsAndProductsInventory partsAndProductsInventory;
 
-    //Method to get selected part records
+    /**
+     * Void LoginButtonOnAction() method is used after the user clicks the login button.
+     * e represents the event that triggers the action.
+     * The username and the password inputs are validated.
+     * validateLogin() method is called when validation is passed.
+     * error alert is shown when validation is not passed.
+     */
     @FXML
-    void getSelectedPart (MouseEvent event) {
-//        index = parts_tableView.getSelectionModel().getSelectedIndex();
-//        if(index <= -1) {
-//            return;
-//        } else{
-//        //EXAMPLE:
-//        //text_id.setText(col_id.getCellData(index).toString());
-//            parts_tableView_col_partID.getCellData(index).toString();
-//
-//        }
+    void LoginButtonOnAction(ActionEvent e) {
+        if(usernameField.getText().trim().isBlank() == false && passwordField.getText().trim().isBlank() == false) {
+            validateLogin();
+        } else {
+//            messageLabel.setText("Please enter username and password");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields.");
+            alert.showAndWait();
+        }
     }
 
-    //Method to delete selected part records
+    /**
+     * Void closeBtnAction() method is used to close the landing page which will basically close the application.
+     * e represents the event that triggers the action.
+     */
     @FXML
-    private void deleteSelectedPart (ActionEvent event) {
+    void closeBtnAction(ActionEvent e) {
+        Stage stage = (Stage) landingPage_closeBtn.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * Void createAccountForm() method is used to display the addProfile page after the user clicks the sign-up button located on the landing page.
+     * e represents the event that triggers the action.
+     * The landing page hides, and the addProfile page is displayed, unless an Exception is caught.
+     */
+    @FXML
+    void createAccountForm(ActionEvent event) {
+        try {
+            signUpBtn.getScene().getWindow().hide();
+            //create new stage
+            Stage addProfileWindow = new Stage();
+            addProfileWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+            //create view for FXML
+            FXMLLoader addProfileLoader = new FXMLLoader(getClass().getResource("signUp.fxml"));
+
+            //set view in ppMainWindow
+            addProfileWindow.setScene(new Scene(addProfileLoader.load(), 500, 400));
+
+            //launch
+            addProfileWindow.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    /**
+     * Public void validateLogin() method is used to validate that the username and the password match with the information in our database, after the user clicks the login button on the landing page.
+     * When username and password pass, the method for displaying the home page is called, unless an Exception is caught.
+     * When username and password do not pass, an error alert will show up.
+     */
+    public void validateLogin(){
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDB = connectNow.getConnection();
+        String verifyLogin = "SELECT count(1) FROM users WHERE username = '" + usernameField.getText() + "' AND u_password = '" + passwordField.getText() + "'";
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(verifyLogin);
+
+            while(queryResult.next()) {
+                if(queryResult.getInt(1) == 1) {
+//                    messageLabel.setText("Welcome to EM Inventory Management System!");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful Log In");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Welcome to EM Inventory Management System!");
+                    alert.showAndWait();
+
+                    startBtn.getScene().getWindow().hide();
+//                    Platform.exit();
+                    viewEMInventoryManagementSystem();
+                } else {
+//                    messageLabel.setText("Invalid Login. Please try again.");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Invalid Login. Please try again.");
+                    alert.showAndWait();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    /**
+     * Public void viewEMInventoryManagementSystem() method is called when the login validation passes.
+     * The home page is displayed.
+     * @exception IOException if an input or output error occurred.
+     * @see IOException
+     */
+    public void viewEMInventoryManagementSystem() throws IOException {
+//        startBtn.getScene().getWindow().hide();
+//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
+//        stage1.close();
+        //create new stage
+        Stage ppMainWindow = new Stage();
+        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+
+        //set view in ppMainWindow
+        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
+
+        //launch
+        ppMainWindow.show();
+
+    }
+
+    /**
+     * Void deleteSelectedPart() method is used to delete the records from the selected row on the parts table.
+     * e represents the event that triggers the action.
+     * A confirmation alert is displayed, if the user clicks ok then the part will be deleted, and the parts table will be updated. If the user clicks cancel, then the action is aborted.
+     * An error alert is displayed when no row has been selected.
+     */
+    @FXML
+    void deleteSelectedPart (ActionEvent event) {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
         index = parts_tableView.getSelectionModel().getSelectedIndex();
@@ -224,7 +271,6 @@ public class HelloController implements Initializable {
                     alert.setContentText("Part has been successfully removed from the EM Inventory Management System");
                     alert.showAndWait();
 
-
                     homePage_modifyPartBtn.getScene().getWindow().hide();
                     viewEMInventoryManagementSystem();
                 } else {
@@ -242,12 +288,17 @@ public class HelloController implements Initializable {
             alert.setContentText("Please select the data row that you want to delete.");
             alert.showAndWait();
         }
-
     }
 
-    //Method to delete selected product records
+    /**
+     * Void deleteSelectedProduct() method is used to delete the product records from the selected row on the products table.
+     * e represents the event that triggers the action.
+     * A confirmation alert is displayed, if the user clicks ok then the product will be deleted, and the products table will be updated, unless an Exception is caught. If the user clicks cancel, then the action is aborted.
+     * An error alert is displayed when no row has been selected.
+     * An error alert is displayed when the selected product has an associated part.
+     */
     @FXML
-    private void deleteSelectedProduct (ActionEvent event) {
+    void deleteSelectedProduct (ActionEvent event) {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
         index = products_tableView.getSelectionModel().getSelectedIndex();
@@ -326,15 +377,23 @@ public class HelloController implements Initializable {
         }
     }
 
-   @FXML
-    public void clickModifyPartPageBtn (ActionEvent event){
+    /**
+     * Void clickModifyPartPageBtn() method is used to open Modify Part Page.
+     * e represents the event that triggers the action.
+     * An error alert is displayed when no row has been selected.
+     * @exception IOException if an input or output error occurs.
+     * @see IOException
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
+    @FXML
+    void clickModifyPartPageBtn (ActionEvent event){
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
         index = parts_tableView.getSelectionModel().getSelectedIndex();
 //        parts_tableView.getItems().remove(selectedItem);
 
         if(index > -1) {
-//            PreparedStatement pst;
 
             PartData selectedItem = parts_tableView.getSelectionModel().getSelectedItem();
             String getSinglePartID = "";
@@ -361,7 +420,6 @@ public class HelloController implements Initializable {
                     getSinglePartPriceUnit = querySelectedPartResult.getString("price_unit");
                     getSinglePartMin = querySelectedPartResult.getString("min");
                     getSinglePartMax = querySelectedPartResult.getString("max");
-
                     getSinglePartMachineID = querySelectedPartResult.getString("machineID");
                     System.out.println("getSinglePartMachineID is: " + getSinglePartMachineID);
                     getSinglePartCompanyName = querySelectedPartResult.getString("company_name");
@@ -370,16 +428,16 @@ public class HelloController implements Initializable {
                 modifyPartPageBtn.getScene().getWindow().hide();
                 //create new stage
                 Stage modifyPartPageWindow = new Stage();
-                modifyPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+                modifyPartPageWindow.setTitle("Modify Part - EM Inventory Management System");
 
                 //create view for FXML
                 FXMLLoader modifyPartPageLoader = new FXMLLoader(getClass().getResource("modifyPart_page.fxml"));
 
-////        //Get modifyPart_page Controller : ModifyPartController
-//        ModifyPartController modifyPartController = modifyPartPageLoader.getController();
-////
-////        //Pass any data we want, we can have multiple method calls here
-//        modifyPartController.showSelectedPartDataInformation(getPartName);
+                //Get modifyPart_page Controller : ModifyPartController
+                //ModifyPartController modifyPartController = modifyPartPageLoader.getController();
+
+                //Pass any data we want, we can have multiple method calls here
+                //modifyPartController.showSelectedPartDataInformation(getPartName);
 
                 //***give it a try*****
                 ModifyPartController modifyPartController = new ModifyPartController(partsAndProductsInventory, selectedItem, getSinglePartID, getSinglePartName, getSinglePartStock, getSinglePartPriceUnit, getSinglePartMin, getSinglePartMax, getSinglePartMachineID, getSinglePartCompanyName);
@@ -407,15 +465,23 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void clickModifyProductPageBtn (ActionEvent event) {
+    /**
+     * Void clickModifyProductPageBtn() method is used to open Modify Product Page.
+     * e represents the event that triggers the action.
+     * An error alert is displayed when no row has been selected.
+     * @exception IOException if an input or output error occurs.
+     * @see IOException
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
+    @FXML
+    void clickModifyProductPageBtn (ActionEvent event) {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
         index = products_tableView.getSelectionModel().getSelectedIndex();
 //        parts_tableView.getItems().remove(selectedItem);
 
         if(index > -1) {
-//            PreparedStatement pst;
-
             ProductData selectedItem = products_tableView.getSelectionModel().getSelectedItem();
             String getSingleProductID = "";
             String getSingleProductName = "";
@@ -443,7 +509,7 @@ public class HelloController implements Initializable {
                 modifyProductPageBtn.getScene().getWindow().hide();
                 //create new stage
                 Stage modifyProductPageWindow = new Stage();
-                modifyProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+                modifyProductPageWindow.setTitle("Modify Product - EM Inventory Management System");
 
                 //create view for FXML
                 FXMLLoader modifyProductPageLoader = new FXMLLoader(getClass().getResource("modifyProduct_page.fxml"));
@@ -472,135 +538,14 @@ public class HelloController implements Initializable {
         }
     }
 
-    //!!!!!!REFRESH TABLE AFTER ADDING A NEW USER!!!!
-//    public void refreshPartsTable() {
-//        partList.clear();
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
-//        //SQL Query - executed in the backend database
-//        String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
-//        try {
-//            Statement statement = connectDB.createStatement();
-//            ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
-//
-//            while (queryPartsOutput.next()) {
-//
-//                //populate the observableList
-//                partList.add(new PartData(queryPartsOutput.getInt("partID"),
-//                        queryPartsOutput.getString("part_name"),
-//                        queryPartsOutput.getInt("stock"),
-//                        queryPartsOutput.getBigDecimal("price_unit")));
-//            }
-//
-//            //PropertyValueFactory corresponds to the new PartData fields
-//            //the table column is the one we annotate above
-//            parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
-//            parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
-//            parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//            parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
-//
-//            parts_tableView.setItems(partList);
-//
-//        } catch(SQLException e) {
-//            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
-//            e.printStackTrace();
-//            e.getCause();
-//        }
-//    }
-
-    //When we click the sign-up button that is in the landing page we are redirected to the addProfile_page
-    public void createAccountForm(ActionEvent event) throws IOException {
-        try {
-            signUpBtn.getScene().getWindow().hide();
-            //create new stage
-            Stage addProfileWindow = new Stage();
-            addProfileWindow.setTitle("Parts and Products - EM Inventory Management System");
-
-            //create view for FXML
-            FXMLLoader addProfileLoader = new FXMLLoader(getClass().getResource("signUp.fxml"));
-
-            //set view in ppMainWindow
-            addProfileWindow.setScene(new Scene(addProfileLoader.load(), 500, 400));
-
-            //launch
-            addProfileWindow.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-    }
-
-    public void LoginButtonOnAction(ActionEvent e) {
-
-        if(usernameField.getText().trim().isBlank() == false && passwordField.getText().trim().isBlank() == false) {
-            validateLogin();
-        } else {
-//            messageLabel.setText("Please enter username and password");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error message");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill all blank fields.");
-            alert.showAndWait();
-        }
-    }
-
-    public void validateLogin(){
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getConnection();
-        String verifyLogin = "SELECT count(1) FROM users WHERE username = '" + usernameField.getText() + "' AND u_password = '" + passwordField.getText() + "'";
-
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(verifyLogin);
-
-            while(queryResult.next()) {
-                if(queryResult.getInt(1) == 1) {
-//                    messageLabel.setText("Welcome to EM Inventory Management System!");
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Successful Log In");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Welcome to EM Inventory Management System!");
-                    alert.showAndWait();
-
-                    startBtn.getScene().getWindow().hide();
-//                    Platform.exit();
-                    viewEMInventoryManagementSystem();
-                } else {
-//                    messageLabel.setText("Invalid Login. Please try again.");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Invalid Login. Please try again.");
-                    alert.showAndWait();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-    }
-
-    public void viewEMInventoryManagementSystem() throws IOException {
-//        startBtn.getScene().getWindow().hide();
-//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
-//        stage1.close();
-        //create new stage
-        Stage ppMainWindow = new Stage();
-        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
-
-        //set view in ppMainWindow
-        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
-
-        //launch
-        ppMainWindow.show();
-
-    }
-
-    public void clickAddPartPageBtn (ActionEvent event) throws IOException {
+    /**
+     * Void clickAddPartPageBtn() method is used to open Add Part Page.
+     * e represents the event that triggers the action.
+     * @exception IOException if an input or output error occurs.
+     * @see IOException
+     */
+    @FXML
+    void clickAddPartPageBtn (ActionEvent event) throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addPartPageWindow = new Stage();
@@ -614,10 +559,16 @@ public class HelloController implements Initializable {
 
         //launch
         addPartPageWindow.show();
-
     }
 
-    public void clickAddProductPageBtn (ActionEvent event) throws IOException {
+    /**
+     * Void clickAddProductPageBtn() method is used to open Add Product Page.
+     * e represents the event that triggers the action.
+     * @exception IOException if an input or output error occurs.
+     * @see IOException
+     */
+    @FXML
+    void clickAddProductPageBtn (ActionEvent event) throws IOException {
         addProductPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addProductPageWindow = new Stage();
@@ -631,15 +582,14 @@ public class HelloController implements Initializable {
 
         //launch
         addProductPageWindow.show();
-
     }
 
-    public void closeBtnAction(ActionEvent e) {
-        Stage stage = (Stage) landingPage_closeBtn.getScene().getWindow();
-        stage.close();
-    }
-
-    public void logOutBtnAction() {
+    /**
+     * Void logOutBtnAction() method is used to log-out from the EM Inventory Management System Application.
+     * The homepage is closed and the user is redirected to the landing page which has the option for sign-in or sign-up.
+     */
+    @FXML
+    void logOutBtnAction() {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Message");
@@ -648,10 +598,10 @@ public class HelloController implements Initializable {
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {
-//                We can exit the plataform by doing...
-//                Platform.exit();
+                //We can exit the plataform by doing...
+                //Platform.exit();
 
-//                or go back to the landing page by doing ...
+                //or go back to the landing page by doing ...
                 LogOut_btn.getScene().getWindow().hide();
                 //create new stage
                 Stage landingPageWindow = new Stage();
@@ -674,55 +624,12 @@ public class HelloController implements Initializable {
         }
     }
 
-    //creating the switch window method that might be implemented on the menu and other buttons
-//    public void switchWindow(ActionEvent event) {
-//        if(event.getSource() == addNewPart_btn || addPartPageBtn) {
-//            addPart_page.setVisible(true);
-//            addProduct_page.setVisible(false);
-//            modifyPart_page.setVisible(false);
-//            modifyProduct_page.setVisible(false);
-//            landing_page.setVisible(false);
-//            home_page.setVisible(false);
-//
-//            addPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
-//
-//        } else if(event.getSource() == addNewProduct_btn || addProductPageBtn) {
-//            addPart_page.setVisible(false);
-//            addProduct_page.setVisible(true);
-//            modifyPart_page.setVisible(false);
-//            modifyProduct_page.setVisible(false);
-//            landing_page.setVisible(false);
-//            home_page.setVisible(false);
-//
-//            addProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
-//
-//        } else if(event.getSource() == modifyPart_btn || modifyPartPageBtn) {
-//            addPart_page.setVisible(false);
-//            addProduct_page.setVisible(false);
-//            modifyPart_page.setVisible(true);
-//            modifyProduct_page.setVisible(false);
-//            landing_page.setVisible(false);
-//            home_page.setVisible(false);
-//
-//            modifyPartPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
-//
-//        } else if(event.getSource() == modifyProduct_btn || modifyProductPageBtn) {
-//            addPart_page.setVisible(false);
-//            addProduct_page.setVisible(false);
-//            modifyPart_page.setVisible(false);
-//            modifyProduct_page.setVisible(true);
-//            landing_page.setVisible(false);
-//            home_page.setVisible(false);
-//
-//            modifyProductPageBtn.setStyle("-fx-background-color: linear-gradient(to top, #196f9a, #1ba32d);
-//                                     -fx-font-weight: bold;");
-//        }
-//    }
-
-
+    /**
+     * Void btnSearchPart() method is used to find a part row by typing information in the input field and clicking the search button.
+     * e represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void btnSearchPart(MouseEvent event) {
         String text = homePage_searchPartInputField.getText();
@@ -823,10 +730,16 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     * Void KeyReleaseSearchPart() method is used to find a part row by typing information in the input field.
+     * e represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void KeyReleaseSearchPart(KeyEvent event) {
         String text = homePage_searchPartInputField.getText();
-//        System.out.println(text);
+        //System.out.println(text);
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -873,6 +786,12 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     * Void btnSearchProduct() method is used to find a product row by typing information in the input field and clicking the search button.
+     * e represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void btnSearchProduct(MouseEvent event) {
         String text = homePage_searchProductInputField.getText();
@@ -966,6 +885,12 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     * Void KeyReleaseSearchProduct() method is used to find a product row by typing information in the input field.
+     * e represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void KeyReleaseSearchProduct(KeyEvent event) {
         String text = homePage_searchProductInputField.getText();
@@ -1014,6 +939,13 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     * Public void initialize() method called to initialize a controller after its root element has been completely processed.
+     * @parameter url is used to resolve relative paths for the root object. It is null if the url is not known.
+     * @parameter rb is used to localize the root object, and it is null if the root object is not located.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DatabaseConnection connectNow = new DatabaseConnection();
@@ -1049,32 +981,6 @@ public class HelloController implements Initializable {
             //closing statement once I am done with the query to avoid crashing!!
             statement.close();
             queryPartsOutput.close();
-           // connectDB.close();
-//            //Initial filtered list
-//            FilteredList<PartData> filteredPartData = new FilteredList<>(partList, b -> true);
-//            searchPart_inputField.textProperty().addListener((observable, oldValue, newValue) -> {
-//                filteredPartData.setPredicate(partDataSearch -> {
-//                    //if no search value, then display all records or whatever records it currently has. - no changes!
-//                    if(newValue.isEmpty() || newValue.isBlank() || newValue == null) {
-//                        return true;
-//                    }
-//                    String searchPartByInput = newValue.toLowerCase();
-//                    if(partDataSearch.getPart_name().toLowerCase().indexOf(searchPartByInput) > -1) {
-//                        return true; //it means a part_name match has been found
-//                    } else if(partDataSearch.getPartID().toString().indexOf(searchPartByInput) > -1) {
-//                        return true; //it means a partID match has been found
-//                    } else if (partDataSearch.getPrice_unit().toString().indexOf(searchPartByInput) > -1) {
-//                        return true; //it means a price_unit match has been found
-//                    } else {
-//                        return false; //no matches have been found
-//                    }
-//                });
-//            });
-//            SortedList<PartData> sortedPartData = new SortedList<>(filteredPartData);
-//            //Bind sorted result with Table view
-//            sortedPartData.comparatorProperty().bind(parts_tableView.comparatorProperty());
-//            //Apply filtered and sorted data to the Table View
-//            parts_tableView.setItems(sortedPartData);
 
         } catch(SQLException e) {
             Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
