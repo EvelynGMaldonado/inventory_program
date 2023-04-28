@@ -615,29 +615,70 @@ public class AddProductController implements Initializable {
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
+            //populate the observableList
+            String name = "";
+            String partID = "";
+            String inv = "";
+            String price = "";
+            BigDecimal num;
+
             parts_tableView.getItems().clear();
-            while (queryPartsOutput.next()) {
+            if (queryPartsOutput.next()) {
 
                 //populate the observableList
-                String name = queryPartsOutput.getString("part_name");
-                String partID = Integer.toString(queryPartsOutput.getInt("partID"));
-                String inv = Integer.toString(queryPartsOutput.getInt("stock"));
-//                String price = DecimalFormat.getInstance().format(queryPartsOutput.getBigDecimal("price_unit"));
-                String price = queryPartsOutput.getBigDecimal("price_unit").toString();
+                name = queryPartsOutput.getString("part_name");
+                partID = Integer.toString(queryPartsOutput.getInt("partID"));
+                inv = Integer.toString(queryPartsOutput.getInt("stock"));
+                price = queryPartsOutput.getBigDecimal("price_unit").toString();
                 Double obj = Double.parseDouble(price);
-                BigDecimal num = BigDecimal.valueOf(obj);
+                num = BigDecimal.valueOf(obj);
                 PartData data = new PartData(
                         Integer.parseInt(partID),
                         name,
                         Integer.parseInt(inv),
                         num
                 );
-                if(inv.equals(text) || price.equals(text))
-                {
+                if(inv.equals(text) || price.equals(text)) {
                     partList.add(data);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.showAndWait();
+
+                    addProduct_searchPartInputField.clear();
+                    //SQL Query - executed in the backend database
+                    String refreshPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+                    try {
+                        statement = connectDB.createStatement();
+                        ResultSet queryrRefreshPartsOutput = statement.executeQuery(refreshPartsViewQuery);
+
+                        while (queryrRefreshPartsOutput.next()) {
+
+                            //populate the observableList
+                            partList.add(new PartData(queryrRefreshPartsOutput.getInt("partID"),
+                                    queryrRefreshPartsOutput.getString("part_name"),
+                                    queryrRefreshPartsOutput.getInt("stock"),
+                                    queryrRefreshPartsOutput.getBigDecimal("price_unit")));
+                        }
+                        //PropertyValueFactory corresponds to the new PartData fields
+                        //the table column is the one we annotate above
+                        parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+                        parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+                        parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                        parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+                        parts_tableView.setItems(partList);
+
+                    } catch(SQLException e) {
+                        Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+                        e.printStackTrace();
+                        e.getCause();
+                    }
+
                 }
             }
-
             //PropertyValueFactory corresponds to the new PartData fields
             //the table column is the one we annotate above
             parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -646,6 +687,7 @@ public class AddProductController implements Initializable {
             parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
 
             parts_tableView.setItems(partList);
+
             //closing statement once I am done with the query to avoid crashing!!
             statement.close();
             queryPartsOutput.close();

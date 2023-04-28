@@ -772,16 +772,6 @@ public class ModifyProductController implements Initializable {
 
                 }
             }
-//            if(!inv.equals(text) && !price.equals(text)) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Error message");
-//                alert.setHeaderText(null);
-//                alert.setContentText("No inventory level or price have been found. Please try again.");
-//                alert.showAndWait();
-//
-//                modifyProduct_searchPartInputField.clear();
-//            }
-
             //PropertyValueFactory corresponds to the new PartData fields
             //the table column is the one we annotate above
             parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
