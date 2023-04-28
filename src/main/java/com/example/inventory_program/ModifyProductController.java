@@ -694,60 +694,6 @@ public class ModifyProductController implements Initializable {
         }
     }
 
-    //SIDE MENU
-    public void modifyProductRedirectsToEMIMSHomePage() throws IOException {
-        startBtn.getScene().getWindow().hide();
-//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
-//        stage1.close();
-        //create new stage
-        Stage ppMainWindow = new Stage();
-        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
-
-        //set view in ppMainWindow
-        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
-
-        //launch
-        ppMainWindow.show();
-
-    }
-
-    public void modifyProductRedirectsToAddPartPage () throws IOException {
-        addPartPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage addPartPageWindow = new Stage();
-        addPartPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader addPartPageLoader = new FXMLLoader(getClass().getResource("addPart_page.fxml"));
-
-        //set view in ppMainWindow
-        addPartPageWindow.setScene(new Scene(addPartPageLoader.load(), 600, 400));
-
-        //launch
-        addPartPageWindow.show();
-
-    }
-
-    public void modifyProductRedirectsToAddProductPage () throws IOException {
-        addProductPageBtn.getScene().getWindow().hide();
-        //create new stage
-        Stage addProductPageWindow = new Stage();
-        addProductPageWindow.setTitle("Add Part - EM Inventory Management System");
-
-        //create view for FXML
-        FXMLLoader addProductPageLoader = new FXMLLoader(getClass().getResource("addProduct_page.fxml"));
-
-        //set view in ppMainWindow
-        addProductPageWindow.setScene(new Scene(addProductPageLoader.load(), 800, 610));
-
-        //launch
-        addProductPageWindow.show();
-
-    }
-
     @FXML
     void btnSearchPart(MouseEvent event) {
         String text = modifyProduct_searchPartInputField.getText();
@@ -762,28 +708,79 @@ public class ModifyProductController implements Initializable {
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
+            //populate the observableList
+            String name = "";
+            String partID = "";
+            String inv = "";
+            String price = "";
+            BigDecimal num;
+
             parts_tableView.getItems().clear();
-            while (queryPartsOutput.next()) {
+            if (queryPartsOutput.next()) {
 
                 //populate the observableList
-                String name = queryPartsOutput.getString("part_name");
-                String partID = Integer.toString(queryPartsOutput.getInt("partID"));
-                String inv = Integer.toString(queryPartsOutput.getInt("stock"));
-//                String price = DecimalFormat.getInstance().format(queryPartsOutput.getBigDecimal("price_unit"));
-                String price = queryPartsOutput.getBigDecimal("price_unit").toString();
+                name = queryPartsOutput.getString("part_name");
+                partID = Integer.toString(queryPartsOutput.getInt("partID"));
+                inv = Integer.toString(queryPartsOutput.getInt("stock"));
+                price = queryPartsOutput.getBigDecimal("price_unit").toString();
                 Double obj = Double.parseDouble(price);
-                BigDecimal num = BigDecimal.valueOf(obj);
+                num = BigDecimal.valueOf(obj);
                 PartData data = new PartData(
                         Integer.parseInt(partID),
                         name,
                         Integer.parseInt(inv),
                         num
                 );
-                if(inv.equals(text) || price.equals(text))
-                {
+                if(inv.equals(text) || price.equals(text)) {
                     partList.add(data);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.showAndWait();
+
+                    modifyProduct_searchPartInputField.clear();
+                    //SQL Query - executed in the backend database
+                    String refreshPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
+                    try {
+                        statement = connectDB.createStatement();
+                        ResultSet queryrRefreshPartsOutput = statement.executeQuery(refreshPartsViewQuery);
+
+                        while (queryrRefreshPartsOutput.next()) {
+
+                            //populate the observableList
+                            partList.add(new PartData(queryrRefreshPartsOutput.getInt("partID"),
+                                    queryrRefreshPartsOutput.getString("part_name"),
+                                    queryrRefreshPartsOutput.getInt("stock"),
+                                    queryrRefreshPartsOutput.getBigDecimal("price_unit")));
+                        }
+                        //PropertyValueFactory corresponds to the new PartData fields
+                        //the table column is the one we annotate above
+                        parts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
+                        parts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
+                        parts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                        parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
+
+                        parts_tableView.setItems(partList);
+
+                    } catch(SQLException e) {
+                        Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
+                        e.printStackTrace();
+                        e.getCause();
+                    }
+
                 }
             }
+//            if(!inv.equals(text) && !price.equals(text)) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error message");
+//                alert.setHeaderText(null);
+//                alert.setContentText("No inventory level or price have been found. Please try again.");
+//                alert.showAndWait();
+//
+//                modifyProduct_searchPartInputField.clear();
+//            }
 
             //PropertyValueFactory corresponds to the new PartData fields
             //the table column is the one we annotate above
@@ -793,6 +790,8 @@ public class ModifyProductController implements Initializable {
             parts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
 
             parts_tableView.setItems(partList);
+
+
             //closing statement once I am done with the query to avoid crashing!!
             statement.close();
             queryPartsOutput.close();
@@ -855,6 +854,60 @@ public class ModifyProductController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
+    }
+
+    //SIDE MENU
+    public void modifyProductRedirectsToEMIMSHomePage() throws IOException {
+        startBtn.getScene().getWindow().hide();
+//        Stage stage1 = (Stage) startBtn.getScene().getWindow();
+//        stage1.close();
+        //create new stage
+        Stage ppMainWindow = new Stage();
+        ppMainWindow.setTitle("Parts and Products - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader ppMainLoader = new FXMLLoader(getClass().getResource("home_page-parts&products.fxml"));
+
+        //set view in ppMainWindow
+        ppMainWindow.setScene(new Scene(ppMainLoader.load(), 800, 400));
+
+        //launch
+        ppMainWindow.show();
+
+    }
+
+    public void modifyProductRedirectsToAddPartPage () throws IOException {
+        addPartPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage addPartPageWindow = new Stage();
+        addPartPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader addPartPageLoader = new FXMLLoader(getClass().getResource("addPart_page.fxml"));
+
+        //set view in ppMainWindow
+        addPartPageWindow.setScene(new Scene(addPartPageLoader.load(), 600, 400));
+
+        //launch
+        addPartPageWindow.show();
+
+    }
+
+    public void modifyProductRedirectsToAddProductPage () throws IOException {
+        addProductPageBtn.getScene().getWindow().hide();
+        //create new stage
+        Stage addProductPageWindow = new Stage();
+        addProductPageWindow.setTitle("Add Part - EM Inventory Management System");
+
+        //create view for FXML
+        FXMLLoader addProductPageLoader = new FXMLLoader(getClass().getResource("addProduct_page.fxml"));
+
+        //set view in ppMainWindow
+        addProductPageWindow.setScene(new Scene(addProductPageLoader.load(), 800, 610));
+
+        //launch
+        addProductPageWindow.show();
+
     }
 
     @Override
