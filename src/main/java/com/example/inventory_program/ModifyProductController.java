@@ -737,7 +737,7 @@ public class ModifyProductController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error message");
                     alert.setHeaderText(null);
-                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.setContentText("No matches have been found. Please try again.");
                     alert.showAndWait();
 
                     modifyProduct_searchPartInputField.clear();
@@ -819,8 +819,7 @@ public class ModifyProductController implements Initializable {
                         name,
                         queryPartsOutput.getInt("stock"),
                         queryPartsOutput.getBigDecimal("price_unit"));
-                if(name.toLowerCase().contains(text.toLowerCase()) && partList.contains(data) == false || partID.equals(text))
-                {
+                if(name.toLowerCase().contains(text.toLowerCase()) && partList.contains(data) == false || partID.equals(text)) {
                     partList.add(data);
                 }
             }

@@ -644,7 +644,7 @@ public class AddProductController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error message");
                     alert.setHeaderText(null);
-                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.setContentText("No matches have been found. Please try again.");
                     alert.showAndWait();
 
                     addProduct_searchPartInputField.clear();

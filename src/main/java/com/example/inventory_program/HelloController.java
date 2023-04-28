@@ -734,8 +734,6 @@ public class HelloController implements Initializable {
         //SQL Query - executed in the backend database
         String partsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts";
 
-        String productsViewQuery = "SELECT productID, product_name, stock, price_unit FROM products";
-
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryPartsOutput = statement.executeQuery(partsViewQuery);
@@ -768,7 +766,7 @@ public class HelloController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error message");
                     alert.setHeaderText(null);
-                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.setContentText("No matches have been found. Please try again.");
                     alert.showAndWait();
 
                     homePage_searchPartInputField.clear();
@@ -849,8 +847,7 @@ public class HelloController implements Initializable {
                         name,
                         queryPartsOutput.getInt("stock"),
                         queryPartsOutput.getBigDecimal("price_unit"));
-                if(name.toLowerCase().contains(text.toLowerCase()) && partList.contains(data) == false || partID.equals(text))
-                {
+                if(name.toLowerCase().contains(text.toLowerCase()) && partList.contains(data) == false || partID.equals(text)) {
                     partList.add(data);
                 }
             }
@@ -911,14 +908,13 @@ public class HelloController implements Initializable {
                         Integer.parseInt(inv),
                         num
                 );
-                if(inv.equals(text) || price.equals(text))
-                {
+                if(inv.equals(text) || price.equals(text)) {
                     productList.add(searchProductData);
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error message");
                     alert.setHeaderText(null);
-                    alert.setContentText("No inventory level or price matches have been found. Please try again.");
+                    alert.setContentText("No matches have been found. Please try again.");
                     alert.showAndWait();
 
                     homePage_searchProductInputField.clear();
@@ -993,8 +989,7 @@ public class HelloController implements Initializable {
                         productName,
                         queryProductsOutput.getInt("stock"),
                         queryProductsOutput.getBigDecimal("price_unit"));
-                if(productName.toLowerCase().contains(text.toLowerCase()) && productList.contains(searchData) == false || productID.equals(text))
-                {
+                if(productName.toLowerCase().contains(text.toLowerCase()) && productList.contains(searchData) == false || productID.equals(text)) {
                     productList.add(searchData);
                 }
             }
