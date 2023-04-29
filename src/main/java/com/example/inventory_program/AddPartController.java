@@ -6,14 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -21,22 +20,7 @@ import java.util.ResourceBundle;
 public class AddPartController implements Initializable {
 
     @FXML
-    private StackPane addPart_page;
-
-    @FXML
     private Button addProductPageBtn;
-
-    @FXML
-    private Button modifyProduct_closeBtn;
-
-    @FXML
-    private Button modifyPartPageBtn;
-
-    @FXML
-    private Button modifyProductPageBtn;
-
-    @FXML
-    private Button settingsBtn;
 
     @FXML
     private Button startBtn;
@@ -54,12 +38,6 @@ public class AddPartController implements Initializable {
     private RadioButton outsourcedRadioBtn;
 
     @FXML
-    private ToggleGroup selectInHouseOutsourcedToggleGroup;
-
-    @FXML
-    private TextField addPart_partIDTextField;
-
-    @FXML
     private TextField addPart_setPartName;
 
     @FXML
@@ -75,16 +53,7 @@ public class AddPartController implements Initializable {
     private TextField addPart_setPriceUnit;
 
     @FXML
-    private Button addPart_saveBtn;
-
-    @FXML
     private Button addPart_cancelBtn;
-
-    @FXML
-    private Button addPart_closeBtn;
-
-    @FXML
-    private TextField addPart_partID;
 
 
     //Toggle Group - radio buttons functionality
@@ -98,7 +67,7 @@ public class AddPartController implements Initializable {
         }
     }
 
-    public void clickSavePartBtn(ActionEvent event) throws IOException{
+    public void clickSavePartBtn(ActionEvent event) {
 
         //retrieve variables for max, min, and inventory validation.
         String min = addPart_setMin.getText().trim();
@@ -370,11 +339,12 @@ public class AddPartController implements Initializable {
         addProductPageWindow.show();
     }
 
-//    public void closeBtnAction(ActionEvent e) {
-//        Stage stage = (Stage) close.getScene().getWindow();
-//        stage.close();
-//    }
 
+    /**
+     * Public void initialize() method called to initialize a controller after its root element has been completely processed.
+     * @parameter url is used to resolve relative paths for the root object. It is null if the url is not known.
+     * @parameter rb is used to localize the root object, and it is null if the root object is not located.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inHouseRadioBtn.setSelected(true);
