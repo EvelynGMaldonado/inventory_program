@@ -80,7 +80,7 @@ public class RegisterController implements Initializable {
     /**
      * Void signUp_cancelBtnAction() method is used to go back to the landing page when the user hasn't been saved in the database.
      * e represents the event that triggers the action.
-     * A confirmation alert will be saved when the user clicks the cancel button. If the user clicks OK, then the signUp Page will be hide, and the user will be redirected to the landing page, unless an exception is caught. If the user press cancel, then it will return to the signUp page to keep editing its profile.
+     * A confirmation alert will be shown when the user clicks the cancel button. If the user clicks OK, then the signUp Page will be hidden, and the user will be redirected to the landing page, unless an exception is caught. If the user press cancel, then it will return to the signUp page to keep editing its profile.
      */
     @FXML
     void signUp_cancelBtnAction(ActionEvent event) {
