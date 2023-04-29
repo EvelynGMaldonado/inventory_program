@@ -119,10 +119,19 @@ public class AddProductController implements Initializable {
 
     //on click addBtn located on Add Product page, I check if a row has been selected,
     //retrieve data from parts table (choose part data), and insert it into associated part data table.
+    /**
+     * Void clickAddAssociatedPartBtn() method is used after the user selects one row from the upper table and clicks the add button.
+     * event represents the event that triggers the action.
+     * there is a validation to verify if one row from the part table has been selected.
+     * All the data from the selected row is retrieved.
+     * displayAssociatedPartDataTableView() method is called when the data is successfully retrieved from the parts table and inserted into the associated parts table.
+     * error alert is shown when there is no selected row or when the part has been already associated to the product.
+     * information alert is shown when the part data has been successfully associated to the current product.
+     */
     @FXML
-    public void clickAddAssociatedPartBtn (ActionEvent event){
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
+    void clickAddAssociatedPartBtn(ActionEvent event){
+        //DatabaseConnection connectNow = new DatabaseConnection();
+        //Connection connectDB = connectNow.getConnection();
         index = parts_tableView.getSelectionModel().getSelectedIndex();
 
         String getSingleAssociatedPartID = "";
@@ -193,7 +202,7 @@ public class AddProductController implements Initializable {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("Successful In-House Part Registration");
                                 alert.setHeaderText(null);
-                                alert.setContentText("New In House  Part has been successfully added to EM Inventory Management System");
+                                alert.setContentText("New In House Part has been successfully added to EM Inventory Management System");
                                 alert.showAndWait();
 
                                 //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
@@ -238,19 +247,21 @@ public class AddProductController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
             alert.setHeaderText(null);
-            alert.setContentText("Please select the data row that you want to delete.");
+            alert.setContentText("Please select the data row part that you want to associate with your product.");
             alert.showAndWait();
         }
     }
 
-    //display the current associated parts data after add a new associated part
+    /**
+     * Public void displayAssociatedPartDataTableView() method is called when the selected part has been successfully associated do our product.
+     * The bottom associated parts table updates and shows the current associated parts data after adding a new associated part, unless an exception is caught.
+     */
     public void displayAssociatedPartDataTableView() {
         associatedPartList.clear();
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
 
         String associatedPartsViewQuery = "SELECT partID, part_name, stock, price_unit FROM associated_parts";
-
         try {
         Statement statement = connectDB.createStatement();
         ResultSet queryAssociatedPartsView = statement.executeQuery(associatedPartsViewQuery);
@@ -264,7 +275,6 @@ public class AddProductController implements Initializable {
                         queryAssociatedPartsView.getBigDecimal("price_unit")));
             }
 
-
             //PropertyValueFactory corresponds to the new PartData fields
             //the table column is the one we annotate above
             associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
@@ -274,15 +284,17 @@ public class AddProductController implements Initializable {
 
             associatedParts_tableview.setItems(associatedPartList);
 
-
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
-
     }
 
-    //on click addProduct_saveBtn
+    /**
+     * Void clickSaveNewProductAndAssociatedParts() method is used to validate that none of the fields are empty, and that the correct data types have been used.
+     * event represents the event that triggers the action (on click addProduct_saveBtn).
+     * If all validations pass, then the validateProductName() method will be called; otherwise an error alert will be displayed.
+     */
     @FXML
     void clickSaveNewProductAndAssociatedParts(ActionEvent event) {
         String min = addProduct_setMin.getText().trim();
@@ -341,6 +353,11 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Public void validateProductName() method is used to validate that the new product name does not exist in the EM database.
+     * When the validation passes, the method registerNewProduct() is called, unless an Exception is caught.
+     * When the validation does not pass, an error alert will show up, and the user will be requested to use a different name for the new product.
+     */
     public void validateProductName() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -367,6 +384,11 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Public void registerNewProduct() method called after the product name validation is passed, and no exceptions were caught.
+     * Once the data is inserted, the registerCurrentProductAssociatedParts() method will be called, if no exceptions are caught.
+     * An information alert is displayed to notify that the new product has been successfully registered to the database.
+     */
     public void registerNewProduct() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -402,6 +424,12 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Public void registerCurrentProductAssociatedParts() method called after the new product is registered, and no exceptions were caught.
+     * Once the data is inserted, the registerCurrentProductAssociatedParts() method will be called, if no exceptions are caught.
+     * The productID is queried from the products table, and then the product and the associated parts are inserted into the products_associated_parts table.
+     * An information alert is displayed to notify that the New Product and its PartsID have been successfully added to table products_associated_parts; and the addProductRedirectsToEMIMSHomePage() method is called.
+     */
     //Last step on add New product functionality
     public void registerCurrentProductAssociatedParts() {
         DatabaseConnection connectNow = new DatabaseConnection();
@@ -416,16 +444,13 @@ public class AddProductController implements Initializable {
             Statement statement = connectDB.createStatement();
             ResultSet queryCurrentProductIDResult = statement.executeQuery(getCurrentProductIDQuery);
 
-
             while(queryCurrentProductIDResult.next()) {
                 currentProductID = queryCurrentProductIDResult.getString("productID");
                 System.out.println("The current productID on line 374 is: " + currentProductID);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
-
         }
 
         String currentAssociatedPartsIDs = "";
@@ -469,9 +494,14 @@ public class AddProductController implements Initializable {
         }
     }
 
-    //remove associated part btn removes the data of the selected row from the associated part data table
+    /**
+     * Void deleteSelectedAssociatedPart() method is used to delete the associated part from the selected row on the products_associated_parts table.
+     * e represents the event that triggers the action.
+     * A confirmation alert is displayed, if the user clicks ok then the part will be unassociated from the products, and the products_associated_parts table will be updated, unless an Exception is caught. If the user clicks cancel, then the action is aborted.
+     * An error alert is displayed when no row has been selected.
+     */
     @FXML
-    private void deleteSelectedAssociatedPart (ActionEvent event) {
+    void deleteSelectedAssociatedPart(ActionEvent event) {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
         index = associatedParts_tableview.getSelectionModel().getSelectedIndex();
@@ -521,8 +551,15 @@ public class AddProductController implements Initializable {
 
     }
 
-    //cancelBtn confirms that changes haven't been saved and takes us to homepage
-    public void addProduct_cancelBtnAction(ActionEvent event) {
+    /**
+     * Void addProduct_cancelBtnAction() method is used to go back to the landing page while still working on adding a new product to the database.
+     * e represents the event that triggers the action.
+     * A confirmation alert will be shown when the user clicks the cancel button.
+     * The alert confirms that changes haven't been saved and takes us to homepage.
+     * If the user clicks OK, then the addProduct Page will be hidden, and the user will be redirected to the landing page, unless an exception is caught. If the user press cancel, then it will return to the addProduct page to keep working on the data part input.
+     */
+    @FXML
+    void addProduct_cancelBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Message");
@@ -554,7 +591,13 @@ public class AddProductController implements Initializable {
         }
     }
 
-    public void addProduct_addPartBtnAction(ActionEvent event) {
+    /**
+     * Void addProduct_addPartBtnAction() method is used to call the addProductRedirectsToAddPartPage();, unless an exception is caught.
+     * e represents the event that triggers the action.
+     * A confirmation alert is displayed.
+     */
+    @FXML
+    void addProduct_addPartBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Message");
@@ -563,7 +606,7 @@ public class AddProductController implements Initializable {
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {
-                addProductRedirectsToAddPartPage ();
+                addProductRedirectsToAddPartPage();
             } else {
                 return;
             }
@@ -573,7 +616,12 @@ public class AddProductController implements Initializable {
         }
     }
 
-    public void addProduct_modifyPartBtnAction_Error(ActionEvent event) {
+    /**
+     * When the modify part button is clicked, an error alert will be displayed.
+     * e represents the event that triggers the action.
+     */
+    @FXML
+    void addProduct_modifyPartBtnAction_Error(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
@@ -587,7 +635,12 @@ public class AddProductController implements Initializable {
         }
     }
 
-    public void addProduct_modifyProductBtnAction_Error(ActionEvent event) {
+    /**
+     * When the modify product button is clicked, an error alert will be displayed.
+     * e represents the event that triggers the action.
+     */
+    @FXML
+    void addProduct_modifyProductBtnAction_Error(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
@@ -601,6 +654,12 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Void btnSearchPart() method is used to find a part row by typing information in the input field and clicking the search button.
+     * e represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void btnSearchPart(MouseEvent event) {
         String text = addProduct_searchPartInputField.getText();
@@ -700,6 +759,12 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Void keyReleaseSearchPart() method is used to find a part row by typing information in the input field.
+     * e represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void keyReleaseSearchPart(KeyEvent event) {
         String text = addProduct_searchPartInputField.getText();
@@ -752,6 +817,12 @@ public class AddProductController implements Initializable {
     }
 
 //SIDE MENU
+    /**
+     * Public void addProductRedirectsToEMIMSHomePage() method called after the new product is successfully registered into the database, and no exceptions were caught.
+     * The add Product page is hided, and the user is redirected to the homepage, where it can see the new part displaying on the parts table.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
     public void addProductRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
 
@@ -770,7 +841,13 @@ public class AddProductController implements Initializable {
 
     }
 
-    public void addProductRedirectsToAddPartPage () throws IOException {
+    /**
+     * Void addProductRedirectsToAddPartPage() method is called by the addProduct_addPartBtnAction; and it is used to open Add Part Page, unless an exception is caught.
+     * e represents the event that triggers the action.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
+    public void addProductRedirectsToAddPartPage() throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addPartPageWindow = new Stage();
@@ -787,7 +864,11 @@ public class AddProductController implements Initializable {
 
     }
 
-
+    /**
+     * Public void initialize() method called to initialize a controller after its root element has been completely processed.
+     * @parameter url is used to resolve relative paths for the root object. It is null if the url is not known.
+     * @parameter rb is used to localize the root object, and it is null if the root object is not located.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DatabaseConnection connectNow = new DatabaseConnection();
@@ -866,5 +947,4 @@ public class AddProductController implements Initializable {
             e.getCause();
         }
     }
-
 }

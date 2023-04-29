@@ -347,7 +347,9 @@ public class AddPartController implements Initializable {
     //SIDE MENU
     /**
      * Public void addPartRedirectsToEMIMSHomePage() method called after the new part is successfully registered into the database, and no exceptions were caught.
-     * The add Product page is hided, and the user is redirected to the homepage, where it can see the new part displaying on the parts table.
+     * The add Part page is hided, and the user is redirected to the homepage, where it can see the new part displaying on the parts table.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
      */
     public void addPartRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
@@ -369,6 +371,8 @@ public class AddPartController implements Initializable {
     /**
      * Void addPartRedirectsToAddProductPage() method is called by the addPart_addProductBtnAction; and it is used to open Add Product Page, unless an exception is caught.
      * e represents the event that triggers the action.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
      */
     public void addPartRedirectsToAddProductPage() throws IOException {
         addProductPageBtn.getScene().getWindow().hide();
