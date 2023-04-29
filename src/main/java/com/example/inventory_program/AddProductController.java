@@ -11,9 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -27,21 +25,6 @@ public class AddProductController implements Initializable {
 
     @FXML
     private Button addPartPageBtn;
-
-    @FXML
-    private StackPane addProduct_page;
-
-    @FXML
-    private Button addProduct_closeBtn;
-
-    @FXML
-    private Button modifyPartPageBtn;
-
-    @FXML
-    private Button modifyProductPageBtn;
-
-    @FXML
-    private Button settingsBtn;
 
     @FXML
     private Button startBtn;
@@ -78,21 +61,6 @@ public class AddProductController implements Initializable {
 
     @FXML
     private TableColumn<RowPartData, BigDecimal> associatedParts_tableView_col_priceUnit = new TableColumn<>("price_unit");
-
-    @FXML
-    private Button addProduct_addAssociatedPartBtn;
-
-    @FXML
-    private TextField addProduct_productIDTextField;
-
-    @FXML
-    private Button addProduct_removeAssociatedPartBtn;
-
-    @FXML
-    private Button addProduct_saveBtn;
-
-    @FXML
-    private Button addProduct_searchPartBtn;
 
     @FXML
     private TextField addProduct_searchPartInputField;
