@@ -128,7 +128,7 @@ public class ModifyProductController implements Initializable {
     private final String getSingleProductMax;
 
     /**
-     * Public ModifyProductController accepts:
+     * Public ModifyProductController Constructor accepts:
      * @param partsAndProductsInventory parts and products inventory parameters and initializes the private final String getPartsAndProductsInventory variable.
      * @param productData  productData parameter and initializes the private final String getSingleProductData variable.
      * @param getSingleProductID getSingleProductID parameter and initializes the private final String getSingleProductID variable.

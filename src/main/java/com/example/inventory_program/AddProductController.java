@@ -21,6 +21,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Evelyn G Morrow.
+ * @version 1.0.
+ * Public class AddProductController is used to add a new product to the EM management system database.
+ */
 public class AddProductController implements Initializable {
 
     @FXML
@@ -143,15 +148,15 @@ public class AddProductController implements Initializable {
                                 System.out.println(querySelectedPartToAssociateResult.getString("part_name"));
                                 getSingleAssociatedPartID = querySelectedPartToAssociateResult.getString("partID");
                                 getSingleAssociatedPartName = querySelectedPartToAssociateResult.getString("part_name");
-            //                    System.out.println("getSingleAssociatedPartName is: " + getSingleAssociatedPartName);
+                                //System.out.println("getSingleAssociatedPartName is: " + getSingleAssociatedPartName);
                                 getSingleAssociatedPartStock = querySelectedPartToAssociateResult.getString("stock");
                                 getSingleAssociatedPartPriceUnit = querySelectedPartToAssociateResult.getString("price_unit");
                                 getSingleAssociatedPartMin = querySelectedPartToAssociateResult.getString("min");
                                 getSingleAssociatedPartMax = querySelectedPartToAssociateResult.getString("max");
                                 getSingleAssociatedPartMachineID = querySelectedPartToAssociateResult.getString("machineID");
-            //                    System.out.println("getSinglePartMachineID is: " + getSingleAssociatedPartMachineID);
+                                //System.out.println("getSinglePartMachineID is: " + getSingleAssociatedPartMachineID);
                                 getSingleAssociatedPartCompanyName = querySelectedPartToAssociateResult.getString("company_name");
-            //                    System.out.println("getSinglePartCompanyName is: " + getSingleAssociatedPartCompanyName);
+                                //System.out.println("getSinglePartCompanyName is: " + getSingleAssociatedPartCompanyName);
                             }
 
                         } catch (SQLException e) {

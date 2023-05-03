@@ -107,7 +107,7 @@ public class ModifyPartController implements Initializable {
     //};
 
     /**
-     * Public ModifyPartController accepts:
+     * Public ModifyPartController Constructor accepts:
      * @param partsAndProductsInventory parts and products inventory parameters and initializes the private final String getPartsAndProductsInventory variable.
      * @param partData partData parameter and initializes the private final String getSinglePartData variable.
      * @param getSinglePartID getSinglePartID parameter and initializes the private final String getSinglePartID variable.
