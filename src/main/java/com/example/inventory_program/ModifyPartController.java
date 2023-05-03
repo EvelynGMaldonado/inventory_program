@@ -112,13 +112,13 @@ public class ModifyPartController implements Initializable {
      * @param partsAndProductsInventory parts and products inventory parameters and initializes the private final String getPartsAndProductsInventory variable.
      * @param partData partData parameter and initializes the private final String getSinglePartData variable.
      * @param getSinglePartID getSinglePartID parameter and initializes the private final String getSinglePartID variable.
-     * @param getSinglePartName getSinglePartName parameter and initializes the private final String getSinglePartName;
-     * @param getSinglePartStock getSinglePartStock parameter and
-     * @param getSinglePartPriceUnit
-     * @param getSinglePartMin
-     * @param getSinglePartMax
-     * @param getSinglePartMachineID
-     * @param getSinglePartCompanyName
+     * @param getSinglePartName getSinglePartName parameter and initializes the private final String getSinglePartName variable.
+     * @param getSinglePartStock getSinglePartStock parameter and initializes the private final String getSinglePartStock variable.
+     * @param getSinglePartPriceUnit getSinglePartPriceUnit parameter and initializes the private final String getSinglePartPriceUnit variable.
+     * @param getSinglePartMin getSinglePartMin parameter and initializes the private final String getSinglePartMin variable.
+     * @param getSinglePartMax getSinglePartMax parameter and initializes the private final String getSinglePartMax variable.
+     * @param getSinglePartMachineID getSinglePartMachineID parameter and initializes the private final String getSinglePartMachineID variable.
+     * @param getSinglePartCompanyName getSinglePartCompanyName parameter and initializes the private final String getSinglePartCompanyName variable.
      *
      */
     public ModifyPartController(PartsAndProductsInventory partsAndProductsInventory, PartData partData, String getSinglePartID, String getSinglePartName, String getSinglePartStock, String getSinglePartPriceUnit, String getSinglePartMin, String getSinglePartMax, String getSinglePartMachineID, String getSinglePartCompanyName) {
@@ -134,6 +134,10 @@ public class ModifyPartController implements Initializable {
         this.getSinglePartCompanyName= getSinglePartCompanyName;
     }
 
+    /**
+     * Toggle Group - radio buttons functionality.
+     * @param event represents the event that triggers the action.
+     */
     public void displayMachineIDOrCompanyName_modifyPartPage(ActionEvent event) {
         if(modifyPartInHouseRadioBtn.isSelected()) {
             modifyPart_displayCompanyOrMachineLabel.setText("Machine ID:");
@@ -144,6 +148,11 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * Void clickSaveUpdatedPartBtn() method is used to validate that none of the fields are empty, and that the correct data types have been used.
+     * @param event represents the event that triggers the action.
+     * If all validations pass, then the validateUpdatedPartNameAndPartID() method will be called; otherwise an error alert will be displayed.
+     */
     @FXML
     public void clickSaveUpdatedPartBtn(ActionEvent event) {
         //retrieve variables for max, min, and inventory validation.
@@ -215,6 +224,11 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * Public void validateUpdatedPartNameAndPartID()  method is used to validate that whether the updated part name matches with its ID.
+     * If the validation passes (part name matches with its ID), the method UpdatePart() is called, unless an Exception is caught.
+     * When the validation does not pass(part name does not match with its ID), the method verifyIfPartNameAlreadyExists() is called, unless an Exception is caught.
+     */
     public void validateUpdatedPartNameAndPartID() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -240,6 +254,11 @@ public class ModifyPartController implements Initializable {
         }
     };
 
+    /**
+     * Public void verifyIfPartNameAlreadyExists() method is used to validate that if the part name does not exist in the EM database.
+     * When the validation passes(part name does not exist in the EM database), the method UpdatePart() is called, unless an Exception is caught.
+     * When the validation does not pass (part name already exists in the EM database), an error alert will show up, and the user will be requested to use a different name for the updated part.
+     */
     public void verifyIfPartNameAlreadyExists() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -270,6 +289,11 @@ public class ModifyPartController implements Initializable {
         }
     };
 
+    /**
+     * Public void UpdatePart() method called after the part name validation is passed, and no exceptions were caught.
+     * Once the data is inserted, the modifyPartRedirectsToEMIMSHomePage() method will be called, if no exceptions are caught.
+     * An information alert is displayed to notify that the updated part has been successfully registered to the database.
+     */
     public void UpdatePart() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();

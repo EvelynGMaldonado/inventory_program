@@ -55,7 +55,7 @@ public class AddPartController implements Initializable {
 
     /**
      * Toggle Group - radio buttons functionality.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      */
     @FXML
     void displayMachineIDOrCompanyName(ActionEvent event) {
