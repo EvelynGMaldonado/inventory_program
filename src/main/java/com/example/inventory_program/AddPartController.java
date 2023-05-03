@@ -70,7 +70,7 @@ public class AddPartController implements Initializable {
 
     /**
      * Void clickSavePartBtn() method is used to validate that none of the fields are empty, and that the correct data types have been used.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      * If all validations pass, then the validatePartName() method will be called; otherwise an error alert will be displayed.
      */
     @FXML
@@ -147,7 +147,7 @@ public class AddPartController implements Initializable {
 
     /**
      * Void addPart_cancelBtnAction() method is used to go back to the landing page while still working on adding a new part to the database.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      * A confirmation alert will be shown when the user clicks the cancel button. If the user clicks OK, then the addPart Page will be hidden, and the user will be redirected to the landing page, unless an exception is caught. If the user press cancel, then it will return to the addPart page to keep working on the data part input.
      */
     @FXML
@@ -160,7 +160,7 @@ public class AddPartController implements Initializable {
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {
-//              go back to the landing page by doing ...
+              //go back to the landing page by doing ...
                 addPart_cancelBtn.getScene().getWindow().hide();
                 //create new stage
                 Stage ppMainWindow = new Stage();
@@ -185,7 +185,7 @@ public class AddPartController implements Initializable {
 
     /**
      * When the modify part button is clicked, an error alert will be displayed.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      */
     @FXML
     void addPart_modifyPartBtnAction_Error(ActionEvent event) {
@@ -204,7 +204,7 @@ public class AddPartController implements Initializable {
 
     /**
      * When the modify product button is clicked, an error alert will be displayed.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      */
     @FXML
     void addPart_modifyProductBtnAction_Error(ActionEvent event) {
@@ -223,7 +223,7 @@ public class AddPartController implements Initializable {
 
     /**
      * Void addPart_addProductBtnAction() method is used to call the addPartRedirectsToAddProductPage(), unless an exception is caught.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      * A confirmation alert is displayed.
      */
     @FXML
@@ -370,7 +370,6 @@ public class AddPartController implements Initializable {
 
     /**
      * Void addPartRedirectsToAddProductPage() method is called by the addPart_addProductBtnAction; and it is used to open Add Product Page, unless an exception is caught.
-     * e represents the event that triggers the action.
      * @throws IOException if an input or output error occurs
      * @see IOException
      */
@@ -393,8 +392,8 @@ public class AddPartController implements Initializable {
 
     /**
      * Public void initialize() method called to initialize a controller after its root element has been completely processed.
-     * @parameter url is used to resolve relative paths for the root object. It is null if the url is not known.
-     * @parameter rb is used to localize the root object, and it is null if the root object is not located.
+     * @param url is used to resolve relative paths for the root object. It is null if the url is not known.
+     * @param rb is used to localize the root object, and it is null if the root object is not located.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

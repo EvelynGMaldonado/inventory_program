@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 /**
  * @author Evelyn G Morrow.
  * @version 1.0.
- * Public class HelloController is used to retrieve and display the updated data on the part and product tables after the user successfully signs in, as well as to manage some functionality such as delete, search, etc.
+ * Public class HelloController is used to retrieve and display the most up-to-date data on the parts and products tables after the user successfully signs in, as well as to manage some functionality such as delete, search, etc.
  */
 public class HelloController implements Initializable {
 //public class HelloController {
@@ -941,8 +941,8 @@ public class HelloController implements Initializable {
 
     /**
      * Public void initialize() method called to initialize a controller after its root element has been completely processed.
-     * @parameter url is used to resolve relative paths for the root object. It is null if the url is not known.
-     * @parameter rb is used to localize the root object, and it is null if the root object is not located.
+     * @param url is used to resolve relative paths for the root object. It is null if the url is not known.
+     * @param rb is used to localize the root object, and it is null if the root object is not located.
      * @exception SQLException if a database error or other errors occur.
      * @see SQLException
      */

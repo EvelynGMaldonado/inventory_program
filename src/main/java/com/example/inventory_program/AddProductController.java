@@ -561,7 +561,7 @@ public class AddProductController implements Initializable {
 
     /**
      * Void addProduct_addPartBtnAction() method is used to call the addProductRedirectsToAddPartPage();, unless an exception is caught.
-     * e represents the event that triggers the action.
+     * event represents the event that triggers the action.
      * A confirmation alert is displayed.
      */
     @FXML
@@ -605,7 +605,7 @@ public class AddProductController implements Initializable {
 
     /**
      * When the modify product button is clicked, an error alert will be displayed.
-     * e represents the event that triggers the action.
+     * event represents the event that triggers the action.
      */
     @FXML
     void addProduct_modifyProductBtnAction_Error(ActionEvent event) {
@@ -811,7 +811,6 @@ public class AddProductController implements Initializable {
 
     /**
      * Void addProductRedirectsToAddPartPage() method is called by the addProduct_addPartBtnAction; and it is used to open Add Part Page, unless an exception is caught.
-     * e represents the event that triggers the action.
      * @throws IOException if an input or output error occurs
      * @see IOException
      */

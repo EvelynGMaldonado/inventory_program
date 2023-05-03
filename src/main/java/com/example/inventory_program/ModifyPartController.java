@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -17,12 +16,17 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * @author Evelyn G Morrow.
+ * @version 1.0.
+ * Public class ModifyPartController is used to retrieve and display the data row after selecting the part that the user needs to modify from the parts table, and click the modify part button.
+ * after the user successfully signs in, as well as to manage some functionality such as delete, search, etc.
+ */
 public class ModifyPartController implements Initializable {
 
     HelloController helloController;
     PartData partData;
     PartsAndProductsInventory partsAndProductsInventory;
-
 
     @FXML
     private Button addPartPageBtn;
@@ -84,6 +88,10 @@ public class ModifyPartController implements Initializable {
     @FXML
     private Label modifyPart_displayCompanyOrMachineLabel;
 
+    /**
+     * private final variables are not accessible outside the class.
+     * private final variables values are final (no changes allowed) once the variable is initialized.
+     */
     private final String getSinglePartID;
     private final String getSinglePartName;
     private final String getSinglePartStock;
@@ -94,12 +102,25 @@ public class ModifyPartController implements Initializable {
     private final String getSinglePartCompanyName;
 
     //display info from the row selected to be modified/edited at the home_page
-//    public void showSelectedPartDataInformation(String name, String age) {
-//        nameScene2.setText(name);
-//        ageScene2.setText(age);
-//
-//    };
+    //public void showSelectedPartDataInformation(String name, String age) {
+        //nameScene2.setText(name);
+        //ageScene2.setText(age);
+    //};
 
+    /**
+     * Public ModifyPartController accepts:
+     * @param partsAndProductsInventory parts and products inventory parameters and initializes the private final String getPartsAndProductsInventory variable.
+     * @param partData partData parameter and initializes the private final String getSinglePartData variable.
+     * @param getSinglePartID getSinglePartID parameter and initializes the private final String getSinglePartID variable.
+     * @param getSinglePartName getSinglePartName parameter and initializes the private final String getSinglePartName;
+     * @param getSinglePartStock getSinglePartStock parameter and
+     * @param getSinglePartPriceUnit
+     * @param getSinglePartMin
+     * @param getSinglePartMax
+     * @param getSinglePartMachineID
+     * @param getSinglePartCompanyName
+     *
+     */
     public ModifyPartController(PartsAndProductsInventory partsAndProductsInventory, PartData partData, String getSinglePartID, String getSinglePartName, String getSinglePartStock, String getSinglePartPriceUnit, String getSinglePartMin, String getSinglePartMax, String getSinglePartMachineID, String getSinglePartCompanyName) {
         this.partsAndProductsInventory = partsAndProductsInventory;
         this.partData = partData;
@@ -301,7 +322,7 @@ public class ModifyPartController implements Initializable {
                 alert.setContentText("Outsourced Part has been successfully updated in EM Inventory Management System");
                 alert.showAndWait();
 
-                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                //After successfully saving the updated part we redirect to the home_page and are able to see the updated data table
                 modifyPartRedirectsToEMIMSHomePage();
 
             } catch (Exception e) {
@@ -311,6 +332,11 @@ public class ModifyPartController implements Initializable {
         }
     };
 
+    /**
+     * Void modifyPart_cancelBtnAction() method is used to go back to the landing page while still working on adding a new part to the database.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert will be shown when the user clicks the cancel button. If the user clicks OK, then the addPart Page will be hidden, and the user will be redirected to the landing page, unless an exception is caught. If the user press cancel, then it will return to the addPart page to keep working on the data part input.
+     */
     public void modifyPart_cancelBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -320,7 +346,7 @@ public class ModifyPartController implements Initializable {
             Optional<ButtonType> option = alert.showAndWait();
 
             if(option.get().equals(ButtonType.OK)) {
-//              go back to the landing page by doing ...
+              //go back to the landing page by doing ...
                 modifyPart_cancelBtn.getScene().getWindow().hide();
                 //create new stage
                 Stage ppMainWindow = new Stage();
@@ -343,6 +369,11 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * Void modifyPart_addProductBtnAction() method is used to call the modifyPartRedirectsToAddProductPage(), unless an exception is caught.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert is displayed.
+     */
     public void modifyPart_addProductBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -362,6 +393,10 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * When the modify product button is clicked, an error alert will be displayed.
+     * @param event represents the event that triggers the action.
+     */
     public void modifyPart_modifyProductBtnAction_Error(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -376,6 +411,11 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * Void modifyPart_addPartBtnAction() method is used to call the modifyPartRedirectsToAddPartPage();, unless an exception is caught.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert is displayed.
+     */
     public void modifyPart_addPartBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -396,6 +436,12 @@ public class ModifyPartController implements Initializable {
     }
 
     //SIDE MENU
+    /**
+     * Public void modifyPartRedirectsToEMIMSHomePage() method called after successfully saving the updated new part into the database, and no exceptions were caught.
+     * The Modify Part page is hided, and the user is redirected to the homepage, where it can see the updated part displaying on the parts table.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
     public void modifyPartRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
 
@@ -413,6 +459,11 @@ public class ModifyPartController implements Initializable {
         ppMainWindow.show();
     }
 
+    /**
+     * Void modifyPartRedirectsToAddProductPage() method is called by the modifyPart_addProductBtnAction; and it is used to open Add Product Page, unless an exception is caught.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
     public void modifyPartRedirectsToAddProductPage () throws IOException {
         addProductPageBtn.getScene().getWindow().hide();
         //create new stage
@@ -430,7 +481,12 @@ public class ModifyPartController implements Initializable {
 
     }
 
-    public void modifyPartRedirectsToAddPartPage () throws IOException {
+    /**
+     * Void modifyPartRedirectsToAddPartPage() method is called by the modifyPart_addPartBtnAction; and it is used to open Add Part Page, unless an exception is caught.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
+    public void modifyPartRedirectsToAddPartPage() throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addPartPageWindow = new Stage();
@@ -447,9 +503,15 @@ public class ModifyPartController implements Initializable {
 
     }
 
+
+    /**
+     * Public void initialize() method called to initialize a controller after its root element has been completely processed.
+     * @param url is used to resolve relative paths for the root object. It is null if the url is not known.
+     * @param rb is used to localize the root object, and it is null if the root object is not located.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        modifyPart_setPartName.setText("hellooooo");
+        //modifyPart_setPartName.setText("hellooooo");
 
         modifyPart_displayCompanyOrMachineLabel.setText("Machine ID:");
 
@@ -496,25 +558,6 @@ public class ModifyPartController implements Initializable {
         //display the outsourced radio button selected, the companyName label, the company name phrase as promptText, and inputfield = ""
 
 
-
-
-        //2pink
-//        if(modifyPartInHouseRadioBtn.isSelected()) {
-//            modifyPart_displayCompanyOrMachineLabel.setText("Machine ID:");
-//            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartMachineID);
-//        } else if(modifyPartInHouseRadioBtn.isSelected()) {
-//            modifyPart_displayCompanyOrMachineLabel.setText("Company Name:");
-//            modifyPart_inputCompanyOrMachineInputField.setText(getSinglePartCompanyName);
-//        }
-//        Platform.runLater(() -> {
-//            startingToModify();
-//        });
-//
     }
-
-//    public void closeBtnAction(ActionEvent e) {
-//        Stage stage = (Stage) close.getScene().getWindow();
-//        stage.close();
-//    }
 
 }
