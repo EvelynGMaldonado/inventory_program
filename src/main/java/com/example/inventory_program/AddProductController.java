@@ -561,7 +561,7 @@ public class AddProductController implements Initializable {
 
     /**
      * Void addProduct_addPartBtnAction() method is used to call the addProductRedirectsToAddPartPage();, unless an exception is caught.
-     * event represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      * A confirmation alert is displayed.
      */
     @FXML

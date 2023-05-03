@@ -13,7 +13,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -23,6 +22,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Evelyn G Morrow.
+ * @version 1.0.
+ * Public class ModifyProductController is used to retrieve and display the data row after selecting the product that the user needs to modify from the products table, and click the modify product button.
+ */
 public class ModifyProductController implements Initializable {
 
     HelloController helloController;
@@ -112,6 +116,10 @@ public class ModifyProductController implements Initializable {
     ObservableList<PartData> partList = FXCollections.observableArrayList();
     ObservableList<ProductPartsData> associatedPartsByProductList = FXCollections.observableArrayList();
 
+    /**
+     * private final variables are not accessible outside the class.
+     * private final variables values are final (no changes allowed) once the variable is initialized.
+     */
     private final String getSingleProductID;
     private final String getSingleProductName;
     private final String getSingleProductStock;
@@ -119,6 +127,17 @@ public class ModifyProductController implements Initializable {
     private final String getSingleProductMin;
     private final String getSingleProductMax;
 
+    /**
+     * Public ModifyProductController accepts:
+     * @param partsAndProductsInventory parts and products inventory parameters and initializes the private final String getPartsAndProductsInventory variable.
+     * @param productData  productData parameter and initializes the private final String getSingleProductData variable.
+     * @param getSingleProductID getSingleProductID parameter and initializes the private final String getSingleProductID variable.
+     * @param getSingleProductName getSingleProductName parameter and initializes the private final String getSingleProductName variable.
+     * @param getSingleProductStock getSingleProductStock parameter and initializes the private final String getSingleProductStock variable.
+     * @param getSingleProductPriceUnit getSingleProductPriceUnit parameter and initializes the private final String getSingleProductPriceUnit variable.
+     * @param getSingleProductMin getSingleProductMin parameter and initializes the private final String getSingleProductMin variable.
+     * @param getSingleProductMax getSingleProductMax parameter and initializes the  private final String getSingleProductMax variable.
+     */
     public ModifyProductController(PartsAndProductsInventory partsAndProductsInventory, ProductData productData, String getSingleProductID, String getSingleProductName, String getSingleProductStock, String getSingleProductPriceUnit, String getSingleProductMin, String getSingleProductMax) {
         this.partsAndProductsInventory = partsAndProductsInventory;
         this.productData = productData;
@@ -493,39 +512,6 @@ public class ModifyProductController implements Initializable {
             alert.setContentText("Please select the associated part data row that you want to delete.");
             alert.showAndWait();
         }
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
-//        index = associatedParts_tableview.getSelectionModel().getSelectedIndex();
-//
-//        if(index > -1) {
-//            ProductPartsData selectedItem = associatedParts_tableview.getSelectionModel().getSelectedItem();
-//
-//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                alert.setTitle("Confirmation Message");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Are you sure that you want to delete this Associated Part from your Product?");
-//                Optional<ButtonType> option = alert.showAndWait();
-//
-//                if(option.get().equals(ButtonType.OK)) {
-//
-//                    associatedParts_tableview.getItems().remove(selectedItem);
-//
-//                    alert = new Alert(Alert.AlertType.INFORMATION);
-//                    alert.setTitle("Deletion information");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText("Associated Part has been successfully removed from Current Product");
-//                    alert.showAndWait();
-//
-//                } else {
-//                    return;
-//                }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error message");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Please select the associated part that you want to delete.");
-//            alert.showAndWait();
-//        }
     }
 
     //display the current associated parts data after add a new associated part
@@ -562,54 +548,13 @@ public class ModifyProductController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
-
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDB = connectNow.getConnection();
-//
-//        String getRemaindingPartsIDByProductQuery = "SELECT partID FROM products_associated_parts WHERE productID = '" + getSingleProductID + "' ";
-//        String remaindingPartsIDByProduct = "";
-//        try{
-//            Statement statement = connectDB.createStatement();
-//            ResultSet queryCurrentAssociatedPartsIDsResult = statement.executeQuery(getRemaindingPartsIDByProductQuery);
-//
-//            while(queryCurrentAssociatedPartsIDsResult.next()) {
-//                remaindingPartsIDByProduct = queryCurrentAssociatedPartsIDsResult.getString("partID");
-//                System.out.println("The remainding partsID on line 328 is: " + remaindingPartsIDByProduct);
-//
-//                String allPartsByProductsViewQuery = "SELECT partID, part_name, stock, price_unit FROM parts WHERE partID = '" + remaindingPartsIDByProduct + "' ";
-//                try{
-//                    statement = connectDB.createStatement();
-//                    ResultSet queryAssociatedPartsByProductsOutput = statement.executeQuery(allPartsByProductsViewQuery);
-//
-//                    while(queryAssociatedPartsByProductsOutput.next()) {
-//                        associatedPartsByProductList.add(new ProductPartsData(queryAssociatedPartsByProductsOutput.getInt("partID"),
-//                                queryAssociatedPartsByProductsOutput.getString("part_name"),
-//                                queryAssociatedPartsByProductsOutput.getInt("stock"),
-//                                queryAssociatedPartsByProductsOutput.getBigDecimal("price_unit")));
-//                    }
-//
-//                    //PropertyValueFactory corresponds to the new PartData fields
-//                    //the table column is the one we annotate above
-//                    associatedParts_tableView_col_partID.setCellValueFactory(new PropertyValueFactory<>("partID"));
-//                    associatedParts_tableView_col_partName.setCellValueFactory(new PropertyValueFactory<>("part_name"));
-//                    associatedParts_tableView_col_inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//                    associatedParts_tableView_col_priceUnit.setCellValueFactory(new PropertyValueFactory<>("price_unit"));
-//
-//                    associatedParts_tableview.setItems(associatedPartsByProductList);
-//
-//                }catch(SQLException e){
-//                    e.printStackTrace();
-//                    e.getCause();
-//                }
-//            }
-//
-//        } catch(SQLException e) {
-//            e.printStackTrace();
-//            e.getCause();
-//        }
-
     }
 
+    /**
+     * Void modifyProduct_cancelBtnAction() method is used to go back to the landing page while still working on updating a product in the database.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert will be shown when the user clicks the cancel button. If the user clicks OK, then the modifyProduct Page will be hidden, and the user will be redirected to the landing page, unless an exception is caught. If the user press cancel, then it will return to the modifyProduct page to keep working on the product update input.
+     */
     public void modifyProduct_cancelBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -642,6 +587,11 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Void modifyProduct_addProductBtnAction() method is used to call the modifyProductRedirectsToAddProductPage(), unless an exception is caught.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert is displayed.
+     */
     public void modifyProduct_addProductBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -661,6 +611,11 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Void modifyProduct_addPartBtnAction() method is used to call the modifyProductRedirectsToAddPartPage();, unless an exception is caught.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert is displayed.
+     */
     public void modifyProduct_addPartBtnAction(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -680,6 +635,10 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * When the modify part button is clicked, an error alert will be displayed.
+     * @param event represents the event that triggers the action.
+     */
     public void modifyProduct_modifyPartBtnAction_Error(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -694,6 +653,12 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Void btnSearchPart() method is used to find a part row by typing information in the input field and clicking the search button.
+     * @param event represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void btnSearchPart(MouseEvent event) {
         String text = modifyProduct_searchPartInputField.getText();
@@ -781,12 +746,10 @@ public class ModifyProductController implements Initializable {
 
             parts_tableView.setItems(partList);
 
-
             //closing statement once I am done with the query to avoid crashing!!
             statement.close();
             queryPartsOutput.close();
             connectDB.close();
-
 
         } catch(SQLException e) {
             Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, e);
@@ -795,10 +758,16 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Void keyReleaseSearchPart() method is used to find a part row by typing information in the input field.
+     * @param event represents the event that triggers the action.
+     * @exception SQLException if a database error or other errors occur.
+     * @see SQLException
+     */
     @FXML
     void keyReleaseSearchPart(KeyEvent event) {
         String text = modifyProduct_searchPartInputField.getText();
-//        System.out.println(text);
+        //System.out.println(text);
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -846,6 +815,12 @@ public class ModifyProductController implements Initializable {
     }
 
     //SIDE MENU
+    /**
+     * Public void modifyProductRedirectsToEMIMSHomePage() method called after successfully saving the updated new product into the database, and no exceptions were caught.
+     * Modify Product page is hided, and the user is redirected to the homepage, where it can see the updated product displaying on the products table.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
     public void modifyProductRedirectsToEMIMSHomePage() throws IOException {
         startBtn.getScene().getWindow().hide();
 //        Stage stage1 = (Stage) startBtn.getScene().getWindow();
@@ -865,7 +840,12 @@ public class ModifyProductController implements Initializable {
 
     }
 
-    public void modifyProductRedirectsToAddPartPage () throws IOException {
+    /**
+     * Void modifyProductRedirectsToAddPartPage() method is called by the modifyProduct_addPartBtnAction; and it is used to open Add Part Page, unless an exception is caught.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
+    public void modifyProductRedirectsToAddPartPage() throws IOException {
         addPartPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addPartPageWindow = new Stage();
@@ -882,7 +862,12 @@ public class ModifyProductController implements Initializable {
 
     }
 
-    public void modifyProductRedirectsToAddProductPage () throws IOException {
+    /**
+     * Void modifyProductRedirectsToAddProductPage() method is called by the modifyProduct_addProductBtnAction; and it is used to open Add Product Page, unless an exception is caught.
+     * @throws IOException if an input or output error occurs
+     * @see IOException
+     */
+    public void modifyProductRedirectsToAddProductPage() throws IOException {
         addProductPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addProductPageWindow = new Stage();
@@ -899,6 +884,11 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /**
+     * Public void initialize() method called to initialize a controller after its root element has been completely processed.
+     * @param url is used to resolve relative paths for the root object. It is null if the url is not known.
+     * @param rb is used to localize the root object, and it is null if the root object is not located.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DatabaseConnection connectNow = new DatabaseConnection();

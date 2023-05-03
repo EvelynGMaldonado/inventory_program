@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class ModifyPartController is used to retrieve and display the data row after selecting the part that the user needs to modify from the parts table, and click the modify part button.
- * after the user successfully signs in, as well as to manage some functionality such as delete, search, etc.
  */
 public class ModifyPartController implements Initializable {
 
@@ -462,7 +461,7 @@ public class ModifyPartController implements Initializable {
     //SIDE MENU
     /**
      * Public void modifyPartRedirectsToEMIMSHomePage() method called after successfully saving the updated new part into the database, and no exceptions were caught.
-     * The Modify Part page is hided, and the user is redirected to the homepage, where it can see the updated part displaying on the parts table.
+     * Modify Part page is hided, and the user is redirected to the homepage, where it can see the updated part displaying on the parts table.
      * @throws IOException if an input or output error occurs
      * @see IOException
      */
@@ -488,7 +487,7 @@ public class ModifyPartController implements Initializable {
      * @throws IOException if an input or output error occurs
      * @see IOException
      */
-    public void modifyPartRedirectsToAddProductPage () throws IOException {
+    public void modifyPartRedirectsToAddProductPage() throws IOException {
         addProductPageBtn.getScene().getWindow().hide();
         //create new stage
         Stage addProductPageWindow = new Stage();

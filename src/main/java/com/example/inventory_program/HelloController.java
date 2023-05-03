@@ -626,7 +626,7 @@ public class HelloController implements Initializable {
 
     /**
      * Void btnSearchPart() method is used to find a part row by typing information in the input field and clicking the search button.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      * @exception SQLException if a database error or other errors occur.
      * @see SQLException
      */
@@ -732,7 +732,7 @@ public class HelloController implements Initializable {
 
     /**
      * Void KeyReleaseSearchPart() method is used to find a part row by typing information in the input field.
-     * e represents the event that triggers the action.
+     * @param event represents the event that triggers the action.
      * @exception SQLException if a database error or other errors occur.
      * @see SQLException
      */
