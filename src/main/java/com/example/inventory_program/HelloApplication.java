@@ -12,7 +12,6 @@ import java.io.IOException;
  * Public class HelloApplication is the primary class of the EM Inventory Management System.
  * Public class HelloApplication extends the Application class, which is a standard class in Java.
  */
-
 public class HelloApplication extends Application {
 //    static {
 //        Font.loadFont(HelloApplication.class.getResource("/font/fontawesome-webfont.ttf").toExternalForm(), 10);
