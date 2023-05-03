@@ -15,7 +15,7 @@
 
 <h2 id="description"> Project Description </h2>
 Inventory Management System is a tool that allows the businesses to tracj, organize and oversee all of their inventory, as well as their inventory-related processes; it automates critical tasks, and reduces the chance of human errors. 
-The EM Inventory Management Software will allow you crate a new account, and safely sign into the system. Once the user succesfylly signs in, then it has access to the database, and it is able to perform and take advantage of the following tasks: [Usage](#usage) 
+The EM Inventory Management Software will allow you crate a new account, and safely sign into the system. Once the user succesfylly signs in, then it has access to the database, and it is able to perform and take advantage of the following tasks: different tasks such as add a new part, modify an existent part, delete an existent part, add a new product, add or remove associated parts to a new or an existent product, modify an existent product, and delete an existent product.
 
 
 ## Installation 
