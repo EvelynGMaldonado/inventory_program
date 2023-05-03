@@ -464,8 +464,8 @@ public class AddProductController implements Initializable {
 
     /**
      * Void deleteSelectedAssociatedPart() method is used to delete the associated part from the selected row on the products_associated_parts table.
-     * e represents the event that triggers the action.
-     * A confirmation alert is displayed, if the user clicks ok then the part will be unassociated from the products, and the products_associated_parts table will be updated, unless an Exception is caught. If the user clicks cancel, then the action is aborted.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert is displayed, if the user clicks ok then the part will be unassociated from the product, and the products_associated_parts table will be updated, unless an Exception is caught. If the user clicks cancel, then the action is aborted.
      * An error alert is displayed when no row has been selected.
      */
     @FXML

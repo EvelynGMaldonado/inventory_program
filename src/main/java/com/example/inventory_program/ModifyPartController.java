@@ -224,7 +224,7 @@ public class ModifyPartController implements Initializable {
     }
 
     /**
-     * Public void validateUpdatedPartNameAndPartID()  method is used to validate that whether the updated part name matches with its ID.
+     * Public void validateUpdatedPartNameAndPartID()  method is used to validate whether the updated part name matches with its ID.
      * If the validation passes (part name matches with its ID), the method UpdatePart() is called, unless an Exception is caught.
      * When the validation does not pass(part name does not match with its ID), the method verifyIfPartNameAlreadyExists() is called, unless an Exception is caught.
      */
@@ -254,7 +254,7 @@ public class ModifyPartController implements Initializable {
     };
 
     /**
-     * Public void verifyIfPartNameAlreadyExists() method is used to validate that if the part name does not exist in the EM database.
+     * Public void verifyIfPartNameAlreadyExists() method is used to validate if the part name does not exist in the EM database.
      * When the validation passes(part name does not exist in the EM database), the method UpdatePart() is called, unless an Exception is caught.
      * When the validation does not pass (part name already exists in the EM database), an error alert will show up, and the user will be requested to use a different name for the updated part.
      */
@@ -290,8 +290,8 @@ public class ModifyPartController implements Initializable {
 
     /**
      * Public void UpdatePart() method called after the part name validation is passed, and no exceptions were caught.
-     * Once the data is inserted, the modifyPartRedirectsToEMIMSHomePage() method will be called, if no exceptions are caught.
-     * An information alert is displayed to notify that the updated part has been successfully registered to the database.
+     * Once the data is successfully updated into the EM database, the modifyPartRedirectsToEMIMSHomePage() method will be called, if no exceptions are caught.
+     * An information alert is displayed to notify that the part has been successfully updated into the database.
      */
     public void UpdatePart() {
         DatabaseConnection connectNow = new DatabaseConnection();

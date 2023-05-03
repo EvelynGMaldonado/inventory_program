@@ -149,10 +149,14 @@ public class ModifyProductController implements Initializable {
         this.getSingleProductMax= getSingleProductMax;
     }
 
-    //on click addBtn located on Add Product page, I check if a row has been selected,
-    //retrieve data from parts table (choose part data), and insert it into associated part data table.
+    /**
+     * Void clickAddAssociatedPartBtn() method is located on the Modify Product page.
+     * It checks if a row has been selected, retrieves data from parts table (choose part data), and inserts it into the associated parts data table.
+     * Once the insertion is done, we call the displayAssociatedPartDataTableView() method, to display the updated associated parts table on the modify product page.
+     * @param event represents the event that triggers the action.
+     */
     @FXML
-    public void clickAddAssociatedPartBtn (ActionEvent event){
+    void clickAddAssociatedPartBtn(ActionEvent event){
         index = parts_tableView.getSelectionModel().getSelectedIndex();
 
         String getSelectedPartIDToAssociate = "";
@@ -209,7 +213,7 @@ public class ModifyProductController implements Initializable {
                                 alert.setContentText("New Part has been successfully associated to the current product");
                                 alert.showAndWait();
 
-                                //After successfully saving a new part we redirect to the home_page and are able to see the updated data table
+                                //After successfully saving a new part we update the associated parts table on the modify product page
                                 displayAssociatedPartDataTableView();
 
                             } catch (Exception e) {
@@ -237,6 +241,11 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Void clickSaveUpdatedProductAndAssociatedParts() method is used to validate that none of the fields are empty, and that the correct data types have been used.
+     * @param event represents the event that triggers the action.
+     * If all validations pass, then the validateUpdatedProductNameAndProductID() method will be called; otherwise an error alert will be displayed.
+     */
     @FXML
     void clickSaveUpdatedProductAndAssociatedParts(ActionEvent event) {
         //retrieve variables for max, min, and inventory validation.
@@ -297,6 +306,11 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Public void validateUpdatedProductNameAndProductID()  method is used to validate whether the updated product name matches with its ID.
+     * If the validation passes (product name matches with its ID), the method updateProduct() is called, unless an Exception is caught.
+     * When the validation does not pass(product name does not match with its ID), the method verifyIfProductNameAlreadyExists() is called, unless an Exception is caught.
+     */
     public void validateUpdatedProductNameAndProductID() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -322,6 +336,11 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Public void verifyIfProductNameAlreadyExists() method is used to validate if the product name does not exist in the EM database.
+     * When the validation passes(product name does not exist in the EM database), the method updateProduct() is called, unless an Exception is caught.
+     * When the validation does not pass (product name already exists in the EM database), an error alert will show up, and the user will be requested to use a different name for the updated product.
+     */
     public void verifyIfProductNameAlreadyExists() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -351,6 +370,13 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Public void updateProduct() method called after the product name validation is passed, and no exceptions were caught.
+     * Public void updateProduct() is used to update the product specifications into the products table at the EM database.
+     * Once the product data is successfully updated into the EM database:
+     * an information alert is displayed to notify that the product has been successfully updated into the database, unless an Exception is caught.
+     * updateCurrentProductAssociatedParts() method will be called, unless an Exception is caught.
+     */
     public void updateProduct(){
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -383,7 +409,12 @@ public class ModifyProductController implements Initializable {
         }
     }
 
-    //Last step on modify product functionality
+    /**
+     * Public void updateCurrentProductAssociatedParts() method called after the product data specifications are successfully updated into the database.
+     * Public void updateCurrentProductAssociatedParts() is the last step on modify product functionality, and it is used to retrieve current productID from the products table, select all the updated partsID from our temporary modify_associated_parts table, and update the products_associated_parts table with thw most updated products and their associated parts.
+     * Once the product-parts association data is successfully updated into the EM database, the modifyProductRedirectsToEMIMSHomePage() method will be called, if no exceptions are caught.
+     * An information alert is displayed to notify that the product and its associated parts has been successfully updated into the database.
+     */
     public void updateCurrentProductAssociatedParts() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
@@ -464,8 +495,15 @@ public class ModifyProductController implements Initializable {
 
 
     //remove associated part btn removes the data of the selected row from the associated part data table
+
+    /**
+     * Void deleteSelectedAssociatedPart() method is used to delete the associated part from the selected row on the modify_associated_parts table.
+     * @param event represents the event that triggers the action.
+     * A confirmation alert is displayed, if the user clicks ok then the part will be unassociated from the product, and the displayAssociatedPartDataTableView() method will be called, unless an Exception is caught. If the user clicks cancel, then the action is aborted.
+     * An error alert is displayed when no row has been selected.
+     */
     @FXML
-    private void deleteSelectedAssociatedPart (ActionEvent event) {
+    void deleteSelectedAssociatedPart (ActionEvent event) {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getConnection();
         index = associatedParts_tableview.getSelectionModel().getSelectedIndex();
@@ -515,6 +553,10 @@ public class ModifyProductController implements Initializable {
     }
 
     //display the current associated parts data after add a new associated part
+
+    /** Public void displayAssociatedPartDataTableView() method is called after successfully adding (clickAddAssociatedPartBtn() method) or deleting (deleteSelectedAssociatedPart() method) an associated part to the product we are modifying.
+     * Public void displayAssociatedPartDataTableView() method is used to refresh the associated parts table located on the modify product page, and shows the most current data parts association.
+     */
     public void displayAssociatedPartDataTableView() {
         associatedPartsByProductList.clear();
         DatabaseConnection connectNow = new DatabaseConnection();
