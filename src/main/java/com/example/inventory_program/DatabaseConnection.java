@@ -6,6 +6,8 @@ import java.sql.DriverManager;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class DatabaseConnection handles the creation of a new connection for each interaction that the EM Inventory Management System needs to have with the database.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class DatabaseConnection {
     /**

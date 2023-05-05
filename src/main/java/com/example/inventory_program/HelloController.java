@@ -25,6 +25,8 @@ import java.util.logging.Logger;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class HelloController is used to retrieve and display the most up-to-date data on the parts and products tables after the user successfully signs in, as well as to manage some functionality such as delete, search, etc.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class HelloController implements Initializable {
 //public class HelloController {

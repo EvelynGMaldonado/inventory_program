@@ -6,6 +6,8 @@ import java.math.BigDecimal;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class PartData used to display the parts tableview on the dashboard at the Home Page, the founded parts at the Homepage, the available parts at the Add Product Page and at the Modify Product Page .
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class PartData {
     private Integer partID;

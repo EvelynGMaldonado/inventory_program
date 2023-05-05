@@ -25,6 +25,8 @@ import java.util.logging.Logger;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class AddProductController is used to add a new product to the EM management system database.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class AddProductController implements Initializable {
 

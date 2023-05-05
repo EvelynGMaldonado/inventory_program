@@ -15,6 +15,13 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * @author Evelyn G Morrow.
+ * @version 1.0.
+ * Public class AddPartController is used to add a new part to the inventory after the user successfully clicks the add part button located on the home page or side menu.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
+ */
 public class AddPartController implements Initializable {
 
     @FXML

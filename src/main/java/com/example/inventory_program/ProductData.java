@@ -6,6 +6,8 @@ import java.math.BigDecimal;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class ProductData used to display the products tableview on the dashboard at the Home Page.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class ProductData {
     private Integer productID;

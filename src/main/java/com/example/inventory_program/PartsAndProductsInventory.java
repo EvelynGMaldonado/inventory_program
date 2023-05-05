@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class PartsAndProductsInventory is used to manage the products and parts that EM Management System has in inventory.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class PartsAndProductsInventory {
     private ObservableList<ProductData> allProducts = FXCollections.observableArrayList();

@@ -18,6 +18,13 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * @author Evelyn G Morrow.
+ * @version 1.0.
+ * Public class RegisterController is used to register a new user account into our EM Inventory Management Software.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
+ */
 public class RegisterController implements Initializable {
 
     @FXML

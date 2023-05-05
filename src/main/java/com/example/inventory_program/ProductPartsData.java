@@ -6,6 +6,8 @@ import java.math.BigDecimal;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class ProductPartsData used to display the current associated parts after loading the Modify Product Page.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class ProductPartsData {
     private Integer partID;

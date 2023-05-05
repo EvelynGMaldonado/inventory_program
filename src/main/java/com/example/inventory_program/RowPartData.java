@@ -6,6 +6,8 @@ import java.math.BigDecimal;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class RowPartData used to display the associated parts tableview at the Modify Product Page.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 //public class RowPartData extends PartData {
 public class RowPartData {

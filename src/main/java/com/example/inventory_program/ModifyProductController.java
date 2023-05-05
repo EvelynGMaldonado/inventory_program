@@ -26,6 +26,8 @@ import java.util.logging.Logger;
  * @author Evelyn G Morrow.
  * @version 1.0.
  * Public class ModifyProductController is used to retrieve and display the data row after selecting the product that the user needs to modify from the products table, and click the modify product button.
+ * RUNTIME ERROR:
+ * FUTURE ENHANCEMENT:
  */
 public class ModifyProductController implements Initializable {
 
